@@ -7,55 +7,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
   :root {
-    --sky: #e8f4fd;
-    --cloud: #ffffff;
-    --sun: #FFD93D;
-    --grass: #6BCB77;
-    --grass-dark: #4da35a;
-    --water: #4D96FF;
-    --water-dark: #2d6fd4;
-    --coral: #FF6B6B;
-    --coral-dark: #e04f4f;
-    --purple: #9B59B6;
-    --purple-dark: #7d3e9e;
-    --orange: #FF8C42;
-    --pink: #FF6EB4;
-    --gold: #FFD700;
-    --text-dark: #2c3e50;
-    --text-mid: #5a6a7a;
-    --card-bg: rgba(255,255,255,0.92);
-    --radius: 24px;
-    --radius-sm: 14px;
+    --sky: #e8f4fd; --cloud: #ffffff; --sun: #FFD93D;
+    --grass: #6BCB77; --grass-dark: #4da35a;
+    --water: #4D96FF; --water-dark: #2d6fd4;
+    --coral: #FF6B6B; --coral-dark: #e04f4f;
+    --purple: #9B59B6; --purple-dark: #7d3e9e;
+    --orange: #FF8C42; --pink: #FF6EB4; --gold: #FFD700;
+    --text-dark: #2c3e50; --text-mid: #5a6a7a;
+    --card-bg: rgba(255,255,255,0.95);
+    --radius: 24px; --radius-sm: 14px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--sky);
-    min-height: 100vh;
-    overflow-x: hidden;
-    color: var(--text-dark);
-  }
-
-  /* ───── SCREENS ───── */
+  body { font-family: 'Nunito', sans-serif; background: var(--sky); min-height: 100vh; overflow-x: hidden; color: var(--text-dark); }
   .screen { display: none; min-height: 100vh; }
   .screen.active { display: flex; flex-direction: column; }
 
-  /* ───── ANIMATED SKY BG ───── */
-  .sky-bg {
-    position: fixed; inset: 0; z-index: -1;
-    background: linear-gradient(180deg, #c9e8ff 0%, #e8f4fd 60%, #d4f0c0 100%);
-    overflow: hidden;
-  }
-  .cloud {
-    position: absolute; background: white; border-radius: 50px; opacity: 0.85;
-    animation: drift linear infinite;
-  }
-  .cloud::before, .cloud::after {
-    content: ''; position: absolute; background: white; border-radius: 50%;
-  }
-  .cloud:nth-child(1) { width: 120px; height: 40px; top: 10%; animation-duration: 35s; animation-delay: 0s; }
+  /* SKY BG */
+  .sky-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(180deg, #c9e8ff 0%, #e8f4fd 60%, #d4f0c0 100%); overflow: hidden; }
+  .cloud { position: absolute; background: white; border-radius: 50px; opacity: 0.85; animation: drift linear infinite; }
+  .cloud::before, .cloud::after { content: ''; position: absolute; background: white; border-radius: 50%; }
+  .cloud:nth-child(1) { width: 120px; height: 40px; top: 10%; animation-duration: 35s; }
   .cloud:nth-child(1)::before { width: 60px; height: 55px; top: -25px; left: 20px; }
   .cloud:nth-child(1)::after { width: 45px; height: 45px; top: -18px; left: 55px; }
   .cloud:nth-child(2) { width: 90px; height: 30px; top: 18%; animation-duration: 50s; animation-delay: -15s; }
@@ -66,93 +37,29 @@
   .cloud:nth-child(3)::after { width: 55px; height: 50px; top: -22px; left: 70px; }
   @keyframes drift { from { transform: translateX(-200px); } to { transform: translateX(110vw); } }
 
-  /* ───── PROFILE SELECT SCREEN ───── */
-  #screen-profiles {
-    align-items: center; justify-content: center;
-    padding: 40px 24px;
-    gap: 32px;
-  }
-  .app-title {
-    font-family: 'Fredoka One', cursive;
-    font-size: 52px;
-    color: var(--water);
-    text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
-    text-align: center;
-    line-height: 1.1;
-  }
+  /* PROFILE SELECT */
+  #screen-profiles { align-items: center; justify-content: center; padding: 40px 24px; gap: 32px; }
+  .app-title { font-family: 'Fredoka One', cursive; font-size: 52px; color: var(--water); text-shadow: 3px 3px 0 rgba(0,0,0,0.1); text-align: center; line-height: 1.1; }
   .app-title span { color: var(--coral); }
   .app-subtitle { font-size: 18px; color: var(--text-mid); text-align: center; font-weight: 600; }
-  .profiles-grid {
-    display: flex; flex-wrap: wrap; gap: 20px;
-    justify-content: center; max-width: 500px;
-  }
-  .profile-card {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 28px 24px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.18s, box-shadow 0.18s;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.1);
-    min-width: 140px;
-    border: 3px solid transparent;
-  }
+  .profiles-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 500px; }
+  .profile-card { background: var(--card-bg); border-radius: var(--radius); padding: 28px 24px; text-align: center; cursor: pointer; transition: transform 0.18s, box-shadow 0.18s; box-shadow: 0 6px 24px rgba(0,0,0,0.1); min-width: 140px; border: 3px solid transparent; }
   .profile-card:active { transform: scale(0.95); }
   .profile-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
   .profile-avatar { font-size: 60px; margin-bottom: 10px; line-height: 1; }
   .profile-name { font-size: 18px; font-weight: 800; color: var(--text-dark); }
-  .parent-link {
-    font-size: 15px; color: var(--text-mid); text-decoration: underline;
-    cursor: pointer; font-weight: 600; margin-top: 8px;
-  }
+  .parent-link { font-size: 15px; color: var(--text-mid); text-decoration: underline; cursor: pointer; font-weight: 600; margin-top: 8px; }
   .parent-link:hover { color: var(--purple); }
 
-  /* ───── GAME SELECT SCREEN ───── */
-  #screen-games {
-    padding: 32px 24px;
-    align-items: center;
-    gap: 24px;
-  }
-  .screen-header {
-    display: flex; align-items: center; gap: 16px;
-    width: 100%; max-width: 600px;
-  }
-  .back-btn {
-    background: var(--card-bg); border: none; border-radius: 50%;
-    width: 48px; height: 48px; font-size: 22px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-    transition: transform 0.15s;
-  }
+  /* GAME SELECT */
+  #screen-games { padding: 32px 24px; align-items: center; gap: 24px; }
+  .screen-header { display: flex; align-items: center; gap: 16px; width: 100%; max-width: 600px; }
+  .back-btn { background: var(--card-bg); border: none; border-radius: 50%; width: 48px; height: 48px; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 12px rgba(0,0,0,0.1); transition: transform 0.15s; }
   .back-btn:active { transform: scale(0.9); }
-  .screen-title {
-    font-family: 'Fredoka One', cursive;
-    font-size: 28px; color: var(--text-dark);
-  }
-  .sticker-badge {
-    margin-left: auto;
-    background: var(--gold);
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-weight: 800; font-size: 16px;
-    color: #7a5900;
-    box-shadow: 0 3px 10px rgba(255,215,0,0.4);
-    display: flex; align-items: center; gap: 6px;
-  }
-  .games-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 18px; width: 100%; max-width: 600px;
-  }
-  .game-card {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 28px;
-    cursor: pointer;
-    transition: transform 0.18s, box-shadow 0.18s;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.1);
-    border: 3px solid transparent;
-    position: relative; overflow: hidden;
-  }
+  .screen-title { font-family: 'Fredoka One', cursive; font-size: 28px; color: var(--text-dark); }
+  .sticker-badge { margin-left: auto; background: var(--gold); border-radius: 20px; padding: 8px 16px; font-weight: 800; font-size: 16px; color: #7a5900; box-shadow: 0 3px 10px rgba(255,215,0,0.4); display: flex; align-items: center; gap: 6px; }
+  .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; width: 100%; max-width: 600px; }
+  .game-card { background: var(--card-bg); border-radius: var(--radius); padding: 28px; cursor: pointer; transition: transform 0.18s, box-shadow 0.18s; box-shadow: 0 6px 24px rgba(0,0,0,0.1); border: 3px solid transparent; position: relative; overflow: hidden; }
   .game-card.active-game { border-color: var(--grass); }
   .game-card.coming-soon { opacity: 0.6; cursor: default; }
   .game-card:not(.coming-soon):hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
@@ -160,377 +67,225 @@
   .game-emoji { font-size: 48px; margin-bottom: 12px; }
   .game-title { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--text-dark); margin-bottom: 6px; }
   .game-desc { font-size: 14px; color: var(--text-mid); line-height: 1.5; font-weight: 600; }
-  .coming-soon-tag {
-    position: absolute; top: 14px; right: 14px;
-    background: var(--orange); color: white;
-    font-size: 11px; font-weight: 800; padding: 4px 10px;
-    border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;
-  }
+  .coming-soon-tag { position: absolute; top: 14px; right: 14px; background: var(--orange); color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .wordset-info { background: var(--card-bg); border-radius: var(--radius-sm); padding: 12px 20px; font-size: 14px; font-weight: 700; color: var(--text-mid); box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 8px; max-width: 600px; width: 100%; }
 
-  /* ───── ANIMAL PARADE GAME ───── */
-  #screen-game {
-    padding: 0;
-    position: relative;
+  /* ANIMAL PARADE GAME */
+  #screen-game { padding: 0; position: relative; }
+  .game-topbar { background: var(--card-bg); padding: 16px 24px; display: flex; align-items: center; gap: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); position: relative; z-index: 10; }
+  .word-counter { margin-left: auto; font-size: 15px; font-weight: 800; color: var(--text-mid); }
+  .game-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 24px; gap: 22px; }
+
+  /* ANIMAL FRAME CARD */
+  .word-card {
+    position: relative; width: 100%; max-width: 380px;
+    background: var(--card-bg); border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+    padding: 20px; text-align: center;
+    border: 4px solid transparent;
+    transition: border-color 0.3s;
   }
-  .game-topbar {
-    background: var(--card-bg);
-    padding: 16px 24px;
-    display: flex; align-items: center; gap: 14px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    position: relative; z-index: 10;
-  }
-  .word-counter {
-    margin-left: auto;
-    font-size: 15px; font-weight: 800; color: var(--text-mid);
-  }
-  .game-area {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 32px 24px; gap: 28px;
-  }
-  .word-set-label {
-    background: var(--card-bg);
-    border-radius: 20px; padding: 8px 20px;
-    font-size: 14px; font-weight: 700; color: var(--text-mid);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-  .animal-stage {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 32px;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-    width: 100%; max-width: 400px;
-    position: relative;
-  }
-  .animal-emoji {
-    font-size: 100px; line-height: 1;
-    display: block; margin-bottom: 16px;
-    transition: transform 0.3s;
-    cursor: pointer;
-  }
-  .animal-emoji.bounce {
-    animation: animalBounce 0.6s ease;
-  }
-  .animal-emoji.dance {
-    animation: animalDance 1s ease infinite;
-  }
-  @keyframes animalBounce {
-    0%,100% { transform: scale(1) rotate(0deg); }
-    25% { transform: scale(1.2) rotate(-8deg); }
-    75% { transform: scale(1.2) rotate(8deg); }
-  }
-  @keyframes animalDance {
-    0%,100% { transform: scale(1) rotate(-5deg); }
-    50% { transform: scale(1.1) rotate(5deg); }
-  }
-  .word-display {
-    font-family: 'Fredoka One', cursive;
-    font-size: 48px; color: var(--water);
-    letter-spacing: 2px;
-    transition: opacity 0.3s;
-    min-height: 64px;
+  .word-card.correct-flash { border-color: var(--grass); animation: correctFlash 0.5s ease; }
+  @keyframes correctFlash { 0%,100% { background: var(--card-bg); } 50% { background: #eafff0; } }
+
+  /* Animal corner decorations */
+  .animal-corners { position: absolute; inset: 0; pointer-events: none; }
+  .corner-animal { position: absolute; font-size: 32px; line-height: 1; transition: transform 0.3s; }
+  .corner-animal.tl { top: -16px; left: -16px; transform: rotate(-15deg); }
+  .corner-animal.tr { top: -16px; right: -16px; transform: rotate(15deg); }
+  .corner-animal.bl { bottom: -16px; left: -16px; transform: rotate(15deg); }
+  .corner-animal.br { bottom: -16px; right: -16px; transform: rotate(-15deg); }
+  .word-card.dance .corner-animal.tl { animation: cornerDance1 0.8s ease infinite; }
+  .word-card.dance .corner-animal.tr { animation: cornerDance2 0.8s ease infinite; }
+  .word-card.dance .corner-animal.bl { animation: cornerDance2 0.8s ease infinite; }
+  .word-card.dance .corner-animal.br { animation: cornerDance1 0.8s ease infinite; }
+  @keyframes cornerDance1 { 0%,100% { transform: rotate(-15deg) scale(1); } 50% { transform: rotate(-25deg) scale(1.3); } }
+  @keyframes cornerDance2 { 0%,100% { transform: rotate(15deg) scale(1); } 50% { transform: rotate(25deg) scale(1.3); } }
+
+  /* Word image area */
+  .word-image-frame {
+    width: 180px; height: 180px;
+    margin: 8px auto 14px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f0f7ff, #e8f4fd);
     display: flex; align-items: center; justify-content: center;
-  }
-  .word-display.hidden { opacity: 0; }
-  .word-toggle {
-    font-size: 13px; font-weight: 700; color: var(--text-mid);
-    cursor: pointer; text-decoration: underline; margin-top: 4px;
-    display: inline-block;
-  }
-
-  /* mic button */
-  .mic-area {
-    display: flex; flex-direction: column; align-items: center; gap: 14px;
-    width: 100%; max-width: 400px;
-  }
-  .hear-btn {
-    background: var(--water);
-    color: white; border: none; border-radius: 50px;
-    padding: 16px 32px; font-size: 18px; font-weight: 800;
-    cursor: pointer; display: flex; align-items: center; gap: 10px;
-    transition: transform 0.15s, background 0.15s;
-    box-shadow: 0 6px 20px rgba(77,150,255,0.4);
-    font-family: 'Nunito', sans-serif;
-  }
-  .hear-btn:active { transform: scale(0.95); }
-  .mic-btn {
-    background: var(--coral);
-    color: white; border: none; border-radius: 50%;
-    width: 90px; height: 90px; font-size: 36px;
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: transform 0.15s, background 0.15s;
-    box-shadow: 0 8px 28px rgba(255,107,107,0.45);
     position: relative;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.06);
+    border: 3px solid rgba(77,150,255,0.15);
   }
-  .mic-btn.listening {
-    background: var(--coral-dark);
-    animation: pulse 1s infinite;
-  }
-  @keyframes pulse {
-    0%,100% { box-shadow: 0 8px 28px rgba(255,107,107,0.45); transform: scale(1); }
-    50% { box-shadow: 0 8px 40px rgba(255,107,107,0.7); transform: scale(1.06); }
-  }
+  .word-image-frame img { width: 100%; height: 100%; object-fit: cover; }
+  .word-image-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; color: #b0c4d8; }
+  .word-image-placeholder .ph-icon { font-size: 48px; }
+  .word-image-placeholder .ph-text { font-size: 12px; font-weight: 700; text-align: center; padding: 0 8px; }
+  .word-display { font-family: 'Fredoka One', cursive; font-size: 44px; color: var(--water); letter-spacing: 2px; transition: opacity 0.3s; min-height: 56px; display: flex; align-items: center; justify-content: center; }
+  .word-display.hidden { opacity: 0; }
+  .word-toggle { font-size: 13px; font-weight: 700; color: var(--text-mid); cursor: pointer; text-decoration: underline; margin-top: 2px; display: inline-block; }
+
+  /* MIC AREA */
+  .mic-area { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; max-width: 380px; }
+  .hear-btn { background: var(--water); color: white; border: none; border-radius: 50px; padding: 14px 28px; font-size: 17px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: transform 0.15s; box-shadow: 0 6px 20px rgba(77,150,255,0.4); font-family: 'Nunito', sans-serif; }
+  .hear-btn:active { transform: scale(0.95); }
+  .mic-btn { background: var(--coral); color: white; border: none; border-radius: 50%; width: 86px; height: 86px; font-size: 34px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.15s; box-shadow: 0 8px 28px rgba(255,107,107,0.45); }
+  .mic-btn.listening { background: var(--coral-dark); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 8px 28px rgba(255,107,107,0.45); transform: scale(1); } 50% { box-shadow: 0 8px 40px rgba(255,107,107,0.7); transform: scale(1.06); } }
   .mic-hint { font-size: 14px; color: var(--text-mid); font-weight: 700; }
 
-  /* result overlay */
-  .result-overlay {
-    position: fixed; inset: 0; z-index: 100;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: rgba(255,255,255,0.92);
-    gap: 24px;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s;
-  }
+  /* RESULT OVERLAY */
+  .result-overlay { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.94); gap: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
   .result-overlay.show { opacity: 1; pointer-events: all; }
-  .result-emoji { font-size: 100px; animation: resultPop 0.4s ease; }
-  @keyframes resultPop {
-    0% { transform: scale(0); }
-    70% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-  }
-  .result-text {
-    font-family: 'Fredoka One', cursive;
-    font-size: 42px; text-align: center;
-  }
+  .result-emoji { font-size: 90px; animation: resultPop 0.4s ease; }
+  @keyframes resultPop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+  .result-text { font-family: 'Fredoka One', cursive; font-size: 38px; text-align: center; }
   .result-text.correct { color: var(--grass); }
-  .result-text.wrong { color: var(--coral); }
-  .result-actions { display: flex; gap: 16px; }
-  .result-btn {
-    padding: 16px 28px; border: none; border-radius: 50px;
-    font-size: 17px; font-weight: 800; cursor: pointer;
-    font-family: 'Nunito', sans-serif;
-    transition: transform 0.15s;
-  }
+  .result-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .result-btn { padding: 15px 26px; border: none; border-radius: 50px; font-size: 16px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; transition: transform 0.15s; }
   .result-btn:active { transform: scale(0.95); }
   .result-btn.yes { background: var(--grass); color: white; box-shadow: 0 6px 20px rgba(107,203,119,0.45); }
   .result-btn.retry { background: var(--orange); color: white; box-shadow: 0 6px 20px rgba(255,140,66,0.45); }
   .result-btn.next { background: var(--water); color: white; box-shadow: 0 6px 20px rgba(77,150,255,0.45); }
-  .parent-confirm {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 20px 28px;
-    text-align: center;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.1);
-  }
-  .parent-confirm p { font-size: 16px; font-weight: 700; color: var(--text-mid); margin-bottom: 14px; }
+  .parent-confirm { background: var(--card-bg); border-radius: var(--radius); padding: 18px 24px; text-align: center; box-shadow: 0 6px 24px rgba(0,0,0,0.1); }
+  .parent-confirm p { font-size: 15px; font-weight: 700; color: var(--text-mid); margin-bottom: 14px; }
 
-  /* sticker celebration */
-  .sticker-celebration {
-    position: fixed; inset: 0; z-index: 200;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #fff9c4, #ffe0e0);
-    gap: 20px;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.4s;
-  }
+  /* STICKER CELEBRATION */
+  .sticker-celebration { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #fff9c4, #ffe0e0); gap: 20px; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
   .sticker-celebration.show { opacity: 1; pointer-events: all; }
   .sticker-celebration .big-sticker { font-size: 120px; animation: stickerSpin 0.8s ease; }
-  @keyframes stickerSpin {
-    0% { transform: scale(0) rotate(-180deg); }
-    80% { transform: scale(1.15) rotate(10deg); }
-    100% { transform: scale(1) rotate(0deg); }
-  }
-  .sticker-celebration h2 { font-family: 'Fredoka One', cursive; font-size: 42px; color: var(--coral); text-align: center; }
-  .sticker-celebration p { font-size: 20px; font-weight: 700; color: var(--text-mid); text-align: center; }
+  @keyframes stickerSpin { 0% { transform: scale(0) rotate(-180deg); } 80% { transform: scale(1.15) rotate(10deg); } 100% { transform: scale(1) rotate(0deg); } }
+  .sticker-celebration h2 { font-family: 'Fredoka One', cursive; font-size: 40px; color: var(--coral); text-align: center; }
+  .sticker-celebration p { font-size: 18px; font-weight: 700; color: var(--text-mid); text-align: center; }
   .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 201; overflow: hidden; }
-  .confetti-piece {
-    position: absolute; width: 12px; height: 12px; border-radius: 2px;
-    animation: confettiFall linear forwards;
-  }
-  @keyframes confettiFall {
-    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
+  .confetti-piece { position: absolute; width: 12px; height: 12px; border-radius: 2px; animation: confettiFall linear forwards; }
+  @keyframes confettiFall { 0% { transform: translateY(-20px) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 
-  /* progress bar */
-  .progress-bar-wrap {
-    background: rgba(0,0,0,0.08); border-radius: 20px; height: 10px;
-    width: 100%; max-width: 400px; overflow: hidden;
-  }
-  .progress-bar-fill {
-    height: 100%; background: var(--grass);
-    border-radius: 20px; transition: width 0.4s ease;
-  }
+  /* PROGRESS BAR */
+  .progress-bar-wrap { background: rgba(0,0,0,0.08); border-radius: 20px; height: 10px; width: 100%; max-width: 380px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--grass); border-radius: 20px; transition: width 0.4s ease; }
 
-  /* finish screen */
-  .finish-card {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 40px 32px;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-    width: 100%; max-width: 400px;
-    gap: 16px; display: flex; flex-direction: column; align-items: center;
-  }
+  /* FINISH SCREEN */
+  .finish-card { background: var(--card-bg); border-radius: var(--radius); padding: 40px 32px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.12); width: 100%; max-width: 400px; gap: 16px; display: flex; flex-direction: column; align-items: center; }
   .finish-card h2 { font-family: 'Fredoka One', cursive; font-size: 36px; color: var(--water); }
-  .stat-row { display: flex; gap: 16px; justify-content: center; }
-  .stat-box {
-    background: var(--sky);
-    border-radius: var(--radius-sm);
-    padding: 16px 20px; text-align: center;
-  }
+  .stat-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .stat-box { background: var(--sky); border-radius: var(--radius-sm); padding: 16px 20px; text-align: center; }
   .stat-num { font-family: 'Fredoka One', cursive; font-size: 36px; }
   .stat-label { font-size: 13px; font-weight: 700; color: var(--text-mid); }
   .stat-box.green .stat-num { color: var(--grass-dark); }
   .stat-box.blue .stat-num { color: var(--water); }
   .stat-box.gold .stat-num { color: #b8860b; }
-  .play-again-btn {
-    background: var(--coral); color: white; border: none;
-    border-radius: 50px; padding: 18px 40px;
-    font-size: 20px; font-weight: 800; cursor: pointer;
-    font-family: 'Nunito', sans-serif;
-    box-shadow: 0 6px 20px rgba(255,107,107,0.4);
-    transition: transform 0.15s;
-  }
+  .play-again-btn { background: var(--coral); color: white; border: none; border-radius: 50px; padding: 18px 40px; font-size: 20px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; box-shadow: 0 6px 20px rgba(255,107,107,0.4); transition: transform 0.15s; }
   .play-again-btn:active { transform: scale(0.95); }
 
-  /* ───── PARENT DASHBOARD ───── */
-  #screen-parent {
-    background: #f8f9fa; min-height: 100vh;
-  }
-  .parent-topbar {
-    background: white; padding: 20px 28px;
-    display: flex; align-items: center; gap: 16px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06); border-bottom: 1px solid #eee;
-  }
+  /* PIN */
+  #screen-pin { align-items: center; justify-content: center; gap: 28px; padding: 40px 24px; }
+  .pin-card { background: var(--card-bg); border-radius: var(--radius); padding: 40px 36px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.12); width: 100%; max-width: 340px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .pin-card h2 { font-family: 'Fredoka One', cursive; font-size: 28px; color: var(--purple); }
+  .pin-card p { font-size: 15px; color: var(--text-mid); font-weight: 600; }
+  .pin-dots { display: flex; gap: 12px; }
+  .pin-dot { width: 18px; height: 18px; border-radius: 50%; background: #e0e0e0; transition: background 0.2s; }
+  .pin-dot.filled { background: var(--purple); }
+  .pin-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .pin-key { width: 68px; height: 68px; border-radius: 50%; background: var(--card-bg); border: 2px solid #e8e8e8; font-size: 24px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.12s, background 0.12s; font-family: 'Fredoka One', cursive; color: var(--text-dark); }
+  .pin-key:active { transform: scale(0.92); background: var(--sky); }
+  .pin-error { color: var(--coral); font-weight: 700; font-size: 14px; min-height: 20px; }
+
+  /* PARENT DASHBOARD */
+  #screen-parent { background: #f8f9fa; min-height: 100vh; }
+  .parent-topbar { background: white; padding: 20px 28px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border-bottom: 1px solid #eee; }
   .parent-topbar h1 { font-family: 'Fredoka One', cursive; font-size: 26px; color: var(--purple); }
+  .parent-tabs { display: flex; gap: 0; background: white; border-bottom: 2px solid #f0f0f0; padding: 0 28px; overflow-x: auto; }
+  .parent-tab { padding: 14px 20px; font-size: 15px; font-weight: 800; color: var(--text-mid); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: color 0.15s, border-color 0.15s; }
+  .parent-tab.active { color: var(--purple); border-bottom-color: var(--purple); }
+  .parent-tab-content { display: none; }
+  .parent-tab-content.active { display: block; }
   .parent-content { padding: 28px; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
-  .parent-section {
-    background: white; border-radius: var(--radius);
-    padding: 24px; box-shadow: 0 3px 16px rgba(0,0,0,0.06);
-  }
-  .parent-section h2 {
-    font-family: 'Fredoka One', cursive; font-size: 22px;
-    color: var(--text-dark); margin-bottom: 18px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .children-table, .wordsets-table, .sessions-table {
-    width: 100%; border-collapse: collapse; font-size: 15px;
-  }
-  .children-table th, .wordsets-table th, .sessions-table th {
-    text-align: left; padding: 10px 14px;
-    background: #f8f9fa; font-weight: 800; font-size: 13px;
-    color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.5px;
-    border-radius: 8px;
-  }
-  .children-table td, .wordsets-table td, .sessions-table td {
-    padding: 12px 14px; border-bottom: 1px solid #f0f0f0;
-    vertical-align: middle;
-  }
-  .children-table tr:last-child td, .wordsets-table tr:last-child td, .sessions-table tr:last-child td { border-bottom: none; }
-  .status-badge {
-    display: inline-flex; align-items: center;
-    padding: 4px 12px; border-radius: 20px;
-    font-size: 13px; font-weight: 700;
-  }
+  .parent-section { background: white; border-radius: var(--radius); padding: 24px; box-shadow: 0 3px 16px rgba(0,0,0,0.06); }
+  .parent-section h2 { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--text-dark); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .data-table th { text-align: left; padding: 10px 14px; background: #f8f9fa; font-weight: 800; font-size: 13px; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.5px; }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .status-badge { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; }
   .status-badge.active { background: #d4f5dc; color: #1a7a30; }
   .status-badge.inactive { background: #f0f0f0; color: #888; }
   .status-badge.coming { background: #fff3cd; color: #856404; }
-  .toggle-btn {
-    padding: 7px 16px; border: none; border-radius: 20px;
-    font-size: 13px; font-weight: 700; cursor: pointer;
-    font-family: 'Nunito', sans-serif;
-    transition: transform 0.15s;
-  }
+  .toggle-btn { padding: 7px 16px; border: none; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif; transition: transform 0.15s; }
   .toggle-btn:active { transform: scale(0.95); }
   .toggle-btn.activate { background: var(--grass); color: white; }
   .toggle-btn.deactivate { background: #f0f0f0; color: #888; }
   .wallet-cards { display: flex; flex-wrap: wrap; gap: 16px; }
-  .wallet-card {
-    background: linear-gradient(135deg, #fff9c4, #fff0f0);
-    border-radius: var(--radius-sm);
-    padding: 20px 24px; min-width: 200px; flex: 1;
-    border: 2px solid rgba(255,215,0,0.3);
-  }
+  .wallet-card { background: linear-gradient(135deg, #fff9c4, #fff0f0); border-radius: var(--radius-sm); padding: 20px 24px; min-width: 200px; flex: 1; border: 2px solid rgba(255,215,0,0.3); }
   .wallet-card .child-name { font-weight: 800; font-size: 16px; margin-bottom: 10px; }
-  .wallet-card .sticker-count {
-    font-family: 'Fredoka One', cursive; font-size: 42px;
-    color: #b8860b;
-  }
+  .wallet-card .sticker-count { font-family: 'Fredoka One', cursive; font-size: 42px; color: #b8860b; }
   .wallet-card .sticker-sub { font-size: 13px; color: var(--text-mid); font-weight: 600; }
-  .redeem-btn {
-    margin-top: 12px; padding: 9px 18px; border: none;
-    border-radius: 20px; background: var(--gold); color: #7a5900;
-    font-size: 14px; font-weight: 800; cursor: pointer;
-    font-family: 'Nunito', sans-serif;
-  }
+  .redeem-btn { margin-top: 12px; padding: 9px 18px; border: none; border-radius: 20px; background: var(--gold); color: #7a5900; font-size: 14px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; }
   .redeem-form { margin-top: 14px; display: none; gap: 8px; flex-direction: column; }
   .redeem-form.show { display: flex; }
-  .redeem-form input {
-    padding: 10px 14px; border: 2px solid #eee;
-    border-radius: 12px; font-size: 14px; font-family: 'Nunito', sans-serif;
-    font-weight: 600;
-  }
+  .redeem-form input { padding: 10px 14px; border: 2px solid #eee; border-radius: 12px; font-size: 14px; font-family: 'Nunito', sans-serif; font-weight: 600; }
   .redeem-form input:focus { outline: none; border-color: var(--water); }
-  .redeem-form button {
-    padding: 10px; border: none; border-radius: 12px;
-    background: var(--grass); color: white; font-weight: 800;
-    cursor: pointer; font-family: 'Nunito', sans-serif;
-  }
-  .sessions-empty { text-align: center; padding: 32px; color: var(--text-mid); font-size: 15px; font-weight: 600; }
+  .redeem-form button { padding: 10px; border: none; border-radius: 12px; background: var(--grass); color: white; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; }
 
-  /* PIN screen */
-  #screen-pin {
-    align-items: center; justify-content: center;
-    gap: 28px; padding: 40px 24px;
-  }
-  .pin-card {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 40px 36px;
-    text-align: center;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-    width: 100%; max-width: 340px;
-    display: flex; flex-direction: column; align-items: center; gap: 20px;
-  }
-  .pin-card h2 { font-family: 'Fredoka One', cursive; font-size: 28px; color: var(--purple); }
-  .pin-card p { font-size: 15px; color: var(--text-mid); font-weight: 600; }
-  .pin-dots { display: flex; gap: 12px; }
-  .pin-dot {
-    width: 18px; height: 18px; border-radius: 50%;
-    background: #e0e0e0; transition: background 0.2s;
-  }
-  .pin-dot.filled { background: var(--purple); }
-  .pin-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .pin-key {
-    width: 68px; height: 68px; border-radius: 50%;
-    background: var(--card-bg); border: 2px solid #e8e8e8;
-    font-size: 24px; font-weight: 800; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: transform 0.12s, background 0.12s;
-    font-family: 'Fredoka One', cursive; color: var(--text-dark);
-  }
-  .pin-key:active { transform: scale(0.92); background: var(--sky); }
-  .pin-error { color: var(--coral); font-weight: 700; font-size: 14px; min-height: 20px; }
-  .loading-screen {
-    position: fixed; inset: 0; background: var(--sky);
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 16px; z-index: 999;
-  }
+  /* IMAGE MANAGER */
+  .image-manager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+  .word-image-card { background: #f8f9fa; border-radius: var(--radius-sm); padding: 12px; text-align: center; cursor: pointer; border: 2px solid transparent; transition: border-color 0.15s, transform 0.15s; }
+  .word-image-card:hover { transform: translateY(-2px); border-color: var(--water); }
+  .word-image-card .word-thumb { width: 100%; height: 90px; object-fit: cover; border-radius: 10px; background: #e0e8f0; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 8px; overflow: hidden; }
+  .word-image-card .word-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .word-image-card .word-label { font-size: 15px; font-weight: 800; color: var(--text-dark); }
+  .word-image-card .word-status { font-size: 11px; font-weight: 700; margin-top: 3px; }
+  .word-image-card .word-status.has-img { color: var(--grass-dark); }
+  .word-image-card .word-status.no-img { color: #aaa; }
+  .word-image-card.has-image { background: #f0fff4; border-color: rgba(107,203,119,0.3); }
+
+  /* IMAGE SEARCH PANEL */
+  .img-search-panel { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.6); display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .img-search-panel.show { opacity: 1; pointer-events: all; }
+  .img-search-inner { background: white; border-radius: 28px 28px 0 0; width: 100%; max-width: 700px; max-height: 85vh; overflow-y: auto; padding: 28px; display: flex; flex-direction: column; gap: 18px; }
+  .img-search-header { display: flex; align-items: center; justify-content: space-between; }
+  .img-search-header h3 { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--text-dark); }
+  .img-search-close { width: 36px; height: 36px; border-radius: 50%; background: #f0f0f0; border: none; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .img-search-bar { display: flex; gap: 10px; }
+  .img-search-bar input { flex: 1; padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 14px; font-size: 15px; font-family: 'Nunito', sans-serif; font-weight: 600; }
+  .img-search-bar input:focus { outline: none; border-color: var(--water); }
+  .img-search-bar button { padding: 12px 20px; border: none; border-radius: 14px; background: var(--water); color: white; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 15px; }
+  .img-results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .img-result { border-radius: 14px; overflow: hidden; cursor: pointer; position: relative; aspect-ratio: 1; border: 3px solid transparent; transition: border-color 0.15s, transform 0.15s; }
+  .img-result:hover { transform: scale(1.03); border-color: var(--water); }
+  .img-result.selected { border-color: var(--grass); }
+  .img-result img { width: 100%; height: 100%; object-fit: cover; }
+  .img-result-check { position: absolute; top: 6px; right: 6px; background: var(--grass); color: white; border-radius: 50%; width: 24px; height: 24px; display: none; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
+  .img-result.selected .img-result-check { display: flex; }
+  .img-search-save { padding: 16px; border: none; border-radius: 16px; background: var(--grass); color: white; font-size: 17px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; display: none; }
+  .img-search-save.show { display: block; }
+  .img-search-loading { text-align: center; padding: 32px; color: var(--text-mid); font-weight: 700; }
+  .img-search-empty { text-align: center; padding: 24px; color: #aaa; font-weight: 700; }
+
+  /* CHILD WORD SET ASSIGNMENT */
+  .child-assign-row { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid #f0f0f0; }
+  .child-assign-row:last-child { border-bottom: none; }
+  .child-assign-avatar { font-size: 32px; }
+  .child-assign-name { font-weight: 800; font-size: 16px; flex: 1; }
+  .wordset-select { padding: 8px 14px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 14px; font-family: 'Nunito', sans-serif; font-weight: 700; background: white; cursor: pointer; min-width: 160px; }
+  .wordset-select:focus { outline: none; border-color: var(--purple); }
+  .assign-save-btn { padding: 8px 16px; border: none; border-radius: 12px; background: var(--purple); color: white; font-weight: 800; font-size: 13px; cursor: pointer; font-family: 'Nunito', sans-serif; }
+
+  /* LOADING */
+  .loading-screen { position: fixed; inset: 0; background: var(--sky); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; z-index: 999; }
   .loading-screen.hidden { display: none; }
-  .loader {
-    width: 56px; height: 56px; border-radius: 50%;
-    border: 5px solid rgba(77,150,255,0.2);
-    border-top-color: var(--water);
-    animation: spin 0.8s linear infinite;
-  }
+  .loader { width: 56px; height: 56px; border-radius: 50%; border: 5px solid rgba(77,150,255,0.2); border-top-color: var(--water); animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-screen p { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--water); }
 
   @media (max-width: 480px) {
     .app-title { font-size: 40px; }
-    .word-display { font-size: 36px; }
-    .animal-emoji { font-size: 80px; }
+    .word-display { font-size: 34px; }
+    .img-results-grid { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
 <body>
 
 <div class="sky-bg">
-  <div class="cloud"></div>
-  <div class="cloud"></div>
-  <div class="cloud"></div>
+  <div class="cloud"></div><div class="cloud"></div><div class="cloud"></div>
 </div>
 
 <div class="loading-screen" id="loading">
@@ -553,10 +308,11 @@
     <div class="screen-title" id="games-title">Choose a Game</div>
     <div class="sticker-badge">⭐ <span id="sticker-count">0</span></div>
   </div>
+  <div class="wordset-info" id="wordset-info">📋 Loading word set...</div>
   <div class="games-grid" id="games-grid"></div>
 </div>
 
-<!-- GAME: ANIMAL PARADE -->
+<!-- ANIMAL PARADE GAME -->
 <div class="screen" id="screen-game">
   <div class="game-topbar">
     <button class="back-btn" onclick="showScreen('games')">←</button>
@@ -564,15 +320,29 @@
     <div class="word-counter" id="word-counter">1 / 12</div>
   </div>
   <div class="game-area">
-    <div class="word-set-label" id="wordset-label">V Sound - Set 1</div>
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
     </div>
-    <div class="animal-stage">
-      <span class="animal-emoji" id="animal-emoji" onclick="hearWord()">🐘</span>
+
+    <!-- Animal Frame Word Card -->
+    <div class="word-card" id="word-card">
+      <div class="animal-corners">
+        <span class="corner-animal tl" id="corner-tl">🦁</span>
+        <span class="corner-animal tr" id="corner-tr">🐘</span>
+        <span class="corner-animal bl" id="corner-bl">🐸</span>
+        <span class="corner-animal br" id="corner-br">🦊</span>
+      </div>
+      <div class="word-image-frame" id="word-image-frame">
+        <div class="word-image-placeholder" id="word-image-placeholder">
+          <div class="ph-icon">🖼️</div>
+          <div class="ph-text">No image yet</div>
+        </div>
+        <img id="word-image" src="" alt="" style="display:none" onerror="this.style.display='none';document.getElementById('word-image-placeholder').style.display='flex'">
+      </div>
       <div class="word-display" id="word-display">seven</div>
       <div class="word-toggle" id="word-toggle" onclick="toggleWord()">hide word</div>
     </div>
+
     <div class="mic-area">
       <button class="hear-btn" onclick="hearWord()">🔊 Hear the word</button>
       <button class="mic-btn" id="mic-btn" onclick="startListening()">🎤</button>
@@ -606,45 +376,32 @@
   </div>
 </div>
 
-<!-- FINISH SCREEN (inside game area, shown when done) -->
+<!-- FINISH -->
 <div class="screen" id="screen-finish">
-  <div class="game-topbar">
-    <div class="screen-title">🎊 All done!</div>
-  </div>
+  <div class="game-topbar"><div class="screen-title">🎊 All done!</div></div>
   <div class="game-area">
     <div class="finish-card">
       <div style="font-size:80px">🏆</div>
       <h2>Great job!</h2>
       <div class="stat-row">
-        <div class="stat-box green">
-          <div class="stat-num" id="stat-passed">0</div>
-          <div class="stat-label">Words passed</div>
-        </div>
-        <div class="stat-box blue">
-          <div class="stat-num" id="stat-total">0</div>
-          <div class="stat-label">Words tried</div>
-        </div>
-        <div class="stat-box gold">
-          <div class="stat-num" id="stat-stickers">0</div>
-          <div class="stat-label">Stickers earned</div>
-        </div>
+        <div class="stat-box green"><div class="stat-num" id="stat-passed">0</div><div class="stat-label">Words passed</div></div>
+        <div class="stat-box blue"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Words tried</div></div>
+        <div class="stat-box gold"><div class="stat-num" id="stat-stickers">0</div><div class="stat-label">Stickers earned</div></div>
       </div>
       <button class="play-again-btn" onclick="showScreen('games')">Play again 🎮</button>
     </div>
   </div>
 </div>
 
-<!-- PIN SCREEN -->
+<!-- PIN -->
 <div class="screen" id="screen-pin">
   <div class="pin-card">
     <div style="font-size:48px">🔒</div>
     <h2>Parent Mode</h2>
     <p>Enter your 4-digit PIN</p>
     <div class="pin-dots">
-      <div class="pin-dot" id="dot-0"></div>
-      <div class="pin-dot" id="dot-1"></div>
-      <div class="pin-dot" id="dot-2"></div>
-      <div class="pin-dot" id="dot-3"></div>
+      <div class="pin-dot" id="dot-0"></div><div class="pin-dot" id="dot-1"></div>
+      <div class="pin-dot" id="dot-2"></div><div class="pin-dot" id="dot-3"></div>
     </div>
     <div class="pin-keypad">
       <button class="pin-key" onclick="pinPress('1')">1</button>
@@ -670,93 +427,132 @@
     <button class="back-btn" onclick="showScreen('profiles')" style="background:#f0f0f0">←</button>
     <h1>🎓 Parent Dashboard</h1>
   </div>
-  <div class="parent-content">
+  <div class="parent-tabs">
+    <div class="parent-tab active" onclick="switchTab('overview')">📊 Overview</div>
+    <div class="parent-tab" onclick="switchTab('wordsets')">📋 Word Sets</div>
+    <div class="parent-tab" onclick="switchTab('images')">🖼️ Images</div>
+    <div class="parent-tab" onclick="switchTab('sessions')">📈 Sessions</div>
+  </div>
 
-    <!-- Sticker Wallets -->
-    <div class="parent-section">
-      <h2>⭐ Sticker Wallets</h2>
-      <div class="wallet-cards" id="wallet-cards">
-        <div style="color:#aaa; font-size:15px">Loading...</div>
+  <!-- OVERVIEW TAB -->
+  <div class="parent-tab-content active" id="tab-overview">
+    <div class="parent-content">
+      <!-- Sticker wallets -->
+      <div class="parent-section">
+        <h2>⭐ Sticker Wallets</h2>
+        <div class="wallet-cards" id="wallet-cards"><div style="color:#aaa">Loading...</div></div>
+      </div>
+      <!-- Child assignments -->
+      <div class="parent-section">
+        <h2>👧 Word Set Assignments</h2>
+        <div id="child-assignments"><div style="color:#aaa">Loading...</div></div>
       </div>
     </div>
+  </div>
 
-    <!-- Children -->
-    <div class="parent-section">
-      <h2>👧 Children</h2>
-      <table class="children-table">
-        <thead><tr><th>Name</th><th>Avatar</th><th>PIN</th><th>Active</th></tr></thead>
-        <tbody id="children-tbody"><tr><td colspan="4" style="padding:16px; color:#aaa">Loading...</td></tr></tbody>
-      </table>
+  <!-- WORD SETS TAB -->
+  <div class="parent-tab-content" id="tab-wordsets">
+    <div class="parent-content">
+      <div class="parent-section">
+        <h2>📋 Word Sets</h2>
+        <table class="data-table">
+          <thead><tr><th>Set Name</th><th>Sound Focus</th><th>Status</th></tr></thead>
+          <tbody id="wordsets-tbody"><tr><td colspan="3" style="padding:16px;color:#aaa">Loading...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="parent-section">
+        <h2>🎮 Games</h2>
+        <table class="data-table">
+          <thead><tr><th>Game</th><th>Description</th><th>Status</th></tr></thead>
+          <tbody id="games-tbody"></tbody>
+        </table>
+      </div>
     </div>
+  </div>
 
-    <!-- Word Sets -->
-    <div class="parent-section">
-      <h2>📋 Word Sets</h2>
-      <table class="wordsets-table">
-        <thead><tr><th>Set Name</th><th>Sound Focus</th><th>Words</th><th>Status</th><th>Action</th></tr></thead>
-        <tbody id="wordsets-tbody"><tr><td colspan="5" style="padding:16px; color:#aaa">Loading...</td></tr></tbody>
-      </table>
+  <!-- IMAGES TAB -->
+  <div class="parent-tab-content" id="tab-images">
+    <div class="parent-content">
+      <div class="parent-section">
+        <h2>🖼️ Word Images</h2>
+        <p style="color:var(--text-mid);font-size:14px;font-weight:600;margin-bottom:18px">Tap a word to search and assign an image. Images show in the game instead of a placeholder.</p>
+        <div class="image-manager-grid" id="image-manager-grid"><div style="color:#aaa;padding:16px">Loading...</div></div>
+      </div>
     </div>
+  </div>
 
-    <!-- Games -->
-    <div class="parent-section">
-      <h2>🎮 Games</h2>
-      <table class="wordsets-table">
-        <thead><tr><th>Game</th><th>Description</th><th>Status</th></tr></thead>
-        <tbody id="games-tbody"><tr><td colspan="3" style="padding:16px; color:#aaa">Loading...</td></tr></tbody>
-      </table>
+  <!-- SESSIONS TAB -->
+  <div class="parent-tab-content" id="tab-sessions">
+    <div class="parent-content">
+      <div class="parent-section">
+        <h2>📊 Recent Sessions</h2>
+        <div id="sessions-container"><div style="color:#aaa;padding:16px">Loading...</div></div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <!-- Recent Sessions -->
-    <div class="parent-section">
-      <h2>📊 Recent Sessions</h2>
-      <div id="sessions-container"><div style="color:#aaa; padding:16px">Loading...</div></div>
+<!-- IMAGE SEARCH PANEL -->
+<div class="img-search-panel" id="img-search-panel">
+  <div class="img-search-inner">
+    <div class="img-search-header">
+      <h3 id="img-search-title">Find image for: seven</h3>
+      <button class="img-search-close" onclick="closeImageSearch()">✕</button>
     </div>
-
+    <div class="img-search-bar">
+      <input type="text" id="img-search-input" placeholder="Search images..." onkeydown="if(event.key==='Enter')searchImages()">
+      <button onclick="searchImages()">Search</button>
+    </div>
+    <div id="img-results-container">
+      <div class="img-search-empty">Search for an image above 🔍</div>
+    </div>
+    <button class="img-search-save" id="img-search-save" onclick="saveSelectedImage()">✅ Use this image</button>
   </div>
 </div>
 
 <script>
 // ─── CONFIG ───────────────────────────────────────────────────────────
-const PROXY = '/api/notion'; // Vercel serverless function
-const PARENT_PIN = '9999';   // change this to your own PIN!
+const PROXY = '/api/notion';
+const PARENT_PIN = '9999'; // change this!
 const DB = {
-  children:    'c893fa27-b5c7-4e8b-bfce-95b961db9d7d',
-  wordsets:    'fbd1f158-457d-4a00-b2be-e1731fef2196',
-  games:       'd55c9c26-d8c1-4ea1-96da-b4cbb79d152c',
-  sessions:    '5f9ed66a-3750-4e31-81ad-abddb3adc055',
-  wallet:      '0323e5fe-824c-4368-b33e-d28252f4ab8d',
-  redemptions: 'ed24c019-f9a4-447b-8e03-cc7b5455de4e',
+  children:    'd75f2ae1-c2f5-4500-9c55-c4a3bbb31d3d',
+  wordsets:    '7e2b728d-212c-463b-883f-819c24a3366c',
+  words:       'f77abb4e-3fa8-4066-994e-5cd486c3dfc5',
+  games:       '47b86b21-c1aa-4f48-850d-35a9817f28fb',
+  sessions:    'b4c8af09-235b-4e8b-af0d-0e6781adc90e',
+  wallet:      '2ebb0e80-b7ef-43d2-a065-6d1408d8de4e',
+  redemptions: '047bda4c-9db0-4e90-90a5-2358f91ea260',
 };
+
+// Animal sets for frames - 4 per word card
+const ANIMAL_SETS = [
+  ['🦁','🐘','🦊','🐸'],['🐼','🦄','🐧','🦋'],
+  ['🐬','🦓','🐙','🦜'],['🐻','🦒','🐺','🦩'],
+  ['🐯','🦏','🐨','🦘'],['🦅','🐊','🦙','🐑'],
+];
 
 // ─── NOTION API ───────────────────────────────────────────────────────
 async function notionQuery(dbId, filter) {
   const body = filter ? { filter } : {};
   const res = await fetch(`${PROXY}?path=/databases/${dbId}/query`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
   });
   const data = await res.json();
   return data.results || [];
 }
-
 async function notionCreate(dbId, props) {
   await fetch(`${PROXY}?path=/pages`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ parent: { database_id: dbId }, properties: props })
   });
 }
-
 async function notionUpdate(pageId, props) {
   await fetch(`${PROXY}?path=/pages/${pageId}`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    method: 'PATCH', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ properties: props })
   });
 }
-
 function getProp(page, name, type) {
   const p = page.properties[name];
   if (!p) return '';
@@ -765,33 +561,24 @@ function getProp(page, name, type) {
   if (type === 'select') return p.select?.name || '';
   if (type === 'number') return p.number ?? 0;
   if (type === 'checkbox') return p.checkbox ?? false;
+  if (type === 'url') return p.url || '';
   return '';
 }
 
 // ─── STATE ────────────────────────────────────────────────────────────
 let state = {
-  currentChild: null,
-  currentWords: [],
-  wordIndex: 0,
-  wordsPassed: 0,
-  wordsAttempted: 0,
-  stickersEarned: 0,
-  walletPage: null,
-  walletStickers: 0,
-  showWordText: true,
-  sessionStart: null,
-  allChildren: [],
-  allWordsets: [],
-  allGames: [],
-  activeWordSet: null,
-  recognition: null,
-  listening: false,
+  currentChild: null, currentWords: [], wordIndex: 0,
+  wordsPassed: 0, wordsAttempted: 0, stickersEarned: 0,
+  walletPage: null, walletStickers: 0, showWordText: true,
+  sessionStart: null, allChildren: [], allWordsets: [],
+  allGames: [], allWords: [], activeWordSet: null,
+  listening: false, animalSetIndex: 0,
 };
 
-const ANIMALS = ['🐘','🦁','🐸','🐼','🦊','🐧','🦋','🦄','🐬','🦓','🐙','🦜','🐻','🦒','🐺','🦩'];
-let currentAnimalIndex = 0;
+// Image search state
+let imgSearch = { wordPageId: null, wordText: '', selectedUrl: null };
 
-// ─── SCREEN ROUTING ───────────────────────────────────────────────────
+// ─── ROUTING ─────────────────────────────────────────────────────────
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(`screen-${name}`).classList.add('active');
@@ -802,21 +589,22 @@ function showScreen(name) {
 async function init() {
   document.getElementById('loading').classList.remove('hidden');
   try {
-    const [children, wordsets, games] = await Promise.all([
-      notionQuery(DB.children),
-      notionQuery(DB.wordsets),
-      notionQuery(DB.games),
+    const [children, wordsets, games, words] = await Promise.all([
+      notionQuery(DB.children), notionQuery(DB.wordsets),
+      notionQuery(DB.games), notionQuery(DB.words),
     ]);
     state.allChildren = children;
     state.allWordsets = wordsets;
     state.allGames = games;
+    state.allWords = words;
     renderProfiles();
   } catch(e) {
-    console.error(e);
-    // Fallback demo mode
-    state.allChildren = [{ id: 'demo1', properties: { Name: { title: [{plain_text:'My Daughter'}] }, Avatar: { select: { name: '🦄' } }, PIN: { rich_text: [{plain_text:'1234'}] }, Active: { checkbox: true } } }];
-    state.allWordsets = [{ id: 'ws1', properties: { 'Set Name': { title: [{plain_text:'V Sound - Set 1'}] }, Words: { rich_text: [{plain_text:'seven, shovel, over, caravan, river, giving, oven, waving, screwdriver, clever, diving, eleven'}] }, 'Sound Focus': { rich_text: [{plain_text:'V sound'}] }, Status: { select: { name: 'Active' } }, 'Words Per Sticker': { number: 12 } } }];
-    state.allGames = [{ id: 'g1', properties: { 'Game Name': { title: [{plain_text:'Animal Parade'}] }, Emoji: { rich_text: [{plain_text:'🐾'}] }, Description: { rich_text: [{plain_text:'Animals parade across the screen!'}] }, Status: { select: { name: 'Active' } }, Route: { rich_text: [{plain_text:'/play/animal-parade'}] } } }];
+    console.error('Init error:', e);
+    // Demo fallback
+    state.allChildren = [{id:'demo1',properties:{Name:{title:[{plain_text:'My Daughter'}]},Avatar:{select:{name:'🦄'}},PIN:{rich_text:[{plain_text:'1234'}]},Active:{checkbox:true},'Active Word Set':{rich_text:[{plain_text:'V Sound - Set 1'}]}}}];
+    state.allWordsets = [{id:'ws1',properties:{'Set Name':{title:[{plain_text:'V Sound - Set 1'}]},'Sound Focus':{rich_text:[{plain_text:'V sound'}]},Status:{select:{name:'Active'}},'Words Per Sticker':{number:12}}}];
+    state.allWords = ['seven','shovel','over','caravan','river','giving','oven','waving','screwdriver','clever','diving','eleven'].map((w,i)=>({id:`w${i}`,properties:{Word:{title:[{plain_text:w}]},'Word Set Name':{rich_text:[{plain_text:'V Sound - Set 1'}]},Order:{number:i+1},'Image URL':{url:null}}}));
+    state.allGames = [{id:'g1',properties:{'Game Name':{title:[{plain_text:'Animal Parade'}]},Emoji:{rich_text:[{plain_text:'🐾'}]},Description:{rich_text:[{plain_text:'Animals frame each word!'}]},Status:{select:{name:'Active'}},Route:{rich_text:[{plain_text:'/play/animal-parade'}]}}}];
     renderProfiles();
   }
   document.getElementById('loading').classList.add('hidden');
@@ -826,10 +614,10 @@ async function init() {
 // ─── PROFILES ─────────────────────────────────────────────────────────
 function renderProfiles() {
   const grid = document.getElementById('profiles-grid');
-  const active = state.allChildren.filter(c => getProp(c, 'Active', 'checkbox'));
+  const active = state.allChildren.filter(c => getProp(c,'Active','checkbox'));
   grid.innerHTML = active.map(child => {
-    const name = getProp(child, 'Name', 'title');
-    const avatar = getProp(child, 'Avatar', 'select') || '🐼';
+    const name = getProp(child,'Name','title');
+    const avatar = getProp(child,'Avatar','select') || '🐼';
     return `<div class="profile-card" onclick="selectChild('${child.id}')">
       <div class="profile-avatar">${avatar}</div>
       <div class="profile-name">${name}</div>
@@ -839,13 +627,25 @@ function renderProfiles() {
 
 async function selectChild(id) {
   state.currentChild = state.allChildren.find(c => c.id === id);
-  const name = getProp(state.currentChild, 'Name', 'title');
+  const name = getProp(state.currentChild,'Name','title');
+  const activeSetName = getProp(state.currentChild,'Active Word Set','text');
   document.getElementById('games-title').textContent = `Hi ${name}! 👋`;
-  // load wallet
+
+  // Show assigned word set info
+  const setInfo = document.getElementById('wordset-info');
+  if (activeSetName) {
+    const ws = state.allWordsets.find(w => getProp(w,'Set Name','title') === activeSetName);
+    const focus = ws ? getProp(ws,'Sound Focus','text') : '';
+    setInfo.textContent = `📋 ${activeSetName}${focus ? ' — ' + focus : ''}`;
+  } else {
+    setInfo.textContent = '⚠️ No word set assigned — ask a parent to assign one';
+  }
+
+  // Load wallet
   try {
     const wallets = await notionQuery(DB.wallet);
-    state.walletPage = wallets.find(w => getProp(w, 'Child Name', 'title') === name);
-    state.walletStickers = state.walletPage ? getProp(state.walletPage, 'Stickers Available', 'number') : 0;
+    state.walletPage = wallets.find(w => getProp(w,'Child Name','title') === name);
+    state.walletStickers = state.walletPage ? getProp(state.walletPage,'Stickers Available','number') : 0;
   } catch(e) { state.walletStickers = 0; }
   document.getElementById('sticker-count').textContent = state.walletStickers;
   renderGames();
@@ -856,15 +656,15 @@ async function selectChild(id) {
 function renderGames() {
   const grid = document.getElementById('games-grid');
   grid.innerHTML = state.allGames.map(g => {
-    const name = getProp(g, 'Game Name', 'title');
-    const emoji = getProp(g, 'Emoji', 'text') || '🎮';
-    const desc = getProp(g, 'Description', 'text');
-    const status = getProp(g, 'Status', 'select');
+    const name = getProp(g,'Game Name','title');
+    const emoji = getProp(g,'Emoji','text') || '🎮';
+    const desc = getProp(g,'Description','text');
+    const status = getProp(g,'Status','select');
     const isActive = status === 'Active';
     const isComing = status === 'Coming Soon';
-    return `<div class="game-card ${isActive ? 'active-game' : ''} ${isComing ? 'coming-soon' : ''}"
-      onclick="${isActive ? `startGame('${g.id}')` : ''}">
-      ${isComing ? '<div class="coming-soon-tag">Coming soon</div>' : ''}
+    return `<div class="game-card ${isActive?'active-game':''} ${isComing?'coming-soon':''}"
+      onclick="${isActive?`startGame('${g.id}')`:''}" >
+      ${isComing?'<div class="coming-soon-tag">Coming soon</div>':''}
       <div class="game-emoji">${emoji}</div>
       <div class="game-title">${name}</div>
       <div class="game-desc">${desc}</div>
@@ -874,37 +674,59 @@ function renderGames() {
 
 // ─── GAME: ANIMAL PARADE ──────────────────────────────────────────────
 async function startGame(gameId) {
-  // find active word set
-  const active = state.allWordsets.find(ws => getProp(ws, 'Status', 'select') === 'Active');
-  if (!active) { alert('No active word set! Ask a parent to activate one.'); return; }
-  state.activeWordSet = active;
-  const wordsRaw = getProp(active, 'Words', 'text');
-  state.currentWords = wordsRaw.split(',').map(w => w.trim()).filter(Boolean);
-  state.wordIndex = 0;
-  state.wordsPassed = 0;
-  state.wordsAttempted = 0;
-  state.stickersEarned = 0;
-  state.sessionStart = Date.now();
-  state.showWordText = true;
-  document.getElementById('wordset-label').textContent = getProp(active, 'Set Name', 'title');
-  currentAnimalIndex = Math.floor(Math.random() * ANIMALS.length);
+  const activeSetName = getProp(state.currentChild,'Active Word Set','text');
+  if (!activeSetName) { alert('No word set assigned! Ask a parent to assign one in the dashboard.'); return; }
+  const wordsForSet = state.allWords
+    .filter(w => getProp(w,'Word Set Name','text') === activeSetName)
+    .sort((a,b) => getProp(a,'Order','number') - getProp(b,'Order','number'));
+  if (!wordsForSet.length) { alert('No words found in this set!'); return; }
+  state.currentWords = wordsForSet;
+  state.activeWordSet = state.allWordsets.find(ws => getProp(ws,'Set Name','title') === activeSetName);
+  state.wordIndex = 0; state.wordsPassed = 0; state.wordsAttempted = 0;
+  state.stickersEarned = 0; state.sessionStart = Date.now(); state.showWordText = true;
+  state.animalSetIndex = 0;
   showScreen('game');
   renderWordCard();
 }
 
 function renderWordCard() {
   if (state.wordIndex >= state.currentWords.length) { endGame(); return; }
-  const word = state.currentWords[state.wordIndex];
+  const wordPage = state.currentWords[state.wordIndex];
+  const word = getProp(wordPage,'Word','title');
+  const imageUrl = getProp(wordPage,'Image URL','url');
   const total = state.currentWords.length;
-  document.getElementById('word-counter').textContent = `${state.wordIndex + 1} / ${total}`;
-  document.getElementById('progress-bar').style.width = `${(state.wordIndex / total) * 100}%`;
-  document.getElementById('animal-emoji').textContent = ANIMALS[currentAnimalIndex % ANIMALS.length];
-  document.getElementById('animal-emoji').className = 'animal-emoji';
+
+  document.getElementById('word-counter').textContent = `${state.wordIndex+1} / ${total}`;
+  document.getElementById('progress-bar').style.width = `${(state.wordIndex/total)*100}%`;
+
+  // Animal frame corners
+  const animals = ANIMAL_SETS[state.animalSetIndex % ANIMAL_SETS.length];
+  document.getElementById('corner-tl').textContent = animals[0];
+  document.getElementById('corner-tr').textContent = animals[1];
+  document.getElementById('corner-bl').textContent = animals[2];
+  document.getElementById('corner-br').textContent = animals[3];
+
+  // Word image
+  const img = document.getElementById('word-image');
+  const placeholder = document.getElementById('word-image-placeholder');
+  if (imageUrl) {
+    img.src = imageUrl; img.style.display = 'block';
+    placeholder.style.display = 'none';
+  } else {
+    img.style.display = 'none';
+    placeholder.style.display = 'flex';
+    placeholder.innerHTML = `<div class="ph-icon">🖼️</div><div class="ph-text">No image yet</div>`;
+  }
+
+  // Word text
   document.getElementById('word-display').textContent = word;
-  document.getElementById('word-display').className = `word-display ${state.showWordText ? '' : 'hidden'}`;
+  document.getElementById('word-display').className = `word-display ${state.showWordText?'':'hidden'}`;
   document.getElementById('word-toggle').textContent = state.showWordText ? 'hide word' : 'show word';
-  document.getElementById('mic-hint').textContent = 'Tap the mic and say the word!';
+
+  // Reset
+  document.getElementById('word-card').className = 'word-card';
   document.getElementById('mic-btn').className = 'mic-btn';
+  document.getElementById('mic-hint').textContent = 'Tap the mic and say the word!';
   document.getElementById('result-overlay').className = 'result-overlay';
   document.getElementById('next-actions').style.display = 'none';
   document.getElementById('parent-confirm').style.display = 'block';
@@ -912,15 +734,16 @@ function renderWordCard() {
 
 function toggleWord() {
   state.showWordText = !state.showWordText;
-  document.getElementById('word-display').className = `word-display ${state.showWordText ? '' : 'hidden'}`;
+  document.getElementById('word-display').className = `word-display ${state.showWordText?'':'hidden'}`;
   document.getElementById('word-toggle').textContent = state.showWordText ? 'hide word' : 'show word';
 }
 
 function hearWord() {
-  const word = state.currentWords[state.wordIndex];
-  const anim = document.getElementById('animal-emoji');
-  anim.classList.add('bounce');
-  setTimeout(() => anim.classList.remove('bounce'), 700);
+  const word = getProp(state.currentWords[state.wordIndex],'Word','title');
+  // Animate corners
+  const card = document.getElementById('word-card');
+  card.classList.add('dance');
+  setTimeout(() => card.classList.remove('dance'), 900);
   const utter = new SpeechSynthesisUtterance(word);
   utter.rate = 0.85; utter.pitch = 1.1;
   speechSynthesis.speak(utter);
@@ -929,39 +752,27 @@ function hearWord() {
 function startListening() {
   if (state.listening) return;
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    document.getElementById('mic-hint').textContent = 'Speech not supported — parent will confirm!';
-    showParentConfirm('unsupported');
-    return;
-  }
+  if (!SpeechRecognition) { showParentConfirm('unsupported'); return; }
   state.listening = true;
   const btn = document.getElementById('mic-btn');
   btn.classList.add('listening');
-  document.getElementById('mic-hint').textContent = 'Listening... say the word!';
+  document.getElementById('mic-hint').textContent = 'Listening...';
   const rec = new SpeechRecognition();
   rec.lang = 'en-GB'; rec.interimResults = false; rec.maxAlternatives = 3;
   rec.onresult = (e) => {
-    state.listening = false;
-    btn.classList.remove('listening');
-    const target = state.currentWords[state.wordIndex].toLowerCase().trim();
-    let heard = '';
+    state.listening = false; btn.classList.remove('listening');
+    const target = getProp(state.currentWords[state.wordIndex],'Word','title').toLowerCase().trim();
     let matched = false;
     for (let i = 0; i < e.results[0].length; i++) {
-      heard = e.results[0][i].transcript.toLowerCase().trim();
+      const heard = e.results[0][i].transcript.toLowerCase().trim();
       if (heard === target || heard.includes(target) || target.includes(heard)) { matched = true; break; }
     }
-    if (matched) {
-      showResultOverlay('auto-correct');
-    } else {
-      showParentConfirm('uncertain', heard);
-    }
+    const heard = e.results[0][0].transcript.toLowerCase().trim();
+    if (matched) showResultOverlay('auto-correct');
+    else showParentConfirm('uncertain', heard);
+    state.wordsAttempted++;
   };
-  rec.onerror = () => {
-    state.listening = false;
-    btn.classList.remove('listening');
-    document.getElementById('mic-hint').textContent = 'Could not hear — try again or parent confirms!';
-    showParentConfirm('error');
-  };
+  rec.onerror = () => { state.listening = false; btn.classList.remove('listening'); showParentConfirm('error'); };
   rec.onend = () => { state.listening = false; btn.classList.remove('listening'); };
   rec.start();
 }
@@ -970,41 +781,32 @@ function showResultOverlay(type, heard) {
   const overlay = document.getElementById('result-overlay');
   const emoji = document.getElementById('result-emoji');
   const text = document.getElementById('result-text');
-  const parentConfirm = document.getElementById('parent-confirm');
-  const nextActions = document.getElementById('next-actions');
   overlay.className = 'result-overlay show';
   if (type === 'auto-correct') {
-    emoji.textContent = '🎉';
-    text.textContent = 'Amazing!'; text.className = 'result-text correct';
-    parentConfirm.style.display = 'none';
-    nextActions.style.display = 'flex';
-    animateAnimalDance();
-    state.wordsAttempted++;
-    state.wordsPassed++;
-    checkSticker();
+    emoji.textContent = '🎉'; text.textContent = 'Amazing!'; text.className = 'result-text correct';
+    document.getElementById('parent-confirm').style.display = 'none';
+    document.getElementById('next-actions').style.display = 'flex';
+    document.getElementById('word-card').classList.add('correct-flash', 'dance');
+    state.wordsPassed++; checkSticker();
   } else {
-    // uncertain — let parent confirm
     emoji.textContent = '🤔';
     text.textContent = heard ? `I heard: "${heard}"` : 'Hmm...';
-    text.className = 'result-text';
-    text.style.fontSize = '24px';
-    parentConfirm.style.display = 'block';
-    nextActions.style.display = 'none';
-    state.wordsAttempted++;
+    text.className = 'result-text'; text.style.fontSize = '22px';
+    document.getElementById('parent-confirm').style.display = 'block';
+    document.getElementById('next-actions').style.display = 'none';
   }
 }
 
-function showParentConfirm(reason) {
-  state.wordsAttempted++;
+function showParentConfirm() {
   const overlay = document.getElementById('result-overlay');
-  const emoji = document.getElementById('result-emoji');
-  const text = document.getElementById('result-text');
   overlay.className = 'result-overlay show';
-  emoji.textContent = '👂';
-  text.textContent = 'Parent — did she say it right?';
-  text.className = 'result-text'; text.style.fontSize = '22px';
+  document.getElementById('result-emoji').textContent = '👂';
+  document.getElementById('result-text').textContent = 'Did she say it right?';
+  document.getElementById('result-text').className = 'result-text';
+  document.getElementById('result-text').style.fontSize = '26px';
   document.getElementById('parent-confirm').style.display = 'block';
   document.getElementById('next-actions').style.display = 'none';
+  if (!state.wordsAttempted || state.wordIndex === state.currentWords.length - 1) return;
 }
 
 function markCorrect() {
@@ -1015,7 +817,7 @@ function markCorrect() {
   document.getElementById('result-text').style.fontSize = '';
   document.getElementById('parent-confirm').style.display = 'none';
   document.getElementById('next-actions').style.display = 'flex';
-  animateAnimalDance();
+  document.getElementById('word-card').classList.add('correct-flash', 'dance');
   checkSticker();
 }
 
@@ -1024,17 +826,10 @@ function markRetry() {
   hearWord();
 }
 
-function animateAnimalDance() {
-  const anim = document.getElementById('animal-emoji');
-  anim.classList.add('dance');
-  setTimeout(() => anim.classList.remove('dance'), 1200);
-}
-
 function checkSticker() {
-  const wordsPerSticker = getProp(state.activeWordSet, 'Words Per Sticker', 'number') || 12;
+  const wordsPerSticker = state.activeWordSet ? getProp(state.activeWordSet,'Words Per Sticker','number') || 12 : 12;
   if (state.wordsPassed > 0 && state.wordsPassed % wordsPerSticker === 0) {
-    state.stickersEarned++;
-    state.walletStickers++;
+    state.stickersEarned++; state.walletStickers++;
     document.getElementById('sticker-count').textContent = state.walletStickers;
     setTimeout(showStickerCelebration, 600);
   }
@@ -1044,7 +839,7 @@ function showStickerCelebration() {
   document.getElementById('result-overlay').className = 'result-overlay';
   const cel = document.getElementById('sticker-celebration');
   cel.className = 'sticker-celebration show';
-  document.getElementById('sticker-total-msg').textContent = `You now have ${state.walletStickers} sticker${state.walletStickers !== 1 ? 's' : ''}!`;
+  document.getElementById('sticker-total-msg').textContent = `You now have ${state.walletStickers} sticker${state.walletStickers!==1?'s':''}!`;
   launchConfetti();
 }
 
@@ -1060,114 +855,111 @@ function launchConfetti() {
   for (let i = 0; i < 60; i++) {
     const el = document.createElement('div');
     el.className = 'confetti-piece';
-    el.style.left = Math.random() * 100 + 'vw';
-    el.style.background = colors[Math.floor(Math.random() * colors.length)];
-    el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-    el.style.animationDelay = (Math.random() * 0.8) + 's';
-    el.style.width = el.style.height = (8 + Math.random() * 10) + 'px';
-    el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    el.style.left = Math.random()*100+'vw';
+    el.style.background = colors[Math.floor(Math.random()*colors.length)];
+    el.style.animationDuration = (1.5+Math.random()*2)+'s';
+    el.style.animationDelay = (Math.random()*0.8)+'s';
+    el.style.width = el.style.height = (8+Math.random()*10)+'px';
+    el.style.borderRadius = Math.random()>0.5?'50%':'2px';
     container.appendChild(el);
   }
 }
 
 function nextWord() {
-  currentAnimalIndex++;
-  state.wordIndex++;
+  state.animalSetIndex++; state.wordIndex++;
   document.getElementById('result-overlay').className = 'result-overlay';
+  document.getElementById('word-card').className = 'word-card';
   renderWordCard();
 }
 
 async function endGame() {
-  const elapsed = Math.round((Date.now() - state.sessionStart) / 1000);
+  const elapsed = Math.round((Date.now()-state.sessionStart)/1000);
   document.getElementById('stat-passed').textContent = state.wordsPassed;
   document.getElementById('stat-total').textContent = state.wordsAttempted;
   document.getElementById('stat-stickers').textContent = state.stickersEarned;
   showScreen('finish');
-  // Save session to Notion
   try {
-    const childName = getProp(state.currentChild, 'Name', 'title');
-    const setName = getProp(state.activeWordSet, 'Set Name', 'title');
+    const childName = getProp(state.currentChild,'Name','title');
+    const setName = getProp(state.activeWordSet,'Set Name','title');
     const sessionId = `${childName}-${new Date().toISOString().slice(0,10)}-${Date.now().toString().slice(-4)}`;
     await notionCreate(DB.sessions, {
       'Session ID': { title: [{ text: { content: sessionId } }] },
       'Child Name': { rich_text: [{ text: { content: childName } }] },
       'Game': { rich_text: [{ text: { content: 'Animal Parade' } }] },
       'Word Set': { rich_text: [{ text: { content: setName } }] },
-      'date:Date:start': { date: { start: new Date().toISOString().slice(0,10) } },
       'Words Attempted': { number: state.wordsAttempted },
       'Words Passed': { number: state.wordsPassed },
       'Time Taken (secs)': { number: elapsed },
       'Stickers Earned': { number: state.stickersEarned },
     });
-    // Update wallet
     if (state.walletPage && state.stickersEarned > 0) {
-      const prev = getProp(state.walletPage, 'Total Stickers Earned', 'number');
-      const prevWords = getProp(state.walletPage, 'Total Words Completed', 'number');
-      const prevAvail = getProp(state.walletPage, 'Stickers Available', 'number');
+      const prev = getProp(state.walletPage,'Total Stickers Earned','number');
+      const prevWords = getProp(state.walletPage,'Total Words Completed','number');
+      const prevAvail = getProp(state.walletPage,'Stickers Available','number');
       await notionUpdate(state.walletPage.id, {
-        'Total Stickers Earned': { number: prev + state.stickersEarned },
-        'Total Words Completed': { number: prevWords + state.wordsPassed },
-        'Stickers Available': { number: prevAvail + state.stickersEarned },
+        'Total Stickers Earned': { number: prev+state.stickersEarned },
+        'Total Words Completed': { number: prevWords+state.wordsPassed },
+        'Stickers Available': { number: prevAvail+state.stickersEarned },
       });
     }
-  } catch(e) { console.log('Could not save session', e); }
+  } catch(e) { console.log('Session save error', e); }
 }
 
 // ─── PIN ──────────────────────────────────────────────────────────────
 let pinBuffer = '';
-function goToPin() { pinBuffer = ''; updatePinDots(); document.getElementById('pin-error').textContent = ''; showScreen('pin'); }
+function goToPin() { pinBuffer=''; updatePinDots(); document.getElementById('pin-error').textContent=''; showScreen('pin'); }
 function pinPress(val) {
-  if (val === 'back') { pinBuffer = pinBuffer.slice(0,-1); updatePinDots(); return; }
-  if (pinBuffer.length >= 4) return;
-  pinBuffer += val;
-  updatePinDots();
-  if (pinBuffer.length === 4) {
-    if (pinBuffer === PARENT_PIN) {
-      pinBuffer = ''; updatePinDots();
-      showScreen('parent');
-    } else {
-      document.getElementById('pin-error').textContent = 'Wrong PIN, try again';
-      setTimeout(() => { pinBuffer = ''; updatePinDots(); document.getElementById('pin-error').textContent = ''; }, 1200);
+  if (val==='back') { pinBuffer=pinBuffer.slice(0,-1); updatePinDots(); return; }
+  if (pinBuffer.length>=4) return;
+  pinBuffer+=val; updatePinDots();
+  if (pinBuffer.length===4) {
+    if (pinBuffer===PARENT_PIN) { pinBuffer=''; updatePinDots(); showScreen('parent'); }
+    else {
+      document.getElementById('pin-error').textContent='Wrong PIN, try again';
+      setTimeout(()=>{ pinBuffer=''; updatePinDots(); document.getElementById('pin-error').textContent=''; },1200);
     }
   }
 }
 function updatePinDots() {
-  for (let i = 0; i < 4; i++) {
-    document.getElementById(`dot-${i}`).className = `pin-dot ${i < pinBuffer.length ? 'filled' : ''}`;
-  }
+  for (let i=0;i<4;i++) document.getElementById(`dot-${i}`).className=`pin-dot ${i<pinBuffer.length?'filled':''}`;
+}
+
+// ─── PARENT TABS ──────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.parent-tab').forEach((t,i) => {
+    const tabs = ['overview','wordsets','images','sessions'];
+    t.classList.toggle('active', tabs[i]===name);
+  });
+  document.querySelectorAll('.parent-tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById(`tab-${name}`).classList.add('active');
 }
 
 // ─── PARENT DASHBOARD ─────────────────────────────────────────────────
 async function loadParentDashboard() {
   try {
-    const [children, wordsets, games, wallets, sessions] = await Promise.all([
-      notionQuery(DB.children),
-      notionQuery(DB.wordsets),
-      notionQuery(DB.games),
-      notionQuery(DB.wallet),
-      notionQuery(DB.sessions),
+    const [children, wordsets, games, words, wallets, sessions] = await Promise.all([
+      notionQuery(DB.children), notionQuery(DB.wordsets), notionQuery(DB.games),
+      notionQuery(DB.words), notionQuery(DB.wallet), notionQuery(DB.sessions),
     ]);
-    state.allChildren = children;
-    state.allWordsets = wordsets;
-    state.allGames = games;
+    state.allChildren = children; state.allWordsets = wordsets;
+    state.allGames = games; state.allWords = words;
     renderWallets(wallets);
-    renderChildrenTable(children);
+    renderChildAssignments(children, wordsets);
     renderWordsetsTable(wordsets);
     renderGamesTable(games);
+    renderImageManager(words, wordsets);
     renderSessionsTable(sessions);
-  } catch(e) {
-    console.error('Parent dashboard load error', e);
-  }
+  } catch(e) { console.error('Dashboard error', e); }
 }
 
 function renderWallets(wallets) {
   const div = document.getElementById('wallet-cards');
-  if (!wallets.length) { div.innerHTML = '<div style="color:#aaa">No wallets found</div>'; return; }
+  if (!wallets.length) { div.innerHTML='<div style="color:#aaa">No wallets found</div>'; return; }
   div.innerHTML = wallets.map(w => {
-    const name = getProp(w, 'Child Name', 'title');
-    const avail = getProp(w, 'Stickers Available', 'number');
-    const earned = getProp(w, 'Total Stickers Earned', 'number');
-    const redeemed = getProp(w, 'Total Stickers Redeemed', 'number');
+    const name = getProp(w,'Child Name','title');
+    const avail = getProp(w,'Stickers Available','number');
+    const earned = getProp(w,'Total Stickers Earned','number');
+    const redeemed = getProp(w,'Total Stickers Redeemed','number');
     return `<div class="wallet-card">
       <div class="child-name">${name}</div>
       <div class="sticker-count">⭐ ${avail}</div>
@@ -1175,135 +967,224 @@ function renderWallets(wallets) {
       <button class="redeem-btn" onclick="toggleRedeemForm('${w.id}')">🎁 Redeem stickers</button>
       <div class="redeem-form" id="redeem-${w.id}">
         <input type="number" placeholder="Stickers to redeem" id="redeem-count-${w.id}" min="1" max="${avail}">
-        <input type="text" placeholder="What did they earn? (e.g. extra screen time)" id="redeem-desc-${w.id}">
-        <button onclick="redeemStickers('${w.id}', '${name}', ${avail}, ${earned}, ${redeemed})">✅ Confirm Redemption</button>
+        <input type="text" placeholder="What did they earn? e.g. extra screen time" id="redeem-desc-${w.id}">
+        <button onclick="redeemStickers('${w.id}','${name}',${avail},${earned},${redeemed})">✅ Confirm</button>
       </div>
     </div>`;
   }).join('');
 }
 
 function toggleRedeemForm(id) {
-  const form = document.getElementById(`redeem-${id}`);
-  form.classList.toggle('show');
+  document.getElementById(`redeem-${id}`).classList.toggle('show');
 }
 
 async function redeemStickers(pageId, childName, avail, earned, redeemed) {
-  const countEl = document.getElementById(`redeem-count-${pageId}`);
-  const descEl = document.getElementById(`redeem-desc-${pageId}`);
-  const count = parseInt(countEl.value);
-  const desc = descEl.value.trim();
-  if (!count || count < 1 || count > avail) { alert(`Enter a number between 1 and ${avail}`); return; }
-  if (!desc) { alert('Please describe what the stickers are being redeemed for'); return; }
+  const count = parseInt(document.getElementById(`redeem-count-${pageId}`).value);
+  const desc = document.getElementById(`redeem-desc-${pageId}`).value.trim();
+  if (!count||count<1||count>avail) { alert(`Enter 1–${avail}`); return; }
+  if (!desc) { alert('Please describe the reward'); return; }
   try {
-    await notionUpdate(pageId, {
-      'Stickers Available': { number: avail - count },
-      'Total Stickers Redeemed': { number: redeemed + count },
-    });
-    const redId = `RED-${Date.now().toString().slice(-6)}`;
+    await notionUpdate(pageId, { 'Stickers Available': { number: avail-count }, 'Total Stickers Redeemed': { number: redeemed+count } });
     await notionCreate(DB.redemptions, {
-      'Redemption ID': { title: [{ text: { content: redId } }] },
+      'Redemption ID': { title: [{ text: { content: `RED-${Date.now().toString().slice(-6)}` } }] },
       'Child Name': { rich_text: [{ text: { content: childName } }] },
-      'date:Date:start': { date: { start: new Date().toISOString().slice(0,10) } },
       'Stickers Spent': { number: count },
       'Reward Description': { rich_text: [{ text: { content: desc } }] },
       'Redeemed By Parent': { checkbox: true },
     });
-    alert(`✅ Redeemed ${count} sticker${count !== 1 ? 's' : ''} for: ${desc}`);
+    alert(`✅ Redeemed ${count} sticker${count!==1?'s':''} for: ${desc}`);
     loadParentDashboard();
-  } catch(e) { alert('Error redeeming. Please try again.'); }
+  } catch(e) { alert('Error redeeming. Try again.'); }
 }
 
-function renderChildrenTable(children) {
-  const tbody = document.getElementById('children-tbody');
-  tbody.innerHTML = children.map(c => {
-    const name = getProp(c, 'Name', 'title');
-    const avatar = getProp(c, 'Avatar', 'select') || '🐼';
-    const pin = getProp(c, 'PIN', 'text');
-    const active = getProp(c, 'Active', 'checkbox');
-    return `<tr>
-      <td><strong>${name}</strong></td>
-      <td style="font-size:24px">${avatar}</td>
-      <td><code style="background:#f0f0f0;padding:4px 8px;border-radius:6px">${pin}</code></td>
-      <td><span class="status-badge ${active ? 'active' : 'inactive'}">${active ? '✓ Active' : 'Inactive'}</span></td>
-    </tr>`;
-  }).join('') || '<tr><td colspan="4" style="color:#aaa;padding:16px">No children found</td></tr>';
+function renderChildAssignments(children, wordsets) {
+  const div = document.getElementById('child-assignments');
+  const setNames = wordsets.map(ws => getProp(ws,'Set Name','title'));
+  div.innerHTML = children.filter(c => getProp(c,'Active','checkbox')).map(child => {
+    const name = getProp(child,'Name','title');
+    const avatar = getProp(child,'Avatar','select') || '🐼';
+    const current = getProp(child,'Active Word Set','text');
+    const opts = setNames.map(s => `<option value="${s}" ${s===current?'selected':''}>${s}</option>`).join('');
+    return `<div class="child-assign-row">
+      <span class="child-assign-avatar">${avatar}</span>
+      <span class="child-assign-name">${name}</span>
+      <select class="wordset-select" id="assign-${child.id}">${opts}</select>
+      <button class="assign-save-btn" onclick="saveAssignment('${child.id}','${name}')">Save</button>
+    </div>`;
+  }).join('') || '<div style="color:#aaa">No children found</div>';
+}
+
+async function saveAssignment(childId, childName) {
+  const sel = document.getElementById(`assign-${childId}`);
+  const newSet = sel.value;
+  try {
+    await notionUpdate(childId, { 'Active Word Set': { rich_text: [{ text: { content: newSet } }] } });
+    // Update local state
+    const child = state.allChildren.find(c => c.id === childId);
+    if (child) child.properties['Active Word Set'] = { rich_text: [{ plain_text: newSet }] };
+    alert(`✅ ${childName} is now assigned to: ${newSet}`);
+  } catch(e) { alert('Error saving. Try again.'); }
 }
 
 function renderWordsetsTable(wordsets) {
   const tbody = document.getElementById('wordsets-tbody');
   tbody.innerHTML = wordsets.map(ws => {
-    const name = getProp(ws, 'Set Name', 'title');
-    const sound = getProp(ws, 'Sound Focus', 'text');
-    const words = getProp(ws, 'Words', 'text');
-    const status = getProp(ws, 'Status', 'select');
-    const isActive = status === 'Active';
-    const wordCount = words.split(',').filter(Boolean).length;
+    const name = getProp(ws,'Set Name','title');
+    const sound = getProp(ws,'Sound Focus','text');
+    const status = getProp(ws,'Status','select');
     return `<tr>
       <td><strong>${name}</strong></td>
-      <td>${sound}</td>
-      <td style="color:#888;font-size:13px">${wordCount} words</td>
-      <td><span class="status-badge ${isActive ? 'active' : 'inactive'}">${status}</span></td>
-      <td><button class="toggle-btn ${isActive ? 'deactivate' : 'activate'}"
-        onclick="toggleWordset('${ws.id}', '${status}')">
-        ${isActive ? 'Deactivate' : 'Activate'}</button></td>
+      <td style="color:#888;font-size:14px">${sound}</td>
+      <td><span class="status-badge ${status==='Active'?'active':'inactive'}">${status}</span></td>
     </tr>`;
-  }).join('') || '<tr><td colspan="5" style="color:#aaa;padding:16px">No word sets found</td></tr>';
-}
-
-async function toggleWordset(pageId, currentStatus) {
-  const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
-  try {
-    // deactivate all others if activating
-    if (newStatus === 'Active') {
-      for (const ws of state.allWordsets) {
-        if (ws.id !== pageId && getProp(ws, 'Status', 'select') === 'Active') {
-          await notionUpdate(ws.id, { 'Status': { select: { name: 'Inactive' } } });
-        }
-      }
-    }
-    await notionUpdate(pageId, { 'Status': { select: { name: newStatus } } });
-    loadParentDashboard();
-  } catch(e) { alert('Error updating word set'); }
+  }).join('') || '<tr><td colspan="3" style="color:#aaa;padding:16px">No word sets</td></tr>';
 }
 
 function renderGamesTable(games) {
   const tbody = document.getElementById('games-tbody');
   tbody.innerHTML = games.map(g => {
-    const name = getProp(g, 'Game Name', 'title');
-    const desc = getProp(g, 'Description', 'text');
-    const status = getProp(g, 'Status', 'select');
-    const cls = status === 'Active' ? 'active' : status === 'Coming Soon' ? 'coming' : 'inactive';
-    return `<tr>
-      <td><strong>${name}</strong></td>
-      <td style="color:#888;font-size:14px">${desc}</td>
-      <td><span class="status-badge ${cls}">${status}</span></td>
-    </tr>`;
+    const name = getProp(g,'Game Name','title');
+    const desc = getProp(g,'Description','text');
+    const status = getProp(g,'Status','select');
+    const cls = status==='Active'?'active':status==='Coming Soon'?'coming':'inactive';
+    return `<tr><td><strong>${name}</strong></td><td style="color:#888;font-size:14px">${desc}</td><td><span class="status-badge ${cls}">${status}</span></td></tr>`;
+  }).join('');
+}
+
+function renderImageManager(words, wordsets) {
+  const grid = document.getElementById('image-manager-grid');
+  // Group by word set, show all words
+  const sorted = [...words].sort((a,b) => {
+    const setA = getProp(a,'Word Set Name','text');
+    const setB = getProp(b,'Word Set Name','text');
+    if (setA !== setB) return setA.localeCompare(setB);
+    return getProp(a,'Order','number') - getProp(b,'Order','number');
+  });
+  if (!sorted.length) { grid.innerHTML='<div style="color:#aaa">No words found</div>'; return; }
+  grid.innerHTML = sorted.map(wordPage => {
+    const word = getProp(wordPage,'Word','title');
+    const imageUrl = getProp(wordPage,'Image URL','url');
+    const hasImg = !!imageUrl;
+    return `<div class="word-image-card ${hasImg?'has-image':''}" onclick="openImageSearch('${wordPage.id}','${word}','${imageUrl||''}')">
+      <div class="word-thumb">
+        ${hasImg
+          ? `<img src="${imageUrl}" alt="${word}" onerror="this.parentElement.innerHTML='🖼️'">`
+          : '🖼️'}
+      </div>
+      <div class="word-label">${word}</div>
+      <div class="word-status ${hasImg?'has-img':'no-img'}">${hasImg?'✓ Has image':'No image'}</div>
+    </div>`;
   }).join('');
 }
 
 function renderSessionsTable(sessions) {
   const container = document.getElementById('sessions-container');
-  if (!sessions.length) { container.innerHTML = '<div class="sessions-empty">No sessions yet — play the first game! 🎮</div>'; return; }
-  const recent = sessions.slice(0, 20);
-  container.innerHTML = `<table class="sessions-table">
-    <thead><tr><th>Child</th><th>Game</th><th>Word Set</th><th>Date</th><th>Passed</th><th>Tried</th><th>Stickers</th></tr></thead>
-    <tbody>${recent.map(s => {
-      const child = getProp(s, 'Child Name', 'text');
-      const game = getProp(s, 'Game', 'text');
-      const ws = getProp(s, 'Word Set', 'text');
-      const date = s.properties['Date']?.date?.start || '';
-      const passed = getProp(s, 'Words Passed', 'number');
-      const tried = getProp(s, 'Words Attempted', 'number');
-      const stickers = getProp(s, 'Stickers Earned', 'number');
+  if (!sessions.length) { container.innerHTML='<div style="text-align:center;padding:32px;color:#aaa;font-weight:600">No sessions yet — play the first game! 🎮</div>'; return; }
+  container.innerHTML = `<table class="data-table">
+    <thead><tr><th>Child</th><th>Game</th><th>Word Set</th><th>Passed</th><th>Tried</th><th>Stickers</th></tr></thead>
+    <tbody>${sessions.slice(0,20).map(s => {
+      const child = getProp(s,'Child Name','text');
+      const game = getProp(s,'Game','text');
+      const ws = getProp(s,'Word Set','text');
+      const passed = getProp(s,'Words Passed','number');
+      const tried = getProp(s,'Words Attempted','number');
+      const stickers = getProp(s,'Stickers Earned','number');
       return `<tr>
-        <td>${child}</td><td>${game}</td><td>${ws}</td>
-        <td style="font-size:13px;color:#888">${date}</td>
+        <td>${child}</td><td>${game}</td><td style="font-size:13px">${ws}</td>
         <td style="color:#1a7a30;font-weight:700">${passed}</td>
         <td>${tried}</td>
-        <td>${stickers > 0 ? `⭐ ${stickers}` : '-'}</td>
+        <td>${stickers>0?`⭐ ${stickers}`:'-'}</td>
       </tr>`;
     }).join('')}</tbody>
   </table>`;
+}
+
+// ─── IMAGE SEARCH ─────────────────────────────────────────────────────
+function openImageSearch(wordPageId, wordText, currentUrl) {
+  imgSearch.wordPageId = wordPageId;
+  imgSearch.wordText = wordText;
+  imgSearch.selectedUrl = null;
+  document.getElementById('img-search-title').textContent = `Find image for: ${wordText}`;
+  document.getElementById('img-search-input').value = wordText;
+  document.getElementById('img-results-container').innerHTML = '<div class="img-search-empty">Search for an image above 🔍</div>';
+  document.getElementById('img-search-save').className = 'img-search-save';
+  document.getElementById('img-search-panel').className = 'img-search-panel show';
+  // Auto-search with word
+  searchImages();
+}
+
+function closeImageSearch() {
+  document.getElementById('img-search-panel').className = 'img-search-panel';
+}
+
+async function searchImages() {
+  const query = document.getElementById('img-search-input').value.trim();
+  if (!query) return;
+  const container = document.getElementById('img-results-container');
+  container.innerHTML = '<div class="img-search-loading">🔍 Searching...</div>';
+  imgSearch.selectedUrl = null;
+  document.getElementById('img-search-save').className = 'img-search-save';
+  try {
+    // Use Unsplash source API (no key required for basic use)
+    const queries = [
+      `${query}`,`${query} object`,`${query} cartoon`,
+      `${query} simple`,`${query} colorful`,`${query} kids`,
+    ];
+    const urls = queries.map((q,i) =>
+      `https://source.unsplash.com/200x200/?${encodeURIComponent(q)}&sig=${Date.now()+i}`
+    );
+    // Also try some via the search endpoint
+    let results = urls.map((url, i) => ({ url, id: i }));
+    renderImageResults(results);
+  } catch(e) {
+    container.innerHTML = '<div class="img-search-empty">Search failed. Try again.</div>';
+  }
+}
+
+function renderImageResults(results) {
+  const container = document.getElementById('img-results-container');
+  container.innerHTML = `
+    <div class="img-results-grid">
+      ${results.map((r,i) => `
+        <div class="img-result" id="imgr-${i}" onclick="selectImage(${i},'${r.url}')">
+          <img src="${r.url}" alt="result ${i}"
+            onerror="this.parentElement.style.display='none'"
+            loading="lazy">
+          <div class="img-result-check">✓</div>
+        </div>
+      `).join('')}
+    </div>
+    <p style="font-size:12px;color:#aaa;text-align:center;margin-top:10px;font-weight:600">Images from Unsplash · Tap to select</p>
+  `;
+}
+
+function selectImage(index, url) {
+  // Deselect all
+  document.querySelectorAll('.img-result').forEach(el => el.classList.remove('selected'));
+  document.getElementById(`imgr-${index}`).classList.add('selected');
+  imgSearch.selectedUrl = url;
+  document.getElementById('img-search-save').className = 'img-search-save show';
+}
+
+async function saveSelectedImage() {
+  if (!imgSearch.selectedUrl || !imgSearch.wordPageId) return;
+  const btn = document.getElementById('img-search-save');
+  btn.textContent = 'Saving...'; btn.disabled = true;
+  try {
+    await notionUpdate(imgSearch.wordPageId, {
+      'Image URL': { url: imgSearch.selectedUrl }
+    });
+    // Update local state
+    const wordPage = state.allWords.find(w => w.id === imgSearch.wordPageId);
+    if (wordPage) wordPage.properties['Image URL'] = { url: imgSearch.selectedUrl };
+    closeImageSearch();
+    // Refresh image manager
+    renderImageManager(state.allWords, state.allWordsets);
+    btn.textContent = '✅ Use this image'; btn.disabled = false;
+  } catch(e) {
+    alert('Error saving image. Try again.');
+    btn.textContent = '✅ Use this image'; btn.disabled = false;
+  }
 }
 
 // ─── START ─────────────────────────────────────────────────────────────
