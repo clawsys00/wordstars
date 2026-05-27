@@ -7,293 +7,296 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
 <style>
   :root {
-    --sky: #e8f4fd; --cloud: #ffffff; --sun: #FFD93D;
-    --grass: #6BCB77; --grass-dark: #4da35a;
-    --water: #4D96FF; --water-dark: #2d6fd4;
-    --coral: #FF6B6B; --coral-dark: #e04f4f;
-    --purple: #9B59B6; --purple-dark: #7d3e9e;
-    --orange: #FF8C42; --pink: #FF6EB4; --gold: #FFD700;
-    --text-dark: #2c3e50; --text-mid: #5a6a7a;
-    --card-bg: rgba(255,255,255,0.95);
-    --radius: 24px; --radius-sm: 14px;
+    --sky:#e8f4fd;--grass:#6BCB77;--grass-dark:#4da35a;
+    --water:#4D96FF;--water-dark:#2d6fd4;
+    --coral:#FF6B6B;--coral-dark:#e04f4f;
+    --purple:#9B59B6;--orange:#FF8C42;--pink:#FF6EB4;--gold:#FFD700;
+    --text-dark:#2c3e50;--text-mid:#5a6a7a;
+    --card-bg:rgba(255,255,255,0.95);--radius:24px;--radius-sm:14px;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body { font-family: 'Nunito', sans-serif; background: var(--sky); min-height: 100vh; overflow-x: hidden; color: var(--text-dark); }
-  .screen { display: none; min-height: 100vh; }
-  .screen.active { display: flex; flex-direction: column; }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Nunito',sans-serif;background:var(--sky);min-height:100vh;overflow-x:hidden;color:var(--text-dark)}
+  .screen{display:none;min-height:100vh}
+  .screen.active{display:flex;flex-direction:column}
+  .sky-bg{position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,#c9e8ff 0%,#e8f4fd 60%,#d4f0c0 100%);overflow:hidden}
+  .cloud{position:absolute;background:white;border-radius:50px;opacity:.85;animation:drift linear infinite}
+  .cloud::before,.cloud::after{content:'';position:absolute;background:white;border-radius:50%}
+  .cloud:nth-child(1){width:120px;height:40px;top:10%;animation-duration:35s}
+  .cloud:nth-child(1)::before{width:60px;height:55px;top:-25px;left:20px}
+  .cloud:nth-child(1)::after{width:45px;height:45px;top:-18px;left:55px}
+  .cloud:nth-child(2){width:90px;height:30px;top:18%;animation-duration:50s;animation-delay:-15s}
+  .cloud:nth-child(2)::before{width:45px;height:40px;top:-20px;left:15px}
+  .cloud:nth-child(2)::after{width:35px;height:35px;top:-14px;left:40px}
+  .cloud:nth-child(3){width:150px;height:45px;top:6%;animation-duration:45s;animation-delay:-25s}
+  .cloud:nth-child(3)::before{width:70px;height:60px;top:-30px;left:25px}
+  .cloud:nth-child(3)::after{width:55px;height:50px;top:-22px;left:70px}
+  @keyframes drift{from{transform:translateX(-200px)}to{transform:translateX(110vw)}}
 
-  /* SKY BG */
-  .sky-bg { position: fixed; inset: 0; z-index: -1; background: linear-gradient(180deg, #c9e8ff 0%, #e8f4fd 60%, #d4f0c0 100%); overflow: hidden; }
-  .cloud { position: absolute; background: white; border-radius: 50px; opacity: 0.85; animation: drift linear infinite; }
-  .cloud::before, .cloud::after { content: ''; position: absolute; background: white; border-radius: 50%; }
-  .cloud:nth-child(1) { width: 120px; height: 40px; top: 10%; animation-duration: 35s; }
-  .cloud:nth-child(1)::before { width: 60px; height: 55px; top: -25px; left: 20px; }
-  .cloud:nth-child(1)::after { width: 45px; height: 45px; top: -18px; left: 55px; }
-  .cloud:nth-child(2) { width: 90px; height: 30px; top: 18%; animation-duration: 50s; animation-delay: -15s; }
-  .cloud:nth-child(2)::before { width: 45px; height: 40px; top: -20px; left: 15px; }
-  .cloud:nth-child(2)::after { width: 35px; height: 35px; top: -14px; left: 40px; }
-  .cloud:nth-child(3) { width: 150px; height: 45px; top: 6%; animation-duration: 45s; animation-delay: -25s; }
-  .cloud:nth-child(3)::before { width: 70px; height: 60px; top: -30px; left: 25px; }
-  .cloud:nth-child(3)::after { width: 55px; height: 50px; top: -22px; left: 70px; }
-  @keyframes drift { from { transform: translateX(-200px); } to { transform: translateX(110vw); } }
+  /* PROFILES */
+  #screen-profiles{align-items:center;justify-content:center;padding:40px 24px;gap:32px}
+  .app-title{font-family:'Fredoka One',cursive;font-size:52px;color:var(--water);text-shadow:3px 3px 0 rgba(0,0,0,.1);text-align:center;line-height:1.1}
+  .app-title span{color:var(--coral)}
+  .app-subtitle{font-size:18px;color:var(--text-mid);text-align:center;font-weight:600}
+  .profiles-grid{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;max-width:500px}
+  .profile-card{background:var(--card-bg);border-radius:var(--radius);padding:28px 24px;text-align:center;cursor:pointer;transition:transform .18s,box-shadow .18s;box-shadow:0 6px 24px rgba(0,0,0,.1);min-width:140px;border:3px solid transparent}
+  .profile-card:active{transform:scale(.95)}
+  .profile-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.15)}
+  .profile-avatar{font-size:60px;margin-bottom:10px;line-height:1}
+  .profile-name{font-size:18px;font-weight:800;color:var(--text-dark)}
+  .parent-link{font-size:15px;color:var(--text-mid);text-decoration:underline;cursor:pointer;font-weight:600;margin-top:8px}
 
-  /* PROFILE SELECT */
-  #screen-profiles { align-items: center; justify-content: center; padding: 40px 24px; gap: 32px; }
-  .app-title { font-family: 'Fredoka One', cursive; font-size: 52px; color: var(--water); text-shadow: 3px 3px 0 rgba(0,0,0,0.1); text-align: center; line-height: 1.1; }
-  .app-title span { color: var(--coral); }
-  .app-subtitle { font-size: 18px; color: var(--text-mid); text-align: center; font-weight: 600; }
-  .profiles-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 500px; }
-  .profile-card { background: var(--card-bg); border-radius: var(--radius); padding: 28px 24px; text-align: center; cursor: pointer; transition: transform 0.18s, box-shadow 0.18s; box-shadow: 0 6px 24px rgba(0,0,0,0.1); min-width: 140px; border: 3px solid transparent; }
-  .profile-card:active { transform: scale(0.95); }
-  .profile-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
-  .profile-avatar { font-size: 60px; margin-bottom: 10px; line-height: 1; }
-  .profile-name { font-size: 18px; font-weight: 800; color: var(--text-dark); }
-  .parent-link { font-size: 15px; color: var(--text-mid); text-decoration: underline; cursor: pointer; font-weight: 600; margin-top: 8px; }
-  .parent-link:hover { color: var(--purple); }
+  /* WORDSET SELECT */
+  #screen-wordsets{padding:32px 24px;align-items:center;gap:20px}
+  .screen-header{display:flex;align-items:center;gap:16px;width:100%;max-width:600px}
+  .back-btn{background:var(--card-bg);border:none;border-radius:50%;width:48px;height:48px;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.1);transition:transform .15s;flex-shrink:0}
+  .back-btn:active{transform:scale(.9)}
+  .screen-title{font-family:'Fredoka One',cursive;font-size:28px;color:var(--text-dark)}
+  .sticker-badge{margin-left:auto;background:var(--gold);border-radius:20px;padding:8px 16px;font-weight:800;font-size:16px;color:#7a5900;box-shadow:0 3px 10px rgba(255,215,0,.4);display:flex;align-items:center;gap:6px}
+  .wordsets-list{display:flex;flex-direction:column;gap:14px;width:100%;max-width:500px}
+  .wordset-card{background:var(--card-bg);border-radius:var(--radius);padding:20px 24px;cursor:pointer;transition:transform .18s,box-shadow .18s;box-shadow:0 6px 24px rgba(0,0,0,.1);border:3px solid transparent;display:flex;align-items:center;gap:16px}
+  .wordset-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.13);border-color:var(--water)}
+  .wordset-card:active{transform:scale(.97)}
+  .wordset-icon{font-size:36px;flex-shrink:0}
+  .wordset-info-block{flex:1}
+  .wordset-title{font-family:'Fredoka One',cursive;font-size:20px;color:var(--text-dark)}
+  .wordset-meta{font-size:13px;color:var(--text-mid);font-weight:600;margin-top:3px}
+  .wordset-arrow{font-size:22px;color:#ccc}
 
   /* GAME SELECT */
-  #screen-games { padding: 32px 24px; align-items: center; gap: 24px; }
-  .screen-header { display: flex; align-items: center; gap: 16px; width: 100%; max-width: 600px; }
-  .back-btn { background: var(--card-bg); border: none; border-radius: 50%; width: 48px; height: 48px; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 12px rgba(0,0,0,0.1); transition: transform 0.15s; }
-  .back-btn:active { transform: scale(0.9); }
-  .screen-title { font-family: 'Fredoka One', cursive; font-size: 28px; color: var(--text-dark); }
-  .sticker-badge { margin-left: auto; background: var(--gold); border-radius: 20px; padding: 8px 16px; font-weight: 800; font-size: 16px; color: #7a5900; box-shadow: 0 3px 10px rgba(255,215,0,0.4); display: flex; align-items: center; gap: 6px; }
-  .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; width: 100%; max-width: 600px; }
-  .game-card { background: var(--card-bg); border-radius: var(--radius); padding: 28px; cursor: pointer; transition: transform 0.18s, box-shadow 0.18s; box-shadow: 0 6px 24px rgba(0,0,0,0.1); border: 3px solid transparent; position: relative; overflow: hidden; }
-  .game-card.active-game { border-color: var(--grass); }
-  .game-card.coming-soon { opacity: 0.6; cursor: default; }
-  .game-card:not(.coming-soon):hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
-  .game-card:not(.coming-soon):active { transform: scale(0.97); }
-  .game-emoji { font-size: 48px; margin-bottom: 12px; }
-  .game-title { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--text-dark); margin-bottom: 6px; }
-  .game-desc { font-size: 14px; color: var(--text-mid); line-height: 1.5; font-weight: 600; }
-  .coming-soon-tag { position: absolute; top: 14px; right: 14px; background: var(--orange); color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .wordset-info { background: var(--card-bg); border-radius: var(--radius-sm); padding: 12px 20px; font-size: 14px; font-weight: 700; color: var(--text-mid); box-shadow: 0 2px 8px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 8px; max-width: 600px; width: 100%; }
+  #screen-games{padding:32px 24px;align-items:center;gap:24px}
+  .active-set-banner{background:var(--card-bg);border-radius:var(--radius-sm);padding:12px 20px;font-size:14px;font-weight:700;color:var(--text-mid);box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;align-items:center;gap:8px;max-width:600px;width:100%}
+  .games-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;width:100%;max-width:600px}
+  .game-card{background:var(--card-bg);border-radius:var(--radius);padding:28px;cursor:pointer;transition:transform .18s,box-shadow .18s;box-shadow:0 6px 24px rgba(0,0,0,.1);border:3px solid transparent;position:relative;overflow:hidden}
+  .game-card.active-game{border-color:var(--grass)}
+  .game-card.coming-soon{opacity:.6;cursor:default}
+  .game-card:not(.coming-soon):hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.15)}
+  .game-card:not(.coming-soon):active{transform:scale(.97)}
+  .game-emoji{font-size:48px;margin-bottom:12px}
+  .game-title{font-family:'Fredoka One',cursive;font-size:22px;color:var(--text-dark);margin-bottom:6px}
+  .game-desc{font-size:14px;color:var(--text-mid);line-height:1.5;font-weight:600}
+  .coming-soon-tag{position:absolute;top:14px;right:14px;background:var(--orange);color:white;font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
 
-  /* ANIMAL PARADE GAME */
-  #screen-game { padding: 0; position: relative; }
-  .game-topbar { background: var(--card-bg); padding: 16px 24px; display: flex; align-items: center; gap: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); position: relative; z-index: 10; }
-  .word-counter { margin-left: auto; font-size: 15px; font-weight: 800; color: var(--text-mid); }
-  .game-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 24px; gap: 22px; }
+  /* GAME */
+  #screen-game{padding:0;position:relative}
+  .game-topbar{background:var(--card-bg);padding:16px 24px;display:flex;align-items:center;gap:14px;box-shadow:0 2px 12px rgba(0,0,0,.08);position:relative;z-index:10}
+  .word-counter{margin-left:auto;font-size:15px;font-weight:800;color:var(--text-mid)}
+  .game-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:22px}
+  .progress-bar-wrap{background:rgba(0,0,0,.08);border-radius:20px;height:10px;width:100%;max-width:380px;overflow:hidden}
+  .progress-bar-fill{height:100%;background:var(--grass);border-radius:20px;transition:width .4s ease}
 
-  /* ANIMAL FRAME CARD */
-  .word-card {
-    position: relative; width: 100%; max-width: 380px;
-    background: var(--card-bg); border-radius: var(--radius);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.14);
-    padding: 20px; text-align: center;
-    border: 4px solid transparent;
-    transition: border-color 0.3s;
-  }
-  .word-card.correct-flash { border-color: var(--grass); animation: correctFlash 0.5s ease; }
-  @keyframes correctFlash { 0%,100% { background: var(--card-bg); } 50% { background: #eafff0; } }
+  /* WORD CARD */
+  .word-card{position:relative;width:100%;max-width:380px;background:var(--card-bg);border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,.14);padding:20px;text-align:center;border:4px solid transparent;transition:border-color .3s}
+  .word-card.correct-flash{border-color:var(--grass);animation:correctFlash .5s ease}
+  @keyframes correctFlash{0%,100%{background:var(--card-bg)}50%{background:#eafff0}}
+  .animal-corners{position:absolute;inset:0;pointer-events:none}
+  .corner-animal{position:absolute;font-size:32px;line-height:1;transition:transform .3s}
+  .corner-animal.tl{top:-16px;left:-16px;transform:rotate(-15deg)}
+  .corner-animal.tr{top:-16px;right:-16px;transform:rotate(15deg)}
+  .corner-animal.bl{bottom:-16px;left:-16px;transform:rotate(15deg)}
+  .corner-animal.br{bottom:-16px;right:-16px;transform:rotate(-15deg)}
+  .word-card.dance .corner-animal.tl{animation:cornerDance1 .8s ease infinite}
+  .word-card.dance .corner-animal.tr{animation:cornerDance2 .8s ease infinite}
+  .word-card.dance .corner-animal.bl{animation:cornerDance2 .8s ease infinite}
+  .word-card.dance .corner-animal.br{animation:cornerDance1 .8s ease infinite}
+  @keyframes cornerDance1{0%,100%{transform:rotate(-15deg) scale(1)}50%{transform:rotate(-25deg) scale(1.3)}}
+  @keyframes cornerDance2{0%,100%{transform:rotate(15deg) scale(1)}50%{transform:rotate(25deg) scale(1.3)}}
+  .word-image-frame{width:180px;height:180px;margin:8px auto 14px;border-radius:20px;overflow:hidden;background:linear-gradient(135deg,#f0f7ff,#e8f4fd);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 2px 8px rgba(0,0,0,.06);border:3px solid rgba(77,150,255,.15)}
+  .word-image-frame img{width:100%;height:100%;object-fit:cover}
+  .word-image-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;color:#b0c4d8}
+  .word-image-placeholder .ph-icon{font-size:48px}
+  .word-image-placeholder .ph-text{font-size:12px;font-weight:700;text-align:center;padding:0 8px}
+  .word-display{font-family:'Fredoka One',cursive;font-size:44px;color:var(--water);letter-spacing:2px;transition:opacity .3s;min-height:56px;display:flex;align-items:center;justify-content:center}
+  .word-display.hidden{opacity:0}
+  .word-toggle{font-size:13px;font-weight:700;color:var(--text-mid);cursor:pointer;text-decoration:underline;margin-top:2px;display:inline-block}
+  .mic-area{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:380px}
+  .hear-btn{background:var(--water);color:white;border:none;border-radius:50px;padding:14px 28px;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:10px;transition:transform .15s;box-shadow:0 6px 20px rgba(77,150,255,.4);font-family:'Nunito',sans-serif}
+  .hear-btn:active{transform:scale(.95)}
+  .mic-btn{background:var(--coral);color:white;border:none;border-radius:50%;width:86px;height:86px;font-size:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s;box-shadow:0 8px 28px rgba(255,107,107,.45)}
+  .mic-btn.listening{background:var(--coral-dark);animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 8px 28px rgba(255,107,107,.45);transform:scale(1)}50%{box-shadow:0 8px 40px rgba(255,107,107,.7);transform:scale(1.06)}}
+  .mic-hint{font-size:14px;color:var(--text-mid);font-weight:700}
 
-  /* Animal corner decorations */
-  .animal-corners { position: absolute; inset: 0; pointer-events: none; }
-  .corner-animal { position: absolute; font-size: 32px; line-height: 1; transition: transform 0.3s; }
-  .corner-animal.tl { top: -16px; left: -16px; transform: rotate(-15deg); }
-  .corner-animal.tr { top: -16px; right: -16px; transform: rotate(15deg); }
-  .corner-animal.bl { bottom: -16px; left: -16px; transform: rotate(15deg); }
-  .corner-animal.br { bottom: -16px; right: -16px; transform: rotate(-15deg); }
-  .word-card.dance .corner-animal.tl { animation: cornerDance1 0.8s ease infinite; }
-  .word-card.dance .corner-animal.tr { animation: cornerDance2 0.8s ease infinite; }
-  .word-card.dance .corner-animal.bl { animation: cornerDance2 0.8s ease infinite; }
-  .word-card.dance .corner-animal.br { animation: cornerDance1 0.8s ease infinite; }
-  @keyframes cornerDance1 { 0%,100% { transform: rotate(-15deg) scale(1); } 50% { transform: rotate(-25deg) scale(1.3); } }
-  @keyframes cornerDance2 { 0%,100% { transform: rotate(15deg) scale(1); } 50% { transform: rotate(25deg) scale(1.3); } }
+  /* RESULT */
+  .result-overlay{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.94);gap:20px;opacity:0;pointer-events:none;transition:opacity .3s;padding:24px}
+  .result-overlay.show{opacity:1;pointer-events:all}
+  .result-emoji{font-size:90px;animation:resultPop .4s ease}
+  @keyframes resultPop{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+  .result-text{font-family:'Fredoka One',cursive;font-size:38px;text-align:center}
+  .result-text.correct{color:var(--grass)}
+  .result-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+  .result-btn{padding:15px 26px;border:none;border-radius:50px;font-size:16px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:transform .15s}
+  .result-btn:active{transform:scale(.95)}
+  .result-btn.yes{background:var(--grass);color:white;box-shadow:0 6px 20px rgba(107,203,119,.45)}
+  .result-btn.retry{background:var(--orange);color:white;box-shadow:0 6px 20px rgba(255,140,66,.45)}
+  .result-btn.next{background:var(--water);color:white;box-shadow:0 6px 20px rgba(77,150,255,.45)}
+  .parent-confirm{background:var(--card-bg);border-radius:var(--radius);padding:18px 24px;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.1)}
+  .parent-confirm p{font-size:15px;font-weight:700;color:var(--text-mid);margin-bottom:14px}
 
-  /* Word image area */
-  .word-image-frame {
-    width: 180px; height: 180px;
-    margin: 8px auto 14px;
-    border-radius: 20px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #f0f7ff, #e8f4fd);
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    box-shadow: inset 0 2px 8px rgba(0,0,0,0.06);
-    border: 3px solid rgba(77,150,255,0.15);
-  }
-  .word-image-frame img { width: 100%; height: 100%; object-fit: cover; }
-  .word-image-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; color: #b0c4d8; }
-  .word-image-placeholder .ph-icon { font-size: 48px; }
-  .word-image-placeholder .ph-text { font-size: 12px; font-weight: 700; text-align: center; padding: 0 8px; }
-  .word-display { font-family: 'Fredoka One', cursive; font-size: 44px; color: var(--water); letter-spacing: 2px; transition: opacity 0.3s; min-height: 56px; display: flex; align-items: center; justify-content: center; }
-  .word-display.hidden { opacity: 0; }
-  .word-toggle { font-size: 13px; font-weight: 700; color: var(--text-mid); cursor: pointer; text-decoration: underline; margin-top: 2px; display: inline-block; }
+  /* STICKER */
+  .sticker-celebration{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#fff9c4,#ffe0e0);gap:20px;opacity:0;pointer-events:none;transition:opacity .4s}
+  .sticker-celebration.show{opacity:1;pointer-events:all}
+  .sticker-celebration .big-sticker{font-size:120px;animation:stickerSpin .8s ease}
+  @keyframes stickerSpin{0%{transform:scale(0) rotate(-180deg)}80%{transform:scale(1.15) rotate(10deg)}100%{transform:scale(1) rotate(0deg)}}
+  .sticker-celebration h2{font-family:'Fredoka One',cursive;font-size:40px;color:var(--coral);text-align:center}
+  .sticker-celebration p{font-size:18px;font-weight:700;color:var(--text-mid);text-align:center}
+  .confetti-container{position:fixed;inset:0;pointer-events:none;z-index:201;overflow:hidden}
+  .confetti-piece{position:absolute;width:12px;height:12px;border-radius:2px;animation:confettiFall linear forwards}
+  @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
 
-  /* MIC AREA */
-  .mic-area { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; max-width: 380px; }
-  .hear-btn { background: var(--water); color: white; border: none; border-radius: 50px; padding: 14px 28px; font-size: 17px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: transform 0.15s; box-shadow: 0 6px 20px rgba(77,150,255,0.4); font-family: 'Nunito', sans-serif; }
-  .hear-btn:active { transform: scale(0.95); }
-  .mic-btn { background: var(--coral); color: white; border: none; border-radius: 50%; width: 86px; height: 86px; font-size: 34px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.15s; box-shadow: 0 8px 28px rgba(255,107,107,0.45); }
-  .mic-btn.listening { background: var(--coral-dark); animation: pulse 1s infinite; }
-  @keyframes pulse { 0%,100% { box-shadow: 0 8px 28px rgba(255,107,107,0.45); transform: scale(1); } 50% { box-shadow: 0 8px 40px rgba(255,107,107,0.7); transform: scale(1.06); } }
-  .mic-hint { font-size: 14px; color: var(--text-mid); font-weight: 700; }
-
-  /* RESULT OVERLAY */
-  .result-overlay { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.94); gap: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-  .result-overlay.show { opacity: 1; pointer-events: all; }
-  .result-emoji { font-size: 90px; animation: resultPop 0.4s ease; }
-  @keyframes resultPop { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
-  .result-text { font-family: 'Fredoka One', cursive; font-size: 38px; text-align: center; }
-  .result-text.correct { color: var(--grass); }
-  .result-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
-  .result-btn { padding: 15px 26px; border: none; border-radius: 50px; font-size: 16px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; transition: transform 0.15s; }
-  .result-btn:active { transform: scale(0.95); }
-  .result-btn.yes { background: var(--grass); color: white; box-shadow: 0 6px 20px rgba(107,203,119,0.45); }
-  .result-btn.retry { background: var(--orange); color: white; box-shadow: 0 6px 20px rgba(255,140,66,0.45); }
-  .result-btn.next { background: var(--water); color: white; box-shadow: 0 6px 20px rgba(77,150,255,0.45); }
-  .parent-confirm { background: var(--card-bg); border-radius: var(--radius); padding: 18px 24px; text-align: center; box-shadow: 0 6px 24px rgba(0,0,0,0.1); }
-  .parent-confirm p { font-size: 15px; font-weight: 700; color: var(--text-mid); margin-bottom: 14px; }
-
-  /* STICKER CELEBRATION */
-  .sticker-celebration { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #fff9c4, #ffe0e0); gap: 20px; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
-  .sticker-celebration.show { opacity: 1; pointer-events: all; }
-  .sticker-celebration .big-sticker { font-size: 120px; animation: stickerSpin 0.8s ease; }
-  @keyframes stickerSpin { 0% { transform: scale(0) rotate(-180deg); } 80% { transform: scale(1.15) rotate(10deg); } 100% { transform: scale(1) rotate(0deg); } }
-  .sticker-celebration h2 { font-family: 'Fredoka One', cursive; font-size: 40px; color: var(--coral); text-align: center; }
-  .sticker-celebration p { font-size: 18px; font-weight: 700; color: var(--text-mid); text-align: center; }
-  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 201; overflow: hidden; }
-  .confetti-piece { position: absolute; width: 12px; height: 12px; border-radius: 2px; animation: confettiFall linear forwards; }
-  @keyframes confettiFall { 0% { transform: translateY(-20px) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
-
-  /* PROGRESS BAR */
-  .progress-bar-wrap { background: rgba(0,0,0,0.08); border-radius: 20px; height: 10px; width: 100%; max-width: 380px; overflow: hidden; }
-  .progress-bar-fill { height: 100%; background: var(--grass); border-radius: 20px; transition: width 0.4s ease; }
-
-  /* FINISH SCREEN */
-  .finish-card { background: var(--card-bg); border-radius: var(--radius); padding: 40px 32px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.12); width: 100%; max-width: 400px; gap: 16px; display: flex; flex-direction: column; align-items: center; }
-  .finish-card h2 { font-family: 'Fredoka One', cursive; font-size: 36px; color: var(--water); }
-  .stat-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-  .stat-box { background: var(--sky); border-radius: var(--radius-sm); padding: 16px 20px; text-align: center; }
-  .stat-num { font-family: 'Fredoka One', cursive; font-size: 36px; }
-  .stat-label { font-size: 13px; font-weight: 700; color: var(--text-mid); }
-  .stat-box.green .stat-num { color: var(--grass-dark); }
-  .stat-box.blue .stat-num { color: var(--water); }
-  .stat-box.gold .stat-num { color: #b8860b; }
-  .play-again-btn { background: var(--coral); color: white; border: none; border-radius: 50px; padding: 18px 40px; font-size: 20px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; box-shadow: 0 6px 20px rgba(255,107,107,0.4); transition: transform 0.15s; }
-  .play-again-btn:active { transform: scale(0.95); }
+  /* FINISH */
+  .finish-card{background:var(--card-bg);border-radius:var(--radius);padding:40px 32px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.12);width:100%;max-width:400px;gap:16px;display:flex;flex-direction:column;align-items:center}
+  .finish-card h2{font-family:'Fredoka One',cursive;font-size:36px;color:var(--water)}
+  .stat-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .stat-box{background:var(--sky);border-radius:var(--radius-sm);padding:16px 20px;text-align:center}
+  .stat-num{font-family:'Fredoka One',cursive;font-size:36px}
+  .stat-label{font-size:13px;font-weight:700;color:var(--text-mid)}
+  .stat-box.green .stat-num{color:var(--grass-dark)}
+  .stat-box.blue .stat-num{color:var(--water)}
+  .stat-box.gold .stat-num{color:#b8860b}
+  .play-again-btn{background:var(--coral);color:white;border:none;border-radius:50px;padding:18px 40px;font-size:20px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 6px 20px rgba(255,107,107,.4);transition:transform .15s}
+  .play-again-btn:active{transform:scale(.95)}
 
   /* PIN */
-  #screen-pin { align-items: center; justify-content: center; gap: 28px; padding: 40px 24px; }
-  .pin-card { background: var(--card-bg); border-radius: var(--radius); padding: 40px 36px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.12); width: 100%; max-width: 340px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-  .pin-card h2 { font-family: 'Fredoka One', cursive; font-size: 28px; color: var(--purple); }
-  .pin-card p { font-size: 15px; color: var(--text-mid); font-weight: 600; }
-  .pin-dots { display: flex; gap: 12px; }
-  .pin-dot { width: 18px; height: 18px; border-radius: 50%; background: #e0e0e0; transition: background 0.2s; }
-  .pin-dot.filled { background: var(--purple); }
-  .pin-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .pin-key { width: 68px; height: 68px; border-radius: 50%; background: var(--card-bg); border: 2px solid #e8e8e8; font-size: 24px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.12s, background 0.12s; font-family: 'Fredoka One', cursive; color: var(--text-dark); }
-  .pin-key:active { transform: scale(0.92); background: var(--sky); }
-  .pin-error { color: var(--coral); font-weight: 700; font-size: 14px; min-height: 20px; }
+  #screen-pin{align-items:center;justify-content:center;gap:28px;padding:40px 24px}
+  .pin-card{background:var(--card-bg);border-radius:var(--radius);padding:40px 36px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.12);width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;gap:20px}
+  .pin-card h2{font-family:'Fredoka One',cursive;font-size:28px;color:var(--purple)}
+  .pin-dots{display:flex;gap:12px}
+  .pin-dot{width:18px;height:18px;border-radius:50%;background:#e0e0e0;transition:background .2s}
+  .pin-dot.filled{background:var(--purple)}
+  .pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .pin-key{width:68px;height:68px;border-radius:50%;background:var(--card-bg);border:2px solid #e8e8e8;font-size:24px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .12s,background .12s;font-family:'Fredoka One',cursive;color:var(--text-dark)}
+  .pin-key:active{transform:scale(.92);background:var(--sky)}
+  .pin-error{color:var(--coral);font-weight:700;font-size:14px;min-height:20px}
 
-  /* PARENT DASHBOARD */
-  #screen-parent { background: #f8f9fa; min-height: 100vh; }
-  .parent-topbar { background: white; padding: 20px 28px; display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border-bottom: 1px solid #eee; }
-  .parent-topbar h1 { font-family: 'Fredoka One', cursive; font-size: 26px; color: var(--purple); }
-  .parent-tabs { display: flex; gap: 0; background: white; border-bottom: 2px solid #f0f0f0; padding: 0 28px; overflow-x: auto; }
-  .parent-tab { padding: 14px 20px; font-size: 15px; font-weight: 800; color: var(--text-mid); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; white-space: nowrap; transition: color 0.15s, border-color 0.15s; }
-  .parent-tab.active { color: var(--purple); border-bottom-color: var(--purple); }
-  .parent-tab-content { display: none; }
-  .parent-tab-content.active { display: block; }
-  .parent-content { padding: 28px; max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
-  .parent-section { background: white; border-radius: var(--radius); padding: 24px; box-shadow: 0 3px 16px rgba(0,0,0,0.06); }
-  .parent-section h2 { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--text-dark); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
-  .data-table { width: 100%; border-collapse: collapse; font-size: 15px; }
-  .data-table th { text-align: left; padding: 10px 14px; background: #f8f9fa; font-weight: 800; font-size: 13px; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.5px; }
-  .data-table td { padding: 12px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-  .data-table tr:last-child td { border-bottom: none; }
-  .status-badge { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; }
-  .status-badge.active { background: #d4f5dc; color: #1a7a30; }
-  .status-badge.inactive { background: #f0f0f0; color: #888; }
-  .status-badge.coming { background: #fff3cd; color: #856404; }
-  .toggle-btn { padding: 7px 16px; border: none; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif; transition: transform 0.15s; }
-  .toggle-btn:active { transform: scale(0.95); }
-  .toggle-btn.activate { background: var(--grass); color: white; }
-  .toggle-btn.deactivate { background: #f0f0f0; color: #888; }
-  .wallet-cards { display: flex; flex-wrap: wrap; gap: 16px; }
-  .wallet-card { background: linear-gradient(135deg, #fff9c4, #fff0f0); border-radius: var(--radius-sm); padding: 20px 24px; min-width: 200px; flex: 1; border: 2px solid rgba(255,215,0,0.3); }
-  .wallet-card .child-name { font-weight: 800; font-size: 16px; margin-bottom: 10px; }
-  .wallet-card .sticker-count { font-family: 'Fredoka One', cursive; font-size: 42px; color: #b8860b; }
-  .wallet-card .sticker-sub { font-size: 13px; color: var(--text-mid); font-weight: 600; }
-  .redeem-btn { margin-top: 12px; padding: 9px 18px; border: none; border-radius: 20px; background: var(--gold); color: #7a5900; font-size: 14px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; }
-  .redeem-form { margin-top: 14px; display: none; gap: 8px; flex-direction: column; }
-  .redeem-form.show { display: flex; }
-  .redeem-form input { padding: 10px 14px; border: 2px solid #eee; border-radius: 12px; font-size: 14px; font-family: 'Nunito', sans-serif; font-weight: 600; }
-  .redeem-form input:focus { outline: none; border-color: var(--water); }
-  .redeem-form button { padding: 10px; border: none; border-radius: 12px; background: var(--grass); color: white; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; }
+  /* PARENT */
+  #screen-parent{background:#f8f9fa;min-height:100vh}
+  .parent-topbar{background:white;padding:20px 28px;display:flex;align-items:center;gap:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);border-bottom:1px solid #eee}
+  .parent-topbar h1{font-family:'Fredoka One',cursive;font-size:26px;color:var(--purple)}
+  .parent-tabs{display:flex;gap:0;background:white;border-bottom:2px solid #f0f0f0;padding:0 28px;overflow-x:auto}
+  .parent-tab{padding:14px 20px;font-size:15px;font-weight:800;color:var(--text-mid);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .15s,border-color .15s}
+  .parent-tab.active{color:var(--purple);border-bottom-color:var(--purple)}
+  .parent-tab-content{display:none}
+  .parent-tab-content.active{display:block}
+  .parent-content{padding:28px;max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+  .parent-section{background:white;border-radius:var(--radius);padding:24px;box-shadow:0 3px 16px rgba(0,0,0,.06)}
+  .parent-section h2{font-family:'Fredoka One',cursive;font-size:22px;color:var(--text-dark);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  .data-table{width:100%;border-collapse:collapse;font-size:15px}
+  .data-table th{text-align:left;padding:10px 14px;background:#f8f9fa;font-weight:800;font-size:13px;color:var(--text-mid);text-transform:uppercase;letter-spacing:.5px}
+  .data-table td{padding:12px 14px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+  .data-table tr:last-child td{border-bottom:none}
+  .status-badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:700}
+  .status-badge.active{background:#d4f5dc;color:#1a7a30}
+  .status-badge.inactive{background:#f0f0f0;color:#888}
+  .status-badge.coming{background:#fff3cd;color:#856404}
+
+  /* WALLET */
+  .wallet-cards{display:flex;flex-wrap:wrap;gap:16px}
+  .wallet-card{background:linear-gradient(135deg,#fff9c4,#fff0f0);border-radius:var(--radius-sm);padding:20px 24px;min-width:200px;flex:1;border:2px solid rgba(255,215,0,.3)}
+  .wallet-card .child-name{font-weight:800;font-size:16px;margin-bottom:10px}
+  .wallet-card .sticker-count{font-family:'Fredoka One',cursive;font-size:42px;color:#b8860b}
+  .wallet-card .sticker-sub{font-size:13px;color:var(--text-mid);font-weight:600}
+  .redeem-btn{margin-top:12px;padding:9px 18px;border:none;border-radius:20px;background:var(--gold);color:#7a5900;font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
+  .redeem-form{margin-top:14px;display:none;gap:8px;flex-direction:column}
+  .redeem-form.show{display:flex}
+  .redeem-form input{padding:10px 14px;border:2px solid #eee;border-radius:12px;font-size:14px;font-family:'Nunito',sans-serif;font-weight:600}
+  .redeem-form input:focus{outline:none;border-color:var(--water)}
+  .redeem-form button{padding:10px;border:none;border-radius:12px;background:var(--grass);color:white;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
+
+  /* CHILD ASSIGNMENTS */
+  .child-assign-row{display:flex;align-items:flex-start;gap:12px;padding:16px 0;border-bottom:1px solid #f0f0f0;flex-wrap:wrap}
+  .child-assign-row:last-child{border-bottom:none}
+  .child-assign-avatar{font-size:32px;flex-shrink:0}
+  .child-assign-name{font-weight:800;font-size:16px;flex:1;min-width:80px;padding-top:6px}
+  .assign-sets-area{flex:2;min-width:200px}
+  .assign-sets-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .assign-set-tag{background:#e8f4ff;border-radius:20px;padding:4px 12px;font-size:13px;font-weight:700;color:var(--water-dark);display:flex;align-items:center;gap:6px}
+  .assign-set-tag button{background:none;border:none;cursor:pointer;font-size:14px;color:#999;padding:0;line-height:1}
+  .assign-set-add{display:flex;gap:8px;align-items:center}
+  .assign-set-select{padding:7px 12px;border:2px solid #e0e0e0;border-radius:12px;font-size:13px;font-family:'Nunito',sans-serif;font-weight:700;background:white;cursor:pointer}
+  .assign-set-select:focus{outline:none;border-color:var(--purple)}
+  .assign-save-btn{padding:8px 14px;border:none;border-radius:12px;background:var(--purple);color:white;font-weight:800;font-size:13px;cursor:pointer;font-family:'Nunito',sans-serif}
+
+  /* ADD WORD SET FORM */
+  .add-wordset-form{background:#f8f9fa;border-radius:var(--radius-sm);padding:20px;display:none;flex-direction:column;gap:14px;margin-top:16px}
+  .add-wordset-form.show{display:flex}
+  .form-row{display:flex;flex-direction:column;gap:6px}
+  .form-label{font-size:13px;font-weight:800;color:var(--text-mid);text-transform:uppercase;letter-spacing:.5px}
+  .form-input{padding:11px 14px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:'Nunito',sans-serif;font-weight:600;background:white}
+  .form-input:focus{outline:none;border-color:var(--water)}
+  .form-textarea{padding:11px 14px;border:2px solid #e0e0e0;border-radius:12px;font-size:15px;font-family:'Nunito',sans-serif;font-weight:600;background:white;resize:vertical;min-height:140px;line-height:1.6}
+  .form-textarea:focus{outline:none;border-color:var(--water)}
+  .form-hint{font-size:12px;color:#aaa;font-weight:600}
+  .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .btn-primary{padding:13px 24px;border:none;border-radius:14px;background:var(--water);color:white;font-size:15px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:transform .15s}
+  .btn-primary:active{transform:scale(.97)}
+  .btn-secondary{padding:13px 24px;border:2px solid #e0e0e0;border-radius:14px;background:white;color:var(--text-mid);font-size:15px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
+  .btn-add{padding:10px 20px;border:2px dashed #cce;border-radius:14px;background:white;color:var(--water);font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;display:flex;align-items:center;gap:8px;transition:background .15s}
+  .btn-add:hover{background:#f0f7ff}
+  .form-actions{display:flex;gap:12px;flex-wrap:wrap}
 
   /* IMAGE MANAGER */
-  .image-manager-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
-  .word-image-card { background: #f8f9fa; border-radius: var(--radius-sm); padding: 12px; text-align: center; cursor: pointer; border: 2px solid transparent; transition: border-color 0.15s, transform 0.15s; }
-  .word-image-card:hover { transform: translateY(-2px); border-color: var(--water); }
-  .word-image-card .word-thumb { width: 100%; height: 90px; object-fit: cover; border-radius: 10px; background: #e0e8f0; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 8px; overflow: hidden; }
-  .word-image-card .word-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .word-image-card .word-label { font-size: 15px; font-weight: 800; color: var(--text-dark); }
-  .word-image-card .word-status { font-size: 11px; font-weight: 700; margin-top: 3px; }
-  .word-image-card .word-status.has-img { color: var(--grass-dark); }
-  .word-image-card .word-status.no-img { color: #aaa; }
-  .word-image-card.has-image { background: #f0fff4; border-color: rgba(107,203,119,0.3); }
+  .image-manager-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px}
+  .word-image-card{background:#f8f9fa;border-radius:var(--radius-sm);padding:10px;text-align:center;cursor:pointer;border:2px solid transparent;transition:border-color .15s,transform .15s}
+  .word-image-card:hover{transform:translateY(-2px);border-color:var(--water)}
+  .word-image-card .word-thumb{width:100%;height:85px;border-radius:10px;background:#e0e8f0;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:8px;overflow:hidden}
+  .word-image-card .word-thumb img{width:100%;height:100%;object-fit:cover}
+  .word-image-card .word-label{font-size:14px;font-weight:800;color:var(--text-dark)}
+  .word-image-card .word-status{font-size:11px;font-weight:700;margin-top:3px}
+  .word-image-card .word-status.has-img{color:var(--grass-dark)}
+  .word-image-card .word-status.no-img{color:#aaa}
+  .word-image-card.has-image{background:#f0fff4;border-color:rgba(107,203,119,.3)}
+  .img-set-filter{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .img-set-btn{padding:7px 16px;border-radius:20px;border:2px solid #e0e0e0;background:white;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s}
+  .img-set-btn.active{background:var(--water);color:white;border-color:var(--water)}
 
   /* IMAGE SEARCH PANEL */
-  .img-search-panel { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.6); display: flex; align-items: flex-end; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-  .img-search-panel.show { opacity: 1; pointer-events: all; }
-  .img-search-inner { background: white; border-radius: 28px 28px 0 0; width: 100%; max-width: 700px; max-height: 85vh; overflow-y: auto; padding: 28px; display: flex; flex-direction: column; gap: 18px; }
-  .img-search-header { display: flex; align-items: center; justify-content: space-between; }
-  .img-search-header h3 { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--text-dark); }
-  .img-search-close { width: 36px; height: 36px; border-radius: 50%; background: #f0f0f0; border: none; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-  .img-search-bar { display: flex; gap: 10px; }
-  .img-search-bar input { flex: 1; padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 14px; font-size: 15px; font-family: 'Nunito', sans-serif; font-weight: 600; }
-  .img-search-bar input:focus { outline: none; border-color: var(--water); }
-  .img-search-bar button { padding: 12px 20px; border: none; border-radius: 14px; background: var(--water); color: white; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; font-size: 15px; }
-  .img-results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .img-result { border-radius: 14px; overflow: hidden; cursor: pointer; position: relative; aspect-ratio: 1; border: 3px solid transparent; transition: border-color 0.15s, transform 0.15s; }
-  .img-result:hover { transform: scale(1.03); border-color: var(--water); }
-  .img-result.selected { border-color: var(--grass); }
-  .img-result img { width: 100%; height: 100%; object-fit: cover; }
-  .img-result-check { position: absolute; top: 6px; right: 6px; background: var(--grass); color: white; border-radius: 50%; width: 24px; height: 24px; display: none; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; }
-  .img-result.selected .img-result-check { display: flex; }
-  .img-search-save { padding: 16px; border: none; border-radius: 16px; background: var(--grass); color: white; font-size: 17px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; display: none; }
-  .img-search-save.show { display: block; }
-  .img-search-loading { text-align: center; padding: 32px; color: var(--text-mid); font-weight: 700; }
-  .img-search-empty { text-align: center; padding: 24px; color: #aaa; font-weight: 700; }
-
-  /* CHILD WORD SET ASSIGNMENT */
-  .child-assign-row { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid #f0f0f0; }
-  .child-assign-row:last-child { border-bottom: none; }
-  .child-assign-avatar { font-size: 32px; }
-  .child-assign-name { font-weight: 800; font-size: 16px; flex: 1; }
-  .wordset-select { padding: 8px 14px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 14px; font-family: 'Nunito', sans-serif; font-weight: 700; background: white; cursor: pointer; min-width: 160px; }
-  .wordset-select:focus { outline: none; border-color: var(--purple); }
-  .assign-save-btn { padding: 8px 16px; border: none; border-radius: 12px; background: var(--purple); color: white; font-weight: 800; font-size: 13px; cursor: pointer; font-family: 'Nunito', sans-serif; }
+  .img-search-panel{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+  .img-search-panel.show{opacity:1;pointer-events:all}
+  .img-search-inner{background:white;border-radius:28px 28px 0 0;width:100%;max-width:700px;max-height:88vh;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px}
+  .img-search-header{display:flex;align-items:center;justify-content:space-between}
+  .img-search-header h3{font-family:'Fredoka One',cursive;font-size:22px;color:var(--text-dark)}
+  .img-search-close{width:36px;height:36px;border-radius:50%;background:#f0f0f0;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .img-search-bar{display:flex;gap:10px}
+  .img-search-bar input{flex:1;padding:12px 16px;border:2px solid #e0e0e0;border-radius:14px;font-size:15px;font-family:'Nunito',sans-serif;font-weight:600}
+  .img-search-bar input:focus{outline:none;border-color:var(--water)}
+  .img-search-bar button{padding:12px 20px;border:none;border-radius:14px;background:var(--water);color:white;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;font-size:15px}
+  .img-results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .img-result{border-radius:14px;overflow:hidden;cursor:pointer;position:relative;aspect-ratio:1;border:3px solid transparent;transition:border-color .15s,transform .15s}
+  .img-result:hover{transform:scale(1.03);border-color:var(--water)}
+  .img-result.selected{border-color:var(--grass)}
+  .img-result img{width:100%;height:100%;object-fit:cover}
+  .img-result-check{position:absolute;top:6px;right:6px;background:var(--grass);color:white;border-radius:50%;width:24px;height:24px;display:none;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+  .img-result.selected .img-result-check{display:flex}
+  .img-search-footer{display:flex;gap:10px;align-items:center}
+  .img-search-save{flex:1;padding:16px;border:none;border-radius:16px;background:var(--grass);color:white;font-size:17px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;display:none}
+  .img-search-save.show{display:block}
+  .img-load-more{padding:12px 20px;border:2px solid #e0e0e0;border-radius:14px;background:white;color:var(--text-mid);font-size:14px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;white-space:nowrap}
+  .img-load-more:hover{border-color:var(--water);color:var(--water)}
+  .img-search-loading{text-align:center;padding:32px;color:var(--text-mid);font-weight:700}
+  .img-search-empty{text-align:center;padding:24px;color:#aaa;font-weight:700}
 
   /* LOADING */
-  .loading-screen { position: fixed; inset: 0; background: var(--sky); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; z-index: 999; }
-  .loading-screen.hidden { display: none; }
-  .loader { width: 56px; height: 56px; border-radius: 50%; border: 5px solid rgba(77,150,255,0.2); border-top-color: var(--water); animation: spin 0.8s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-screen p { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--water); }
+  .loading-screen{position:fixed;inset:0;background:var(--sky);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;z-index:999}
+  .loading-screen.hidden{display:none}
+  .loader{width:56px;height:56px;border-radius:50%;border:5px solid rgba(77,150,255,.2);border-top-color:var(--water);animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loading-screen p{font-family:'Fredoka One',cursive;font-size:22px;color:var(--water)}
 
-  @media (max-width: 480px) {
-    .app-title { font-size: 40px; }
-    .word-display { font-size: 34px; }
-    .img-results-grid { grid-template-columns: repeat(2, 1fr); }
+  @media(max-width:480px){
+    .app-title{font-size:40px}
+    .word-display{font-size:34px}
+    .img-results-grid{grid-template-columns:repeat(2,1fr)}
+    .form-row-2{grid-template-columns:1fr}
   }
 </style>
 </head>
 <body>
-
 <div class="sky-bg">
   <div class="cloud"></div><div class="cloud"></div><div class="cloud"></div>
 </div>
+<div class="loading-screen" id="loading"><div class="loader"></div><p>Loading... ✨</p></div>
 
-<div class="loading-screen" id="loading">
-  <div class="loader"></div>
-  <p>Loading... ✨</p>
-</div>
-
-<!-- PROFILE SELECT -->
+<!-- PROFILES -->
 <div class="screen" id="screen-profiles">
   <div class="app-title">Word<span>Stars</span> ⭐</div>
   <div class="app-subtitle">Who's playing today?</div>
@@ -301,18 +304,28 @@
   <div class="parent-link" onclick="goToPin()">🔒 Parent Dashboard</div>
 </div>
 
+<!-- WORD SET SELECT -->
+<div class="screen" id="screen-wordsets">
+  <div class="screen-header">
+    <button class="back-btn" onclick="showScreen('profiles')">←</button>
+    <div class="screen-title" id="wordsets-title">Choose a Word Set</div>
+    <div class="sticker-badge">⭐ <span id="sticker-count">0</span></div>
+  </div>
+  <div class="wordsets-list" id="wordsets-list"></div>
+</div>
+
 <!-- GAME SELECT -->
 <div class="screen" id="screen-games">
   <div class="screen-header">
-    <button class="back-btn" onclick="showScreen('profiles')">←</button>
-    <div class="screen-title" id="games-title">Choose a Game</div>
-    <div class="sticker-badge">⭐ <span id="sticker-count">0</span></div>
+    <button class="back-btn" onclick="showScreen('wordsets')">←</button>
+    <div class="screen-title">Choose a Game</div>
+    <div class="sticker-badge">⭐ <span id="sticker-count2">0</span></div>
   </div>
-  <div class="wordset-info" id="wordset-info">📋 Loading word set...</div>
+  <div class="active-set-banner" id="active-set-banner">📋 Loading...</div>
   <div class="games-grid" id="games-grid"></div>
 </div>
 
-<!-- ANIMAL PARADE GAME -->
+<!-- GAME -->
 <div class="screen" id="screen-game">
   <div class="game-topbar">
     <button class="back-btn" onclick="showScreen('games')">←</button>
@@ -320,11 +333,7 @@
     <div class="word-counter" id="word-counter">1 / 12</div>
   </div>
   <div class="game-area">
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
-    </div>
-
-    <!-- Animal Frame Word Card -->
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div>
     <div class="word-card" id="word-card">
       <div class="animal-corners">
         <span class="corner-animal tl" id="corner-tl">🦁</span>
@@ -333,24 +342,18 @@
         <span class="corner-animal br" id="corner-br">🦊</span>
       </div>
       <div class="word-image-frame" id="word-image-frame">
-        <div class="word-image-placeholder" id="word-image-placeholder">
-          <div class="ph-icon">🖼️</div>
-          <div class="ph-text">No image yet</div>
-        </div>
+        <div class="word-image-placeholder" id="word-image-placeholder"><div class="ph-icon">🖼️</div><div class="ph-text">No image yet</div></div>
         <img id="word-image" src="" alt="" style="display:none" onerror="this.style.display='none';document.getElementById('word-image-placeholder').style.display='flex'">
       </div>
       <div class="word-display" id="word-display">seven</div>
       <div class="word-toggle" id="word-toggle" onclick="toggleWord()">hide word</div>
     </div>
-
     <div class="mic-area">
       <button class="hear-btn" onclick="hearWord()">🔊 Hear the word</button>
       <button class="mic-btn" id="mic-btn" onclick="startListening()">🎤</button>
       <div class="mic-hint" id="mic-hint">Tap the mic and say the word!</div>
     </div>
   </div>
-
-  <!-- Result overlay -->
   <div class="result-overlay" id="result-overlay">
     <div class="result-emoji" id="result-emoji">🎉</div>
     <div class="result-text" id="result-text">Amazing!</div>
@@ -365,8 +368,6 @@
       <button class="result-btn next" onclick="nextWord()">Next word →</button>
     </div>
   </div>
-
-  <!-- Sticker celebration -->
   <div class="sticker-celebration" id="sticker-celebration">
     <div class="confetti-container" id="confetti-container"></div>
     <div class="big-sticker">⭐</div>
@@ -388,7 +389,7 @@
         <div class="stat-box blue"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Words tried</div></div>
         <div class="stat-box gold"><div class="stat-num" id="stat-stickers">0</div><div class="stat-label">Stickers earned</div></div>
       </div>
-      <button class="play-again-btn" onclick="showScreen('games')">Play again 🎮</button>
+      <button class="play-again-btn" onclick="showScreen('wordsets')">Play again 🎮</button>
     </div>
   </div>
 </div>
@@ -404,15 +405,9 @@
       <div class="pin-dot" id="dot-2"></div><div class="pin-dot" id="dot-3"></div>
     </div>
     <div class="pin-keypad">
-      <button class="pin-key" onclick="pinPress('1')">1</button>
-      <button class="pin-key" onclick="pinPress('2')">2</button>
-      <button class="pin-key" onclick="pinPress('3')">3</button>
-      <button class="pin-key" onclick="pinPress('4')">4</button>
-      <button class="pin-key" onclick="pinPress('5')">5</button>
-      <button class="pin-key" onclick="pinPress('6')">6</button>
-      <button class="pin-key" onclick="pinPress('7')">7</button>
-      <button class="pin-key" onclick="pinPress('8')">8</button>
-      <button class="pin-key" onclick="pinPress('9')">9</button>
+      <button class="pin-key" onclick="pinPress('1')">1</button><button class="pin-key" onclick="pinPress('2')">2</button><button class="pin-key" onclick="pinPress('3')">3</button>
+      <button class="pin-key" onclick="pinPress('4')">4</button><button class="pin-key" onclick="pinPress('5')">5</button><button class="pin-key" onclick="pinPress('6')">6</button>
+      <button class="pin-key" onclick="pinPress('7')">7</button><button class="pin-key" onclick="pinPress('8')">8</button><button class="pin-key" onclick="pinPress('9')">9</button>
       <button class="pin-key" onclick="pinPress('back')" style="font-size:18px">⌫</button>
       <button class="pin-key" onclick="pinPress('0')">0</button>
       <button class="pin-key" onclick="showScreen('profiles')" style="font-size:16px">✕</button>
@@ -434,15 +429,12 @@
     <div class="parent-tab" onclick="switchTab('sessions')">📈 Sessions</div>
   </div>
 
-  <!-- OVERVIEW TAB -->
   <div class="parent-tab-content active" id="tab-overview">
     <div class="parent-content">
-      <!-- Sticker wallets -->
       <div class="parent-section">
         <h2>⭐ Sticker Wallets</h2>
         <div class="wallet-cards" id="wallet-cards"><div style="color:#aaa">Loading...</div></div>
       </div>
-      <!-- Child assignments -->
       <div class="parent-section">
         <h2>👧 Word Set Assignments</h2>
         <div id="child-assignments"><div style="color:#aaa">Loading...</div></div>
@@ -450,14 +442,42 @@
     </div>
   </div>
 
-  <!-- WORD SETS TAB -->
   <div class="parent-tab-content" id="tab-wordsets">
     <div class="parent-content">
       <div class="parent-section">
-        <h2>📋 Word Sets</h2>
-        <table class="data-table">
-          <thead><tr><th>Set Name</th><th>Sound Focus</th><th>Status</th></tr></thead>
-          <tbody id="wordsets-tbody"><tr><td colspan="3" style="padding:16px;color:#aaa">Loading...</td></tr></tbody>
+        <h2>📋 Word Sets
+          <button class="btn-add" onclick="toggleAddWordSet()" style="margin-left:auto;font-size:13px">➕ Add New Set</button>
+        </h2>
+        <div class="add-wordset-form" id="add-wordset-form">
+          <div class="form-row-2">
+            <div class="form-row">
+              <div class="form-label">Set Name</div>
+              <input class="form-input" id="new-set-name" placeholder="e.g. R Sound - Set 1">
+            </div>
+            <div class="form-row">
+              <div class="form-label">Sound Focus</div>
+              <input class="form-input" id="new-set-focus" placeholder="e.g. R sound">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-label">Words (one per line)</div>
+            <textarea class="form-textarea" id="new-set-words" placeholder="rabbit&#10;river&#10;red&#10;rain&#10;run"></textarea>
+            <div class="form-hint">Each word on its own line. Minimum 1 word.</div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-row">
+              <div class="form-label">Words per Sticker</div>
+              <input class="form-input" id="new-set-sticker" type="number" value="12" min="1">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" onclick="saveNewWordSet()">💾 Save Word Set</button>
+            <button class="btn-secondary" onclick="toggleAddWordSet()">Cancel</button>
+          </div>
+        </div>
+        <table class="data-table" style="margin-top:8px">
+          <thead><tr><th>Set Name</th><th>Sound Focus</th><th>Words</th><th>Status</th></tr></thead>
+          <tbody id="wordsets-tbody"><tr><td colspan="4" style="padding:16px;color:#aaa">Loading...</td></tr></tbody>
         </table>
       </div>
       <div class="parent-section">
@@ -470,18 +490,17 @@
     </div>
   </div>
 
-  <!-- IMAGES TAB -->
   <div class="parent-tab-content" id="tab-images">
     <div class="parent-content">
       <div class="parent-section">
         <h2>🖼️ Word Images</h2>
-        <p style="color:var(--text-mid);font-size:14px;font-weight:600;margin-bottom:18px">Tap a word to search and assign an image. Images show in the game instead of a placeholder.</p>
+        <p style="color:var(--text-mid);font-size:14px;font-weight:600;margin-bottom:14px">Tap a word to search and assign an image.</p>
+        <div class="img-set-filter" id="img-set-filter"></div>
         <div class="image-manager-grid" id="image-manager-grid"><div style="color:#aaa;padding:16px">Loading...</div></div>
       </div>
     </div>
   </div>
 
-  <!-- SESSIONS TAB -->
   <div class="parent-tab-content" id="tab-sessions">
     <div class="parent-content">
       <div class="parent-section">
@@ -496,173 +515,186 @@
 <div class="img-search-panel" id="img-search-panel">
   <div class="img-search-inner">
     <div class="img-search-header">
-      <h3 id="img-search-title">Find image for: seven</h3>
+      <h3 id="img-search-title">Find image for: word</h3>
       <button class="img-search-close" onclick="closeImageSearch()">✕</button>
     </div>
     <div class="img-search-bar">
-      <input type="text" id="img-search-input" placeholder="Search images..." onkeydown="if(event.key==='Enter')searchImages()">
-      <button onclick="searchImages()">Search</button>
+      <input type="text" id="img-search-input" placeholder="Search images..." onkeydown="if(event.key==='Enter')searchImages(1)">
+      <button onclick="searchImages(1)">Search</button>
     </div>
-    <div id="img-results-container">
-      <div class="img-search-empty">Search for an image above 🔍</div>
+    <div id="img-results-container"><div class="img-search-empty">Search for an image above 🔍</div></div>
+    <div class="img-search-footer">
+      <button class="img-search-save" id="img-search-save" onclick="saveSelectedImage()">✅ Use this image</button>
+      <button class="img-load-more" id="img-load-more" onclick="loadMoreImages()" style="display:none">Load more ↓</button>
     </div>
-    <button class="img-search-save" id="img-search-save" onclick="saveSelectedImage()">✅ Use this image</button>
   </div>
 </div>
 
 <script>
-// ─── CONFIG ───────────────────────────────────────────────────────────
-const PROXY = '/api/notion';
-const PARENT_PIN = '9999'; // change this!
-const DB = {
-  children:    'c893fa27-b5c7-4e8b-bfce-95b961db9d7d',
-  wordsets:    'fbd1f158-457d-4a00-b2be-e1731fef2196',
-  words:       'e8409cb3-c415-4101-bd74-0b92646e58ec',
-  games:       'd55c9c26-d8c1-4ea1-96da-b4cbb79d152c',
-  sessions:    '5f9ed66a-3750-4e31-81ad-abddb3adc055',
-  wallet:      '0323e5fe-824c-4368-b33e-d28252f4ab8d',
-  redemptions: 'ed24c019-f9a4-447b-8e03-cc7b5455de4e',
+const PROXY='/api/notion';
+const PARENT_PIN='9999';
+const DB={
+  children:   'c893fa27-b5c7-4e8b-bfce-95b961db9d7d',
+  wordsets:   'fbd1f158-457d-4a00-b2be-e1731fef2196',
+  words:      'e8409cb3-c415-4101-bd74-0b92646e58ec',
+  games:      'd55c9c26-d8c1-4ea1-96da-b4cbb79d152c',
+  sessions:   '5f9ed66a-3750-4e31-81ad-abddb3adc055',
+  wallet:     '0323e5fe-824c-4368-b33e-d28252f4ab8d',
+  redemptions:'ed24c019-f9a4-447b-8e03-cc7b5455de4e',
 };
-
-// Animal sets for frames - 4 per word card
-const ANIMAL_SETS = [
+const ANIMAL_SETS=[
   ['🦁','🐘','🦊','🐸'],['🐼','🦄','🐧','🦋'],
   ['🐬','🦓','🐙','🦜'],['🐻','🦒','🐺','🦩'],
   ['🐯','🦏','🐨','🦘'],['🦅','🐊','🦙','🐑'],
 ];
 
-// ─── NOTION API ───────────────────────────────────────────────────────
-async function notionQuery(dbId, filter) {
-  const body = filter ? { filter } : {};
-  const res = await fetch(`${PROXY}?path=/databases/${dbId}/query`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
-  });
-  const data = await res.json();
-  return data.results || [];
+// ── Notion API ────────────────────────────────────────────────────────
+async function notionQuery(dbId,filter){
+  const body=filter?{filter}:{};
+  const res=await fetch(`${PROXY}?path=/databases/${dbId}/query`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const data=await res.json();
+  return data.results||[];
 }
-async function notionCreate(dbId, props) {
-  await fetch(`${PROXY}?path=/pages`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ parent: { database_id: dbId }, properties: props })
-  });
+async function notionCreate(dbId,props){
+  return fetch(`${PROXY}?path=/pages`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({parent:{database_id:dbId},properties:props})});
 }
-async function notionUpdate(pageId, props) {
-  await fetch(`${PROXY}?path=/pages/${pageId}`, {
-    method: 'PATCH', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ properties: props })
-  });
+async function notionUpdate(pageId,props){
+  return fetch(`${PROXY}?path=/pages/${pageId}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({properties:props})});
 }
-function getProp(page, name, type) {
-  const p = page.properties[name];
-  if (!p) return '';
-  if (type === 'title') return p.title?.map(t => t.plain_text).join('') || '';
-  if (type === 'text') return p.rich_text?.map(t => t.plain_text).join('') || '';
-  if (type === 'select') return p.select?.name || '';
-  if (type === 'number') return p.number ?? 0;
-  if (type === 'checkbox') return p.checkbox ?? false;
-  if (type === 'url') return p.url || '';
-  return '';
+function getProp(page,name,type){
+  const p=page.properties[name];
+  if(!p)return'';
+  if(type==='title')return p.title?.map(t=>t.plain_text).join('')||'';
+  if(type==='text')return p.rich_text?.map(t=>t.plain_text).join('')||'';
+  if(type==='select')return p.select?.name||'';
+  if(type==='number')return p.number??0;
+  if(type==='checkbox')return p.checkbox??false;
+  if(type==='url')return p.url||'';
+  return'';
 }
 
-// ─── STATE ────────────────────────────────────────────────────────────
-let state = {
-  currentChild: null, currentWords: [], wordIndex: 0,
-  wordsPassed: 0, wordsAttempted: 0, stickersEarned: 0,
-  walletPage: null, walletStickers: 0, showWordText: true,
-  sessionStart: null, allChildren: [], allWordsets: [],
-  allGames: [], allWords: [], activeWordSet: null,
-  listening: false, animalSetIndex: 0,
+// ── Shuffle ──────────────────────────────────────────────────────────
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+// ── State ────────────────────────────────────────────────────────────
+let S={
+  child:null,words:[],wordIdx:0,wordsPassed:0,wordsAttempted:0,
+  stickersEarned:0,walletPage:null,walletStickers:0,showWord:true,
+  sessionStart:null,allChildren:[],allWordsets:[],allGames:[],
+  allWords:[],activeWordSet:null,listening:false,animalIdx:0,
+  selectedWordSet:null,
 };
+let imgState={wordPageId:null,wordText:'',selectedUrl:null,page:1,query:''};
 
-// Image search state
-let imgSearch = { wordPageId: null, wordText: '', selectedUrl: null };
-
-// ─── ROUTING ─────────────────────────────────────────────────────────
-function showScreen(name) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+// ── Routing ──────────────────────────────────────────────────────────
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(`screen-${name}`).classList.add('active');
-  if (name === 'parent') loadParentDashboard();
+  if(name==='parent')loadParentDashboard();
 }
 
-// ─── INIT ─────────────────────────────────────────────────────────────
-async function init() {
+// ── Init ─────────────────────────────────────────────────────────────
+async function init(){
   document.getElementById('loading').classList.remove('hidden');
-  try {
-    const [children, wordsets, games, words] = await Promise.all([
-      notionQuery(DB.children), notionQuery(DB.wordsets),
-      notionQuery(DB.games), notionQuery(DB.words),
+  try{
+    const[children,wordsets,games,words]=await Promise.all([
+      notionQuery(DB.children),notionQuery(DB.wordsets),
+      notionQuery(DB.games),notionQuery(DB.words),
     ]);
-    state.allChildren = children;
-    state.allWordsets = wordsets;
-    state.allGames = games;
-    state.allWords = words;
+    S.allChildren=children;S.allWordsets=wordsets;
+    S.allGames=games;S.allWords=words;
     renderProfiles();
-  } catch(e) {
-    console.error('Init error:', e);
-    // Demo fallback
-    state.allChildren = [{id:'demo1',properties:{Name:{title:[{plain_text:'My Daughter'}]},Avatar:{select:{name:'🦄'}},PIN:{rich_text:[{plain_text:'1234'}]},Active:{checkbox:true},'Active Word Set':{rich_text:[{plain_text:'V Sound - Set 1'}]}}}];
-    state.allWordsets = [{id:'ws1',properties:{'Set Name':{title:[{plain_text:'V Sound - Set 1'}]},'Sound Focus':{rich_text:[{plain_text:'V sound'}]},Status:{select:{name:'Active'}},'Words Per Sticker':{number:12}}}];
-    state.allWords = ['seven','shovel','over','caravan','river','giving','oven','waving','screwdriver','clever','diving','eleven'].map((w,i)=>({id:`w${i}`,properties:{Word:{title:[{plain_text:w}]},'Word Set Name':{rich_text:[{plain_text:'V Sound - Set 1'}]},Order:{number:i+1},'Image URL':{url:null}}}));
-    state.allGames = [{id:'g1',properties:{'Game Name':{title:[{plain_text:'Animal Parade'}]},Emoji:{rich_text:[{plain_text:'🐾'}]},Description:{rich_text:[{plain_text:'Animals frame each word!'}]},Status:{select:{name:'Active'}},Route:{rich_text:[{plain_text:'/play/animal-parade'}]}}}];
+  }catch(e){
+    console.error(e);
+    // demo fallback
+    S.allChildren=[{id:'d1',properties:{Name:{title:[{plain_text:'My Daughter'}]},Avatar:{select:{name:'🦄'}},PIN:{rich_text:[{plain_text:'1234'}]},Active:{checkbox:true},'Assigned Word Sets':{rich_text:[{plain_text:'V Sound - Set 1'}]},'Active Word Set':{rich_text:[{plain_text:'V Sound - Set 1'}]}}}];
+    S.allWordsets=[{id:'ws1',properties:{'Set Name':{title:[{plain_text:'V Sound - Set 1'}]},'Sound Focus':{rich_text:[{plain_text:'V sound'}]},Status:{select:{name:'Active'}},'Words Per Sticker':{number:12}}}];
+    S.allWords=['seven','shovel','over','caravan','river','giving','oven','waving','screwdriver','clever','diving','eleven'].map((w,i)=>({id:`w${i}`,properties:{Word:{title:[{plain_text:w}]},'Word Set Name':{rich_text:[{plain_text:'V Sound - Set 1'}]},Order:{number:i+1},'Image URL':{url:null}}}));
+    S.allGames=[{id:'g1',properties:{'Game Name':{title:[{plain_text:'Animal Parade'}]},Emoji:{rich_text:[{plain_text:'🐾'}]},Description:{rich_text:[{plain_text:'Animals frame each word!'}]},Status:{select:{name:'Active'}},Route:{rich_text:[{plain_text:'/play/animal-parade'}]}}}];
     renderProfiles();
   }
   document.getElementById('loading').classList.add('hidden');
   showScreen('profiles');
 }
 
-// ─── PROFILES ─────────────────────────────────────────────────────────
-function renderProfiles() {
-  const grid = document.getElementById('profiles-grid');
-  const active = state.allChildren.filter(c => getProp(c,'Active','checkbox'));
-  grid.innerHTML = active.map(child => {
-    const name = getProp(child,'Name','title');
-    const avatar = getProp(child,'Avatar','select') || '🐼';
-    return `<div class="profile-card" onclick="selectChild('${child.id}')">
+// ── Profiles ─────────────────────────────────────────────────────────
+function renderProfiles(){
+  const grid=document.getElementById('profiles-grid');
+  const active=S.allChildren.filter(c=>getProp(c,'Active','checkbox'));
+  grid.innerHTML=active.map(c=>{
+    const name=getProp(c,'Name','title');
+    const avatar=getProp(c,'Avatar','select')||'🐼';
+    return`<div class="profile-card" onclick="selectChild('${c.id}')">
       <div class="profile-avatar">${avatar}</div>
       <div class="profile-name">${name}</div>
     </div>`;
   }).join('');
 }
 
-async function selectChild(id) {
-  state.currentChild = state.allChildren.find(c => c.id === id);
-  const name = getProp(state.currentChild,'Name','title');
-  const activeSetName = getProp(state.currentChild,'Active Word Set','text');
-  document.getElementById('games-title').textContent = `Hi ${name}! 👋`;
+async function selectChild(id){
+  S.child=S.allChildren.find(c=>c.id===id);
+  const name=getProp(S.child,'Name','title');
+  document.getElementById('wordsets-title').textContent=`Hi ${name}! 👋`;
+  // load wallet
+  try{
+    const wallets=await notionQuery(DB.wallet);
+    S.walletPage=wallets.find(w=>getProp(w,'Child Name','title')===name);
+    S.walletStickers=S.walletPage?getProp(S.walletPage,'Stickers Available','number'):0;
+  }catch(e){S.walletStickers=0;}
+  document.getElementById('sticker-count').textContent=S.walletStickers;
+  document.getElementById('sticker-count2').textContent=S.walletStickers;
+  renderWordSetSelector();
+  showScreen('wordsets');
+}
 
-  // Show assigned word set info
-  const setInfo = document.getElementById('wordset-info');
-  if (activeSetName) {
-    const ws = state.allWordsets.find(w => getProp(w,'Set Name','title') === activeSetName);
-    const focus = ws ? getProp(ws,'Sound Focus','text') : '';
-    setInfo.textContent = `📋 ${activeSetName}${focus ? ' — ' + focus : ''}`;
-  } else {
-    setInfo.textContent = '⚠️ No word set assigned — ask a parent to assign one';
+// ── Word Set Selector ─────────────────────────────────────────────────
+function renderWordSetSelector(){
+  const list=document.getElementById('wordsets-list');
+  const assignedRaw=getProp(S.child,'Assigned Word Sets','text');
+  const assigned=assignedRaw?assignedRaw.split(',').map(s=>s.trim()).filter(Boolean):[];
+  if(!assigned.length){
+    list.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-mid);font-weight:700">⚠️ No word sets assigned yet.<br>Ask a parent to assign some!</div>';
+    return;
   }
+  const available=S.allWordsets.filter(ws=>assigned.includes(getProp(ws,'Set Name','title')));
+  list.innerHTML=available.map(ws=>{
+    const name=getProp(ws,'Set Name','title');
+    const focus=getProp(ws,'Sound Focus','text');
+    const wordCount=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===name).length;
+    return`<div class="wordset-card" onclick="selectWordSet('${ws.id}')">
+      <div class="wordset-icon">📋</div>
+      <div class="wordset-info-block">
+        <div class="wordset-title">${name}</div>
+        <div class="wordset-meta">${focus?focus+' · ':''}${wordCount} words</div>
+      </div>
+      <div class="wordset-arrow">→</div>
+    </div>`;
+  }).join('');
+}
 
-  // Load wallet
-  try {
-    const wallets = await notionQuery(DB.wallet);
-    state.walletPage = wallets.find(w => getProp(w,'Child Name','title') === name);
-    state.walletStickers = state.walletPage ? getProp(state.walletPage,'Stickers Available','number') : 0;
-  } catch(e) { state.walletStickers = 0; }
-  document.getElementById('sticker-count').textContent = state.walletStickers;
+function selectWordSet(wsId){
+  S.selectedWordSet=S.allWordsets.find(ws=>ws.id===wsId);
+  const name=getProp(S.selectedWordSet,'Set Name','title');
+  document.getElementById('active-set-banner').textContent=`📋 ${name}`;
   renderGames();
   showScreen('games');
 }
 
-// ─── GAMES ────────────────────────────────────────────────────────────
-function renderGames() {
-  const grid = document.getElementById('games-grid');
-  grid.innerHTML = state.allGames.map(g => {
-    const name = getProp(g,'Game Name','title');
-    const emoji = getProp(g,'Emoji','text') || '🎮';
-    const desc = getProp(g,'Description','text');
-    const status = getProp(g,'Status','select');
-    const isActive = status === 'Active';
-    const isComing = status === 'Coming Soon';
-    return `<div class="game-card ${isActive?'active-game':''} ${isComing?'coming-soon':''}"
+// ── Games ─────────────────────────────────────────────────────────────
+function renderGames(){
+  const grid=document.getElementById('games-grid');
+  grid.innerHTML=S.allGames.map(g=>{
+    const name=getProp(g,'Game Name','title');
+    const emoji=getProp(g,'Emoji','text')||'🎮';
+    const desc=getProp(g,'Description','text');
+    const status=getProp(g,'Status','select');
+    const isActive=status==='Active';
+    const isComing=status==='Coming Soon';
+    return`<div class="game-card ${isActive?'active-game':''} ${isComing?'coming-soon':''}"
       onclick="${isActive?`startGame('${g.id}')`:''}" >
       ${isComing?'<div class="coming-soon-tag">Coming soon</div>':''}
       <div class="game-emoji">${emoji}</div>
@@ -672,551 +704,528 @@ function renderGames() {
   }).join('');
 }
 
-// ─── GAME: ANIMAL PARADE ──────────────────────────────────────────────
-async function startGame(gameId) {
-  const activeSetName = getProp(state.currentChild,'Active Word Set','text');
-  if (!activeSetName) { alert('No word set assigned! Ask a parent to assign one in the dashboard.'); return; }
-  const wordsForSet = state.allWords
-    .filter(w => getProp(w,'Word Set Name','text') === activeSetName)
-    .sort((a,b) => getProp(a,'Order','number') - getProp(b,'Order','number'));
-  if (!wordsForSet.length) { alert('No words found in this set!'); return; }
-  state.currentWords = wordsForSet;
-  state.activeWordSet = state.allWordsets.find(ws => getProp(ws,'Set Name','title') === activeSetName);
-  state.wordIndex = 0; state.wordsPassed = 0; state.wordsAttempted = 0;
-  state.stickersEarned = 0; state.sessionStart = Date.now(); state.showWordText = true;
-  state.animalSetIndex = 0;
+// ── Animal Parade ─────────────────────────────────────────────────────
+function startGame(gameId){
+  if(!S.selectedWordSet){alert('Please select a word set first!');return;}
+  const setName=getProp(S.selectedWordSet,'Set Name','title');
+  const wordsForSet=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===setName);
+  if(!wordsForSet.length){alert('No words found in this set!');return;}
+  S.words=shuffle(wordsForSet); // RANDOM ORDER
+  S.wordIdx=0;S.wordsPassed=0;S.wordsAttempted=0;
+  S.stickersEarned=0;S.sessionStart=Date.now();S.showWord=true;S.animalIdx=0;
   showScreen('game');
   renderWordCard();
 }
 
-function renderWordCard() {
-  if (state.wordIndex >= state.currentWords.length) { endGame(); return; }
-  const wordPage = state.currentWords[state.wordIndex];
-  const word = getProp(wordPage,'Word','title');
-  const imageUrl = getProp(wordPage,'Image URL','url');
-  const total = state.currentWords.length;
-
-  document.getElementById('word-counter').textContent = `${state.wordIndex+1} / ${total}`;
-  document.getElementById('progress-bar').style.width = `${(state.wordIndex/total)*100}%`;
-
-  // Animal frame corners
-  const animals = ANIMAL_SETS[state.animalSetIndex % ANIMAL_SETS.length];
-  document.getElementById('corner-tl').textContent = animals[0];
-  document.getElementById('corner-tr').textContent = animals[1];
-  document.getElementById('corner-bl').textContent = animals[2];
-  document.getElementById('corner-br').textContent = animals[3];
-
-  // Word image
-  const img = document.getElementById('word-image');
-  const placeholder = document.getElementById('word-image-placeholder');
-  if (imageUrl) {
-    img.src = imageUrl; img.style.display = 'block';
-    placeholder.style.display = 'none';
-  } else {
-    img.style.display = 'none';
-    placeholder.style.display = 'flex';
-    placeholder.innerHTML = `<div class="ph-icon">🖼️</div><div class="ph-text">No image yet</div>`;
-  }
-
-  // Word text
-  document.getElementById('word-display').textContent = word;
-  document.getElementById('word-display').className = `word-display ${state.showWordText?'':'hidden'}`;
-  document.getElementById('word-toggle').textContent = state.showWordText ? 'hide word' : 'show word';
-
-  // Reset
-  document.getElementById('word-card').className = 'word-card';
-  document.getElementById('mic-btn').className = 'mic-btn';
-  document.getElementById('mic-hint').textContent = 'Tap the mic and say the word!';
-  document.getElementById('result-overlay').className = 'result-overlay';
-  document.getElementById('next-actions').style.display = 'none';
-  document.getElementById('parent-confirm').style.display = 'block';
+function renderWordCard(){
+  if(S.wordIdx>=S.words.length){endGame();return;}
+  const wp=S.words[S.wordIdx];
+  const word=getProp(wp,'Word','title');
+  const imageUrl=getProp(wp,'Image URL','url');
+  const total=S.words.length;
+  document.getElementById('word-counter').textContent=`${S.wordIdx+1} / ${total}`;
+  document.getElementById('progress-bar').style.width=`${(S.wordIdx/total)*100}%`;
+  const animals=ANIMAL_SETS[S.animalIdx%ANIMAL_SETS.length];
+  document.getElementById('corner-tl').textContent=animals[0];
+  document.getElementById('corner-tr').textContent=animals[1];
+  document.getElementById('corner-bl').textContent=animals[2];
+  document.getElementById('corner-br').textContent=animals[3];
+  const img=document.getElementById('word-image');
+  const ph=document.getElementById('word-image-placeholder');
+  if(imageUrl){img.src=imageUrl;img.style.display='block';ph.style.display='none';}
+  else{img.style.display='none';ph.style.display='flex';}
+  document.getElementById('word-display').textContent=word;
+  document.getElementById('word-display').className=`word-display ${S.showWord?'':'hidden'}`;
+  document.getElementById('word-toggle').textContent=S.showWord?'hide word':'show word';
+  document.getElementById('word-card').className='word-card';
+  document.getElementById('mic-btn').className='mic-btn';
+  document.getElementById('mic-hint').textContent='Tap the mic and say the word!';
+  document.getElementById('result-overlay').className='result-overlay';
+  document.getElementById('next-actions').style.display='none';
+  document.getElementById('parent-confirm').style.display='block';
 }
 
-function toggleWord() {
-  state.showWordText = !state.showWordText;
-  document.getElementById('word-display').className = `word-display ${state.showWordText?'':'hidden'}`;
-  document.getElementById('word-toggle').textContent = state.showWordText ? 'hide word' : 'show word';
+function toggleWord(){
+  S.showWord=!S.showWord;
+  document.getElementById('word-display').className=`word-display ${S.showWord?'':'hidden'}`;
+  document.getElementById('word-toggle').textContent=S.showWord?'hide word':'show word';
 }
 
-function hearWord() {
-  const word = getProp(state.currentWords[state.wordIndex],'Word','title');
-  // Animate corners
-  const card = document.getElementById('word-card');
-  card.classList.add('dance');
-  setTimeout(() => card.classList.remove('dance'), 900);
-  const utter = new SpeechSynthesisUtterance(word);
-  utter.rate = 0.85; utter.pitch = 1.1;
-  speechSynthesis.speak(utter);
+function hearWord(){
+  const word=getProp(S.words[S.wordIdx],'Word','title');
+  document.getElementById('word-card').classList.add('dance');
+  setTimeout(()=>document.getElementById('word-card').classList.remove('dance'),900);
+  const u=new SpeechSynthesisUtterance(word);
+  u.rate=0.85;u.pitch=1.1;speechSynthesis.speak(u);
 }
 
-function startListening() {
-  if (state.listening) return;
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) { showParentConfirm('unsupported'); return; }
-  state.listening = true;
-  const btn = document.getElementById('mic-btn');
+function startListening(){
+  if(S.listening)return;
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){showParentConfirm();return;}
+  S.listening=true;
+  const btn=document.getElementById('mic-btn');
   btn.classList.add('listening');
-  document.getElementById('mic-hint').textContent = 'Listening...';
-  const rec = new SpeechRecognition();
-  rec.lang = 'en-GB'; rec.interimResults = false; rec.maxAlternatives = 3;
-  rec.onresult = (e) => {
-    state.listening = false; btn.classList.remove('listening');
-    const target = getProp(state.currentWords[state.wordIndex],'Word','title').toLowerCase().trim();
-    let matched = false;
-    for (let i = 0; i < e.results[0].length; i++) {
-      const heard = e.results[0][i].transcript.toLowerCase().trim();
-      if (heard === target || heard.includes(target) || target.includes(heard)) { matched = true; break; }
+  document.getElementById('mic-hint').textContent='Listening...';
+  const rec=new SR();
+  rec.lang='en-GB';rec.interimResults=false;rec.maxAlternatives=3;
+  rec.onresult=(e)=>{
+    S.listening=false;btn.classList.remove('listening');
+    const target=getProp(S.words[S.wordIdx],'Word','title').toLowerCase().trim();
+    let matched=false;
+    for(let i=0;i<e.results[0].length;i++){
+      const h=e.results[0][i].transcript.toLowerCase().trim();
+      if(h===target||h.includes(target)||target.includes(h)){matched=true;break;}
     }
-    const heard = e.results[0][0].transcript.toLowerCase().trim();
-    if (matched) showResultOverlay('auto-correct');
-    else showParentConfirm('uncertain', heard);
-    state.wordsAttempted++;
+    S.wordsAttempted++;
+    if(matched)showResultOverlay('correct');
+    else showParentConfirm(e.results[0][0].transcript);
   };
-  rec.onerror = () => { state.listening = false; btn.classList.remove('listening'); showParentConfirm('error'); };
-  rec.onend = () => { state.listening = false; btn.classList.remove('listening'); };
+  rec.onerror=()=>{S.listening=false;btn.classList.remove('listening');S.wordsAttempted++;showParentConfirm();};
+  rec.onend=()=>{S.listening=false;btn.classList.remove('listening');};
   rec.start();
 }
 
-function showResultOverlay(type, heard) {
-  const overlay = document.getElementById('result-overlay');
-  const emoji = document.getElementById('result-emoji');
-  const text = document.getElementById('result-text');
-  overlay.className = 'result-overlay show';
-  if (type === 'auto-correct') {
-    emoji.textContent = '🎉'; text.textContent = 'Amazing!'; text.className = 'result-text correct';
-    document.getElementById('parent-confirm').style.display = 'none';
-    document.getElementById('next-actions').style.display = 'flex';
-    document.getElementById('word-card').classList.add('correct-flash', 'dance');
-    state.wordsPassed++; checkSticker();
-  } else {
-    emoji.textContent = '🤔';
-    text.textContent = heard ? `I heard: "${heard}"` : 'Hmm...';
-    text.className = 'result-text'; text.style.fontSize = '22px';
-    document.getElementById('parent-confirm').style.display = 'block';
-    document.getElementById('next-actions').style.display = 'none';
+function showResultOverlay(type,heard){
+  const overlay=document.getElementById('result-overlay');
+  overlay.className='result-overlay show';
+  if(type==='correct'){
+    document.getElementById('result-emoji').textContent='🎉';
+    document.getElementById('result-text').textContent='Amazing!';
+    document.getElementById('result-text').className='result-text correct';
+    document.getElementById('parent-confirm').style.display='none';
+    document.getElementById('next-actions').style.display='flex';
+    document.getElementById('word-card').classList.add('correct-flash','dance');
+    S.wordsPassed++;checkSticker();
   }
 }
 
-function showParentConfirm() {
-  const overlay = document.getElementById('result-overlay');
-  overlay.className = 'result-overlay show';
-  document.getElementById('result-emoji').textContent = '👂';
-  document.getElementById('result-text').textContent = 'Did she say it right?';
-  document.getElementById('result-text').className = 'result-text';
-  document.getElementById('result-text').style.fontSize = '26px';
-  document.getElementById('parent-confirm').style.display = 'block';
-  document.getElementById('next-actions').style.display = 'none';
-  if (!state.wordsAttempted || state.wordIndex === state.currentWords.length - 1) return;
+function showParentConfirm(heard){
+  const overlay=document.getElementById('result-overlay');
+  overlay.className='result-overlay show';
+  document.getElementById('result-emoji').textContent='👂';
+  const txt=document.getElementById('result-text');
+  txt.textContent=heard?`I heard: "${heard}"`:'Did she say it right?';
+  txt.className='result-text';txt.style.fontSize='24px';
+  document.getElementById('parent-confirm').style.display='block';
+  document.getElementById('next-actions').style.display='none';
 }
 
-function markCorrect() {
-  state.wordsPassed++;
-  document.getElementById('result-emoji').textContent = '🌟';
-  document.getElementById('result-text').textContent = 'Well done!';
-  document.getElementById('result-text').className = 'result-text correct';
-  document.getElementById('result-text').style.fontSize = '';
-  document.getElementById('parent-confirm').style.display = 'none';
-  document.getElementById('next-actions').style.display = 'flex';
-  document.getElementById('word-card').classList.add('correct-flash', 'dance');
+function markCorrect(){
+  S.wordsPassed++;
+  document.getElementById('result-emoji').textContent='🌟';
+  document.getElementById('result-text').textContent='Well done!';
+  document.getElementById('result-text').className='result-text correct';
+  document.getElementById('result-text').style.fontSize='';
+  document.getElementById('parent-confirm').style.display='none';
+  document.getElementById('next-actions').style.display='flex';
+  document.getElementById('word-card').classList.add('correct-flash','dance');
   checkSticker();
 }
 
-function markRetry() {
-  document.getElementById('result-overlay').className = 'result-overlay';
-  hearWord();
-}
+function markRetry(){document.getElementById('result-overlay').className='result-overlay';hearWord();}
 
-function checkSticker() {
-  const wordsPerSticker = state.activeWordSet ? getProp(state.activeWordSet,'Words Per Sticker','number') || 12 : 12;
-  if (state.wordsPassed > 0 && state.wordsPassed % wordsPerSticker === 0) {
-    state.stickersEarned++; state.walletStickers++;
-    document.getElementById('sticker-count').textContent = state.walletStickers;
-    setTimeout(showStickerCelebration, 600);
+function checkSticker(){
+  const n=getProp(S.selectedWordSet,'Words Per Sticker','number')||12;
+  if(S.wordsPassed>0&&S.wordsPassed%n===0){
+    S.stickersEarned++;S.walletStickers++;
+    document.getElementById('sticker-count').textContent=S.walletStickers;
+    document.getElementById('sticker-count2').textContent=S.walletStickers;
+    setTimeout(showStickerCelebration,600);
   }
 }
 
-function showStickerCelebration() {
-  document.getElementById('result-overlay').className = 'result-overlay';
-  const cel = document.getElementById('sticker-celebration');
-  cel.className = 'sticker-celebration show';
-  document.getElementById('sticker-total-msg').textContent = `You now have ${state.walletStickers} sticker${state.walletStickers!==1?'s':''}!`;
+function showStickerCelebration(){
+  document.getElementById('result-overlay').className='result-overlay';
+  document.getElementById('sticker-celebration').className='sticker-celebration show';
+  document.getElementById('sticker-total-msg').textContent=`You now have ${S.walletStickers} sticker${S.walletStickers!==1?'s':''}!`;
   launchConfetti();
 }
 
-function dismissSticker() {
-  document.getElementById('sticker-celebration').className = 'sticker-celebration';
+function dismissSticker(){
+  document.getElementById('sticker-celebration').className='sticker-celebration';
   nextWord();
 }
 
-function launchConfetti() {
-  const colors = ['#FFD93D','#FF6B6B','#4D96FF','#6BCB77','#FF6EB4','#FF8C42'];
-  const container = document.getElementById('confetti-container');
-  container.innerHTML = '';
-  for (let i = 0; i < 60; i++) {
-    const el = document.createElement('div');
-    el.className = 'confetti-piece';
-    el.style.left = Math.random()*100+'vw';
-    el.style.background = colors[Math.floor(Math.random()*colors.length)];
-    el.style.animationDuration = (1.5+Math.random()*2)+'s';
-    el.style.animationDelay = (Math.random()*0.8)+'s';
-    el.style.width = el.style.height = (8+Math.random()*10)+'px';
-    el.style.borderRadius = Math.random()>0.5?'50%':'2px';
-    container.appendChild(el);
+function launchConfetti(){
+  const colors=['#FFD93D','#FF6B6B','#4D96FF','#6BCB77','#FF6EB4','#FF8C42'];
+  const c=document.getElementById('confetti-container');c.innerHTML='';
+  for(let i=0;i<60;i++){
+    const el=document.createElement('div');el.className='confetti-piece';
+    el.style.left=Math.random()*100+'vw';
+    el.style.background=colors[Math.floor(Math.random()*colors.length)];
+    el.style.animationDuration=(1.5+Math.random()*2)+'s';
+    el.style.animationDelay=(Math.random()*.8)+'s';
+    el.style.width=el.style.height=(8+Math.random()*10)+'px';
+    el.style.borderRadius=Math.random()>.5?'50%':'2px';
+    c.appendChild(el);
   }
 }
 
-function nextWord() {
-  state.animalSetIndex++; state.wordIndex++;
-  document.getElementById('result-overlay').className = 'result-overlay';
-  document.getElementById('word-card').className = 'word-card';
+function nextWord(){
+  S.animalIdx++;S.wordIdx++;
+  document.getElementById('result-overlay').className='result-overlay';
+  document.getElementById('word-card').className='word-card';
   renderWordCard();
 }
 
-async function endGame() {
-  const elapsed = Math.round((Date.now()-state.sessionStart)/1000);
-  document.getElementById('stat-passed').textContent = state.wordsPassed;
-  document.getElementById('stat-total').textContent = state.wordsAttempted;
-  document.getElementById('stat-stickers').textContent = state.stickersEarned;
+async function endGame(){
+  const elapsed=Math.round((Date.now()-S.sessionStart)/1000);
+  document.getElementById('stat-passed').textContent=S.wordsPassed;
+  document.getElementById('stat-total').textContent=S.wordsAttempted;
+  document.getElementById('stat-stickers').textContent=S.stickersEarned;
   showScreen('finish');
-  try {
-    const childName = getProp(state.currentChild,'Name','title');
-    const setName = getProp(state.activeWordSet,'Set Name','title');
-    const sessionId = `${childName}-${new Date().toISOString().slice(0,10)}-${Date.now().toString().slice(-4)}`;
-    await notionCreate(DB.sessions, {
-      'Session ID': { title: [{ text: { content: sessionId } }] },
-      'Child Name': { rich_text: [{ text: { content: childName } }] },
-      'Game': { rich_text: [{ text: { content: 'Animal Parade' } }] },
-      'Word Set': { rich_text: [{ text: { content: setName } }] },
-      'Words Attempted': { number: state.wordsAttempted },
-      'Words Passed': { number: state.wordsPassed },
-      'Time Taken (secs)': { number: elapsed },
-      'Stickers Earned': { number: state.stickersEarned },
+  try{
+    const childName=getProp(S.child,'Name','title');
+    const setName=getProp(S.selectedWordSet,'Set Name','title');
+    const sid=`${childName}-${new Date().toISOString().slice(0,10)}-${Date.now().toString().slice(-4)}`;
+    await notionCreate(DB.sessions,{
+      'Session ID':{title:[{text:{content:sid}}]},
+      'Child Name':{rich_text:[{text:{content:childName}}]},
+      'Game':{rich_text:[{text:{content:'Animal Parade'}}]},
+      'Word Set':{rich_text:[{text:{content:setName}}]},
+      'Words Attempted':{number:S.wordsAttempted},
+      'Words Passed':{number:S.wordsPassed},
+      'Time Taken (secs)':{number:elapsed},
+      'Stickers Earned':{number:S.stickersEarned},
     });
-    if (state.walletPage && state.stickersEarned > 0) {
-      const prev = getProp(state.walletPage,'Total Stickers Earned','number');
-      const prevWords = getProp(state.walletPage,'Total Words Completed','number');
-      const prevAvail = getProp(state.walletPage,'Stickers Available','number');
-      await notionUpdate(state.walletPage.id, {
-        'Total Stickers Earned': { number: prev+state.stickersEarned },
-        'Total Words Completed': { number: prevWords+state.wordsPassed },
-        'Stickers Available': { number: prevAvail+state.stickersEarned },
+    if(S.walletPage&&S.stickersEarned>0){
+      await notionUpdate(S.walletPage.id,{
+        'Total Stickers Earned':{number:getProp(S.walletPage,'Total Stickers Earned','number')+S.stickersEarned},
+        'Total Words Completed':{number:getProp(S.walletPage,'Total Words Completed','number')+S.wordsPassed},
+        'Stickers Available':{number:getProp(S.walletPage,'Stickers Available','number')+S.stickersEarned},
       });
     }
-  } catch(e) { console.log('Session save error', e); }
+  }catch(e){console.log('Session save error',e);}
 }
 
-// ─── PIN ──────────────────────────────────────────────────────────────
-let pinBuffer = '';
-function goToPin() { pinBuffer=''; updatePinDots(); document.getElementById('pin-error').textContent=''; showScreen('pin'); }
-function pinPress(val) {
-  if (val==='back') { pinBuffer=pinBuffer.slice(0,-1); updatePinDots(); return; }
-  if (pinBuffer.length>=4) return;
-  pinBuffer+=val; updatePinDots();
-  if (pinBuffer.length===4) {
-    if (pinBuffer===PARENT_PIN) { pinBuffer=''; updatePinDots(); showScreen('parent'); }
-    else {
-      document.getElementById('pin-error').textContent='Wrong PIN, try again';
-      setTimeout(()=>{ pinBuffer=''; updatePinDots(); document.getElementById('pin-error').textContent=''; },1200);
-    }
+// ── PIN ───────────────────────────────────────────────────────────────
+let pinBuf='';
+function goToPin(){pinBuf='';updatePinDots();document.getElementById('pin-error').textContent='';showScreen('pin');}
+function pinPress(v){
+  if(v==='back'){pinBuf=pinBuf.slice(0,-1);updatePinDots();return;}
+  if(pinBuf.length>=4)return;
+  pinBuf+=v;updatePinDots();
+  if(pinBuf.length===4){
+    if(pinBuf===PARENT_PIN){pinBuf='';updatePinDots();showScreen('parent');}
+    else{document.getElementById('pin-error').textContent='Wrong PIN, try again';setTimeout(()=>{pinBuf='';updatePinDots();document.getElementById('pin-error').textContent='';},1200);}
   }
 }
-function updatePinDots() {
-  for (let i=0;i<4;i++) document.getElementById(`dot-${i}`).className=`pin-dot ${i<pinBuffer.length?'filled':''}`;
-}
+function updatePinDots(){for(let i=0;i<4;i++)document.getElementById(`dot-${i}`).className=`pin-dot ${i<pinBuf.length?'filled':''}`;}
 
-// ─── PARENT TABS ──────────────────────────────────────────────────────
-function switchTab(name) {
-  document.querySelectorAll('.parent-tab').forEach((t,i) => {
-    const tabs = ['overview','wordsets','images','sessions'];
-    t.classList.toggle('active', tabs[i]===name);
-  });
-  document.querySelectorAll('.parent-tab-content').forEach(c => c.classList.remove('active'));
+// ── Parent tabs ───────────────────────────────────────────────────────
+function switchTab(name){
+  const tabs=['overview','wordsets','images','sessions'];
+  document.querySelectorAll('.parent-tab').forEach((t,i)=>t.classList.toggle('active',tabs[i]===name));
+  document.querySelectorAll('.parent-tab-content').forEach(c=>c.classList.remove('active'));
   document.getElementById(`tab-${name}`).classList.add('active');
 }
 
-// ─── PARENT DASHBOARD ─────────────────────────────────────────────────
-async function loadParentDashboard() {
-  try {
-    const [children, wordsets, games, words, wallets, sessions] = await Promise.all([
-      notionQuery(DB.children), notionQuery(DB.wordsets), notionQuery(DB.games),
-      notionQuery(DB.words), notionQuery(DB.wallet), notionQuery(DB.sessions),
+// ── Parent Dashboard ──────────────────────────────────────────────────
+async function loadParentDashboard(){
+  try{
+    const[children,wordsets,games,words,wallets,sessions]=await Promise.all([
+      notionQuery(DB.children),notionQuery(DB.wordsets),notionQuery(DB.games),
+      notionQuery(DB.words),notionQuery(DB.wallet),notionQuery(DB.sessions),
     ]);
-    state.allChildren = children; state.allWordsets = wordsets;
-    state.allGames = games; state.allWords = words;
+    S.allChildren=children;S.allWordsets=wordsets;S.allGames=games;S.allWords=words;
     renderWallets(wallets);
-    renderChildAssignments(children, wordsets);
+    renderChildAssignments(children,wordsets);
     renderWordsetsTable(wordsets);
     renderGamesTable(games);
-    renderImageManager(words, wordsets);
+    renderImageManager(words,wordsets);
     renderSessionsTable(sessions);
-  } catch(e) { console.error('Dashboard error', e); }
+  }catch(e){console.error(e);}
 }
 
-function renderWallets(wallets) {
-  const div = document.getElementById('wallet-cards');
-  if (!wallets.length) { div.innerHTML='<div style="color:#aaa">No wallets found</div>'; return; }
-  div.innerHTML = wallets.map(w => {
-    const name = getProp(w,'Child Name','title');
-    const avail = getProp(w,'Stickers Available','number');
-    const earned = getProp(w,'Total Stickers Earned','number');
-    const redeemed = getProp(w,'Total Stickers Redeemed','number');
-    return `<div class="wallet-card">
+function renderWallets(wallets){
+  const div=document.getElementById('wallet-cards');
+  if(!wallets.length){div.innerHTML='<div style="color:#aaa">No wallets found</div>';return;}
+  div.innerHTML=wallets.map(w=>{
+    const name=getProp(w,'Child Name','title');
+    const avail=getProp(w,'Stickers Available','number');
+    const earned=getProp(w,'Total Stickers Earned','number');
+    const redeemed=getProp(w,'Total Stickers Redeemed','number');
+    return`<div class="wallet-card">
       <div class="child-name">${name}</div>
       <div class="sticker-count">⭐ ${avail}</div>
       <div class="sticker-sub">Available · ${earned} earned · ${redeemed} redeemed</div>
       <button class="redeem-btn" onclick="toggleRedeemForm('${w.id}')">🎁 Redeem stickers</button>
       <div class="redeem-form" id="redeem-${w.id}">
-        <input type="number" placeholder="Stickers to redeem" id="redeem-count-${w.id}" min="1" max="${avail}">
-        <input type="text" placeholder="What did they earn? e.g. extra screen time" id="redeem-desc-${w.id}">
+        <input type="number" placeholder="Stickers to redeem" id="rc-${w.id}" min="1" max="${avail}">
+        <input type="text" placeholder="What did they earn?" id="rd-${w.id}">
         <button onclick="redeemStickers('${w.id}','${name}',${avail},${earned},${redeemed})">✅ Confirm</button>
       </div>
     </div>`;
   }).join('');
 }
 
-function toggleRedeemForm(id) {
-  document.getElementById(`redeem-${id}`).classList.toggle('show');
-}
+function toggleRedeemForm(id){document.getElementById(`redeem-${id}`).classList.toggle('show');}
 
-async function redeemStickers(pageId, childName, avail, earned, redeemed) {
-  const count = parseInt(document.getElementById(`redeem-count-${pageId}`).value);
-  const desc = document.getElementById(`redeem-desc-${pageId}`).value.trim();
-  if (!count||count<1||count>avail) { alert(`Enter 1–${avail}`); return; }
-  if (!desc) { alert('Please describe the reward'); return; }
-  try {
-    await notionUpdate(pageId, { 'Stickers Available': { number: avail-count }, 'Total Stickers Redeemed': { number: redeemed+count } });
-    await notionCreate(DB.redemptions, {
-      'Redemption ID': { title: [{ text: { content: `RED-${Date.now().toString().slice(-6)}` } }] },
-      'Child Name': { rich_text: [{ text: { content: childName } }] },
-      'Stickers Spent': { number: count },
-      'Reward Description': { rich_text: [{ text: { content: desc } }] },
-      'Redeemed By Parent': { checkbox: true },
+async function redeemStickers(pid,name,avail,earned,redeemed){
+  const count=parseInt(document.getElementById(`rc-${pid}`).value);
+  const desc=document.getElementById(`rd-${pid}`).value.trim();
+  if(!count||count<1||count>avail){alert(`Enter 1–${avail}`);return;}
+  if(!desc){alert('Please describe the reward');return;}
+  try{
+    await notionUpdate(pid,{'Stickers Available':{number:avail-count},'Total Stickers Redeemed':{number:redeemed+count}});
+    await notionCreate(DB.redemptions,{
+      'Redemption ID':{title:[{text:{content:`RED-${Date.now().toString().slice(-6)}`}}]},
+      'Child Name':{rich_text:[{text:{content:name}}]},
+      'Stickers Spent':{number:count},
+      'Reward Description':{rich_text:[{text:{content:desc}}]},
+      'Redeemed By Parent':{checkbox:true},
     });
     alert(`✅ Redeemed ${count} sticker${count!==1?'s':''} for: ${desc}`);
     loadParentDashboard();
-  } catch(e) { alert('Error redeeming. Try again.'); }
+  }catch(e){alert('Error. Try again.');}
 }
 
-function renderChildAssignments(children, wordsets) {
-  const div = document.getElementById('child-assignments');
-  const setNames = wordsets.map(ws => getProp(ws,'Set Name','title'));
-  div.innerHTML = children.filter(c => getProp(c,'Active','checkbox')).map(child => {
-    const name = getProp(child,'Name','title');
-    const avatar = getProp(child,'Avatar','select') || '🐼';
-    const current = getProp(child,'Active Word Set','text');
-    const opts = setNames.map(s => `<option value="${s}" ${s===current?'selected':''}>${s}</option>`).join('');
-    return `<div class="child-assign-row">
+function renderChildAssignments(children,wordsets){
+  const div=document.getElementById('child-assignments');
+  const setNames=wordsets.map(ws=>getProp(ws,'Set Name','title'));
+  div.innerHTML=children.filter(c=>getProp(c,'Active','checkbox')).map(child=>{
+    const name=getProp(child,'Name','title');
+    const avatar=getProp(child,'Avatar','select')||'🐼';
+    const assignedRaw=getProp(child,'Assigned Word Sets','text');
+    const assigned=assignedRaw?assignedRaw.split(',').map(s=>s.trim()).filter(Boolean):[];
+    const tags=assigned.map(s=>`<span class="assign-set-tag">${s}<button onclick="removeAssignment('${child.id}','${name}','${s}','${assignedRaw}')">✕</button></span>`).join('');
+    const opts=setNames.filter(s=>!assigned.includes(s)).map(s=>`<option value="${s}">${s}</option>`).join('');
+    return`<div class="child-assign-row">
       <span class="child-assign-avatar">${avatar}</span>
       <span class="child-assign-name">${name}</span>
-      <select class="wordset-select" id="assign-${child.id}">${opts}</select>
-      <button class="assign-save-btn" onclick="saveAssignment('${child.id}','${name}')">Save</button>
+      <div class="assign-sets-area">
+        <div class="assign-sets-list">${tags||'<span style="color:#aaa;font-size:13px">None assigned</span>'}</div>
+        ${opts?`<div class="assign-set-add">
+          <select class="assign-set-select" id="add-ws-${child.id}"><option value="">Add word set...</option>${opts}</select>
+          <button class="assign-save-btn" onclick="addAssignment('${child.id}','${name}','${assignedRaw}')">Add</button>
+        </div>`:'<div style="font-size:13px;color:#aaa;font-weight:600">All sets assigned</div>'}
+      </div>
     </div>`;
-  }).join('') || '<div style="color:#aaa">No children found</div>';
+  }).join('')||'<div style="color:#aaa">No children found</div>';
 }
 
-async function saveAssignment(childId, childName) {
-  const sel = document.getElementById(`assign-${childId}`);
-  const newSet = sel.value;
-  try {
-    await notionUpdate(childId, { 'Active Word Set': { rich_text: [{ text: { content: newSet } }] } });
-    // Update local state
-    const child = state.allChildren.find(c => c.id === childId);
-    if (child) child.properties['Active Word Set'] = { rich_text: [{ plain_text: newSet }] };
-    alert(`✅ ${childName} is now assigned to: ${newSet}`);
-  } catch(e) { alert('Error saving. Try again.'); }
+async function addAssignment(childId,childName,currentRaw){
+  const sel=document.getElementById(`add-ws-${childId}`);
+  const newSet=sel.value;
+  if(!newSet)return;
+  const current=currentRaw?currentRaw.split(',').map(s=>s.trim()).filter(Boolean):[];
+  if(current.includes(newSet))return;
+  const updated=[...current,newSet].join(', ');
+  try{
+    await notionUpdate(childId,{'Assigned Word Sets':{rich_text:[{text:{content:updated}}]}});
+    const child=S.allChildren.find(c=>c.id===childId);
+    if(child)child.properties['Assigned Word Sets']={rich_text:[{plain_text:updated}]};
+    loadParentDashboard();
+  }catch(e){alert('Error saving.');}
 }
 
-function renderWordsetsTable(wordsets) {
-  const tbody = document.getElementById('wordsets-tbody');
-  tbody.innerHTML = wordsets.map(ws => {
-    const name = getProp(ws,'Set Name','title');
-    const sound = getProp(ws,'Sound Focus','text');
-    const status = getProp(ws,'Status','select');
-    return `<tr>
+async function removeAssignment(childId,childName,setToRemove,currentRaw){
+  if(!confirm(`Remove "${setToRemove}" from ${childName}?`))return;
+  const current=currentRaw?currentRaw.split(',').map(s=>s.trim()).filter(Boolean):[];
+  const updated=current.filter(s=>s!==setToRemove).join(', ');
+  try{
+    await notionUpdate(childId,{'Assigned Word Sets':{rich_text:[{text:{content:updated}}]}});
+    loadParentDashboard();
+  }catch(e){alert('Error saving.');}
+}
+
+function renderWordsetsTable(wordsets){
+  const tbody=document.getElementById('wordsets-tbody');
+  tbody.innerHTML=wordsets.map(ws=>{
+    const name=getProp(ws,'Set Name','title');
+    const focus=getProp(ws,'Sound Focus','text');
+    const status=getProp(ws,'Status','select');
+    const wc=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===name).length;
+    return`<tr>
       <td><strong>${name}</strong></td>
-      <td style="color:#888;font-size:14px">${sound}</td>
+      <td style="color:#888;font-size:14px">${focus}</td>
+      <td style="color:#888;font-size:13px">${wc} words</td>
       <td><span class="status-badge ${status==='Active'?'active':'inactive'}">${status}</span></td>
     </tr>`;
-  }).join('') || '<tr><td colspan="3" style="color:#aaa;padding:16px">No word sets</td></tr>';
+  }).join('')||'<tr><td colspan="4" style="color:#aaa;padding:16px">No word sets</td></tr>';
 }
 
-function renderGamesTable(games) {
-  const tbody = document.getElementById('games-tbody');
-  tbody.innerHTML = games.map(g => {
-    const name = getProp(g,'Game Name','title');
-    const desc = getProp(g,'Description','text');
-    const status = getProp(g,'Status','select');
-    const cls = status==='Active'?'active':status==='Coming Soon'?'coming':'inactive';
-    return `<tr><td><strong>${name}</strong></td><td style="color:#888;font-size:14px">${desc}</td><td><span class="status-badge ${cls}">${status}</span></td></tr>`;
+function renderGamesTable(games){
+  document.getElementById('games-tbody').innerHTML=games.map(g=>{
+    const name=getProp(g,'Game Name','title');
+    const desc=getProp(g,'Description','text');
+    const status=getProp(g,'Status','select');
+    const cls=status==='Active'?'active':status==='Coming Soon'?'coming':'inactive';
+    return`<tr><td><strong>${name}</strong></td><td style="color:#888;font-size:14px">${desc}</td><td><span class="status-badge ${cls}">${status}</span></td></tr>`;
   }).join('');
 }
 
-function renderImageManager(words, wordsets) {
-  const grid = document.getElementById('image-manager-grid');
-  // Group by word set, show all words
-  const sorted = [...words].sort((a,b) => {
-    const setA = getProp(a,'Word Set Name','text');
-    const setB = getProp(b,'Word Set Name','text');
-    if (setA !== setB) return setA.localeCompare(setB);
-    return getProp(a,'Order','number') - getProp(b,'Order','number');
+// ── Add Word Set ──────────────────────────────────────────────────────
+function toggleAddWordSet(){
+  document.getElementById('add-wordset-form').classList.toggle('show');
+}
+
+async function saveNewWordSet(){
+  const name=document.getElementById('new-set-name').value.trim();
+  const focus=document.getElementById('new-set-focus').value.trim();
+  const wordsRaw=document.getElementById('new-set-words').value.trim();
+  const perSticker=parseInt(document.getElementById('new-set-sticker').value)||12;
+  if(!name){alert('Please enter a set name');return;}
+  if(!wordsRaw){alert('Please enter at least one word');return;}
+  const words=wordsRaw.split('\n').map(w=>w.trim()).filter(Boolean);
+  if(!words.length){alert('No valid words found');return;}
+  const btn=document.querySelector('#add-wordset-form .btn-primary');
+  btn.textContent='Saving...';btn.disabled=true;
+  try{
+    // Create word set
+    await notionCreate(DB.wordsets,{
+      'Set Name':{title:[{text:{content:name}}]},
+      'Sound Focus':{rich_text:[{text:{content:focus}}]},
+      'Status':{select:{name:'Active'}},
+      'Words Per Sticker':{number:perSticker},
+      'Words':{rich_text:[{text:{content:words.join(', ')}}]},
+    });
+    // Create individual word rows
+    for(let i=0;i<words.length;i++){
+      await notionCreate(DB.words,{
+        'Word':{title:[{text:{content:words[i]}}]},
+        'Word Set Name':{rich_text:[{text:{content:name}}]},
+        'Order':{number:i+1},
+      });
+    }
+    // Clear form
+    document.getElementById('new-set-name').value='';
+    document.getElementById('new-set-focus').value='';
+    document.getElementById('new-set-words').value='';
+    document.getElementById('new-set-sticker').value='12';
+    toggleAddWordSet();
+    alert(`✅ Word set "${name}" saved with ${words.length} words!`);
+    loadParentDashboard();
+  }catch(e){alert('Error saving. Try again.');}
+  btn.textContent='💾 Save Word Set';btn.disabled=false;
+}
+
+// ── Image Manager ─────────────────────────────────────────────────────
+let imgFilter='all';
+function renderImageManager(words,wordsets){
+  const filterDiv=document.getElementById('img-set-filter');
+  const setNames=[...new Set(words.map(w=>getProp(w,'Word Set Name','text')).filter(Boolean))];
+  filterDiv.innerHTML=`<button class="img-set-btn ${imgFilter==='all'?'active':''}" onclick="setImgFilter('all')">All</button>`+
+    setNames.map(s=>`<button class="img-set-btn ${imgFilter===s?'active':''}" onclick="setImgFilter('${s}')">${s}</button>`).join('');
+  const grid=document.getElementById('image-manager-grid');
+  const filtered=imgFilter==='all'?words:words.filter(w=>getProp(w,'Word Set Name','text')===imgFilter);
+  const sorted=[...filtered].sort((a,b)=>{
+    const sa=getProp(a,'Word Set Name','text'),sb=getProp(b,'Word Set Name','text');
+    if(sa!==sb)return sa.localeCompare(sb);
+    return getProp(a,'Order','number')-getProp(b,'Order','number');
   });
-  if (!sorted.length) { grid.innerHTML='<div style="color:#aaa">No words found</div>'; return; }
-  grid.innerHTML = sorted.map(wordPage => {
-    const word = getProp(wordPage,'Word','title');
-    const imageUrl = getProp(wordPage,'Image URL','url');
-    const hasImg = !!imageUrl;
-    return `<div class="word-image-card ${hasImg?'has-image':''}" onclick="openImageSearch('${wordPage.id}','${word}','${imageUrl||''}')">
-      <div class="word-thumb">
-        ${hasImg
-          ? `<img src="${imageUrl}" alt="${word}" onerror="this.parentElement.innerHTML='🖼️'">`
-          : '🖼️'}
-      </div>
+  if(!sorted.length){grid.innerHTML='<div style="color:#aaa;padding:16px">No words found</div>';return;}
+  grid.innerHTML=sorted.map(wp=>{
+    const word=getProp(wp,'Word','title');
+    const imageUrl=getProp(wp,'Image URL','url');
+    const hasImg=!!imageUrl;
+    return`<div class="word-image-card ${hasImg?'has-image':''}" onclick="openImageSearch('${wp.id}','${word}')">
+      <div class="word-thumb">${hasImg?`<img src="${imageUrl}" alt="${word}" onerror="this.parentElement.innerHTML='🖼️'">`:'🖼️'}</div>
       <div class="word-label">${word}</div>
       <div class="word-status ${hasImg?'has-img':'no-img'}">${hasImg?'✓ Has image':'No image'}</div>
     </div>`;
   }).join('');
 }
 
-function renderSessionsTable(sessions) {
-  const container = document.getElementById('sessions-container');
-  if (!sessions.length) { container.innerHTML='<div style="text-align:center;padding:32px;color:#aaa;font-weight:600">No sessions yet — play the first game! 🎮</div>'; return; }
-  container.innerHTML = `<table class="data-table">
-    <thead><tr><th>Child</th><th>Game</th><th>Word Set</th><th>Passed</th><th>Tried</th><th>Stickers</th></tr></thead>
-    <tbody>${sessions.slice(0,20).map(s => {
-      const child = getProp(s,'Child Name','text');
-      const game = getProp(s,'Game','text');
-      const ws = getProp(s,'Word Set','text');
-      const passed = getProp(s,'Words Passed','number');
-      const tried = getProp(s,'Words Attempted','number');
-      const stickers = getProp(s,'Stickers Earned','number');
-      return `<tr>
-        <td>${child}</td><td>${game}</td><td style="font-size:13px">${ws}</td>
-        <td style="color:#1a7a30;font-weight:700">${passed}</td>
-        <td>${tried}</td>
-        <td>${stickers>0?`⭐ ${stickers}`:'-'}</td>
-      </tr>`;
-    }).join('')}</tbody>
-  </table>`;
+function setImgFilter(val){
+  imgFilter=val;
+  renderImageManager(S.allWords,S.allWordsets);
 }
 
-// ─── IMAGE SEARCH ─────────────────────────────────────────────────────
-function openImageSearch(wordPageId, wordText, currentUrl) {
-  imgSearch.wordPageId = wordPageId;
-  imgSearch.wordText = wordText;
-  imgSearch.selectedUrl = null;
-  document.getElementById('img-search-title').textContent = `Find image for: ${wordText}`;
-  document.getElementById('img-search-input').value = wordText;
-  document.getElementById('img-results-container').innerHTML = '<div class="img-search-empty">Search for an image above 🔍</div>';
-  document.getElementById('img-search-save').className = 'img-search-save';
-  document.getElementById('img-search-panel').className = 'img-search-panel show';
-  // Auto-search with word
-  searchImages();
+function renderSessionsTable(sessions){
+  const c=document.getElementById('sessions-container');
+  if(!sessions.length){c.innerHTML='<div style="text-align:center;padding:32px;color:#aaa;font-weight:600">No sessions yet 🎮</div>';return;}
+  c.innerHTML=`<table class="data-table"><thead><tr><th>Child</th><th>Game</th><th>Word Set</th><th>Passed</th><th>Tried</th><th>Stickers</th></tr></thead><tbody>${
+    sessions.slice(0,20).map(s=>`<tr>
+      <td>${getProp(s,'Child Name','text')}</td>
+      <td>${getProp(s,'Game','text')}</td>
+      <td style="font-size:13px">${getProp(s,'Word Set','text')}</td>
+      <td style="color:#1a7a30;font-weight:700">${getProp(s,'Words Passed','number')}</td>
+      <td>${getProp(s,'Words Attempted','number')}</td>
+      <td>${getProp(s,'Stickers Earned','number')>0?`⭐ ${getProp(s,'Stickers Earned','number')}`:'-'}</td>
+    </tr>`).join('')
+  }</tbody></table>`;
 }
 
-function closeImageSearch() {
-  document.getElementById('img-search-panel').className = 'img-search-panel';
+// ── Image Search ──────────────────────────────────────────────────────
+function openImageSearch(wordPageId,wordText){
+  imgState={wordPageId,wordText,selectedUrl:null,page:1,query:wordText};
+  document.getElementById('img-search-title').textContent=`Find image for: ${wordText}`;
+  document.getElementById('img-search-input').value=wordText;
+  document.getElementById('img-results-container').innerHTML='<div class="img-search-empty">Search for an image above 🔍</div>';
+  document.getElementById('img-search-save').className='img-search-save';
+  document.getElementById('img-load-more').style.display='none';
+  document.getElementById('img-search-panel').className='img-search-panel show';
+  searchImages(1);
 }
 
-async function searchImages() {
-  const query = document.getElementById('img-search-input').value.trim();
-  if (!query) return;
-  const container = document.getElementById('img-results-container');
-  container.innerHTML = '<div class="img-search-loading">🔍 Searching...</div>';
-  imgSearch.selectedUrl = null;
-  document.getElementById('img-search-save').className = 'img-search-save';
-  try {
-    // Use Pixabay API (free, no key needed for basic searches via our proxy)
-    // Fallback: use Google Images via a CORS-friendly image search
-    const searches = [
-      query,
-      `${query} object`,
-      `${query} illustration`,
-      `${query} simple`,
-      `${query} colorful`,
-      `${query} cartoon`,
-    ];
-    // Use Pixabay free API (key required but has generous free tier)
-    // Fall back to Wikimedia Commons which is fully open
-    const wikimediaUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&srnamespace=6&format=json&origin=*&srlimit=9`;
-    const wikiRes = await fetch(wikimediaUrl);
-    const wikiData = await wikiRes.json();
-    const wikiResults = (wikiData.query?.search || []).map(r => {
-      const title = r.title.replace('File:', '');
-      const encoded = encodeURIComponent(r.title.replace('File:', ''));
-      return {
-        url: `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(r.title)}?width=300`,
-        id: r.pageid
-      };
-    });
+function closeImageSearch(){document.getElementById('img-search-panel').className='img-search-panel';}
 
-    if (wikiResults.length > 0) {
-      renderImageResults(wikiResults);
-    } else {
-      // Final fallback: use Picsum with word-based seeds for placeholder variety
-      const results = searches.map((q, i) => ({
-        url: `https://picsum.photos/seed/${encodeURIComponent(q)}/200/200`,
-        id: i
-      }));
-      renderImageResults(results);
-      container.insertAdjacentHTML('beforeend', '<p style="font-size:12px;color:#f90;text-align:center;padding:8px;font-weight:700">⚠️ Could not find specific images — showing placeholders</p>');
+async function searchImages(page){
+  const query=document.getElementById('img-search-input').value.trim();
+  if(!query)return;
+  imgState.query=query;imgState.page=page;
+  const container=document.getElementById('img-results-container');
+  if(page===1){container.innerHTML='<div class="img-search-loading">🔍 Searching...</div>';}
+  imgState.selectedUrl=null;
+  document.getElementById('img-search-save').className='img-search-save';
+  document.getElementById('img-load-more').style.display='none';
+  try{
+    const res=await fetch(`/api/notion?type=images&q=${encodeURIComponent(query)}&page=${page}`);
+    const data=await res.json();
+    if(data.images&&data.images.length>0){
+      if(page===1){
+        container.innerHTML='';
+        const grid=document.createElement('div');
+        grid.className='img-results-grid';
+        grid.id='img-results-grid';
+        container.appendChild(grid);
+      }
+      const grid=document.getElementById('img-results-grid');
+      const startIdx=(page-1)*9;
+      data.images.forEach((img,i)=>{
+        const idx=startIdx+i;
+        const el=document.createElement('div');
+        el.className='img-result';el.id=`imgr-${idx}`;
+        el.onclick=()=>selectImage(idx,img.url);
+        el.innerHTML=`<img src="${img.url}" alt="result" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="img-result-check">✓</div>`;
+        grid.appendChild(el);
+      });
+      if(data.hasMore){
+        document.getElementById('img-load-more').style.display='block';
+      }
+      container.insertAdjacentHTML('beforeend','<p style="font-size:12px;color:#aaa;text-align:center;margin-top:10px;font-weight:600">Images from Pixabay · Tap to select</p>');
+    }else{
+      if(page===1)container.innerHTML='<div class="img-search-empty">No images found. Try a different search term.</div>';
     }
-  } catch(e) {
-    // Final fallback to picsum
-    const results = Array.from({length:6}, (_,i) => ({
-      url: `https://picsum.photos/seed/${encodeURIComponent(query+i)}/200/200`,
-      id: i
-    }));
-    renderImageResults(results);
-  }
+  }catch(e){container.innerHTML='<div class="img-search-empty">Search failed. Try again.</div>';}
 }
 
-function renderImageResults(results) {
-  const container = document.getElementById('img-results-container');
-  container.innerHTML = `
-    <div class="img-results-grid">
-      ${results.map((r,i) => `
-        <div class="img-result" id="imgr-${i}" onclick="selectImage(${i},'${r.url}')">
-          <img src="${r.url}" alt="result ${i}"
-            onerror="this.parentElement.style.display='none'"
-            loading="lazy">
-          <div class="img-result-check">✓</div>
-        </div>
-      `).join('')}
-    </div>
-    <p style="font-size:12px;color:#aaa;text-align:center;margin-top:10px;font-weight:600">Images from Unsplash · Tap to select</p>
-  `;
+function loadMoreImages(){searchImages(imgState.page+1);}
+
+function selectImage(index,url){
+  document.querySelectorAll('.img-result').forEach(el=>el.classList.remove('selected'));
+  const el=document.getElementById(`imgr-${index}`);
+  if(el)el.classList.add('selected');
+  imgState.selectedUrl=url;
+  document.getElementById('img-search-save').className='img-search-save show';
 }
 
-function selectImage(index, url) {
-  // Deselect all
-  document.querySelectorAll('.img-result').forEach(el => el.classList.remove('selected'));
-  document.getElementById(`imgr-${index}`).classList.add('selected');
-  imgSearch.selectedUrl = url;
-  document.getElementById('img-search-save').className = 'img-search-save show';
-}
-
-async function saveSelectedImage() {
-  if (!imgSearch.selectedUrl || !imgSearch.wordPageId) return;
-  const btn = document.getElementById('img-search-save');
-  btn.textContent = 'Saving...'; btn.disabled = true;
-  try {
-    await notionUpdate(imgSearch.wordPageId, {
-      'Image URL': { url: imgSearch.selectedUrl }
-    });
-    // Update local state
-    const wordPage = state.allWords.find(w => w.id === imgSearch.wordPageId);
-    if (wordPage) wordPage.properties['Image URL'] = { url: imgSearch.selectedUrl };
+async function saveSelectedImage(){
+  if(!imgState.selectedUrl||!imgState.wordPageId)return;
+  const btn=document.getElementById('img-search-save');
+  btn.textContent='Saving...';btn.disabled=true;
+  try{
+    await notionUpdate(imgState.wordPageId,{'Image URL':{url:imgState.selectedUrl}});
+    const wp=S.allWords.find(w=>w.id===imgState.wordPageId);
+    if(wp)wp.properties['Image URL']={url:imgState.selectedUrl};
     closeImageSearch();
-    // Refresh image manager
-    renderImageManager(state.allWords, state.allWordsets);
-    btn.textContent = '✅ Use this image'; btn.disabled = false;
-  } catch(e) {
-    alert('Error saving image. Try again.');
-    btn.textContent = '✅ Use this image'; btn.disabled = false;
-  }
+    renderImageManager(S.allWords,S.allWordsets);
+  }catch(e){alert('Error saving image. Try again.');}
+  btn.textContent='✅ Use this image';btn.disabled=false;
 }
 
-// ─── START ─────────────────────────────────────────────────────────────
 init();
 </script>
 </body>
