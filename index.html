@@ -112,8 +112,8 @@
   .hear-btn{background:var(--water);color:white;border:none;border-radius:50px;padding:14px 28px;font-size:17px;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:10px;transition:transform .15s;box-shadow:0 6px 20px rgba(77,150,255,.4);font-family:'Nunito',sans-serif}
   .hear-btn:active{transform:scale(.95)}
   .mic-btn{background:var(--coral);color:white;border:none;border-radius:50%;width:86px;height:86px;font-size:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s;box-shadow:0 8px 28px rgba(255,107,107,.45)}
-  .mic-btn.listening{background:var(--coral-dark);animation:pulse 1s infinite}
-  @keyframes pulse{0%,100%{box-shadow:0 8px 28px rgba(255,107,107,.45);transform:scale(1)}50%{box-shadow:0 8px 40px rgba(255,107,107,.7);transform:scale(1.06)}}
+  .mic-btn.listening{background:#27ae60;animation:pulse 1s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 8px 28px rgba(39,174,96,.45);transform:scale(1)}50%{box-shadow:0 8px 40px rgba(39,174,96,.7);transform:scale(1.06)}}
   .mic-hint{font-size:14px;color:var(--text-mid);font-weight:700}
 
   /* RESULT */
@@ -275,6 +275,81 @@
   .img-search-loading{text-align:center;padding:32px;color:var(--text-mid);font-weight:700}
   .img-search-empty{text-align:center;padding:24px;color:#aaa;font-weight:700}
 
+
+  /* SETTINGS TOGGLE */
+  .settings-bar{background:var(--card-bg);padding:10px 24px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,.06);font-size:14px;font-weight:700;color:var(--text-mid)}
+  .toggle-switch{position:relative;width:44px;height:24px;flex-shrink:0}
+  .toggle-switch input{opacity:0;width:0;height:0}
+  .toggle-slider{position:absolute;inset:0;background:#ccc;border-radius:24px;transition:.3s;cursor:pointer}
+  .toggle-slider:before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s}
+  input:checked+.toggle-slider{background:var(--grass)}
+  input:checked+.toggle-slider:before{transform:translateX(20px)}
+  .yes-no-btns{display:flex;gap:12px;margin-top:4px}
+  .yn-btn{padding:16px 32px;border:none;border-radius:50px;font-size:18px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;transition:transform .15s}
+  .yn-btn:active{transform:scale(.95)}
+  .yn-btn.yes{background:var(--grass);color:white;box-shadow:0 6px 20px rgba(107,203,119,.45)}
+  .yn-btn.no{background:var(--orange);color:white;box-shadow:0 6px 20px rgba(255,140,66,.45)}
+
+  /* EDIT WORD SET */
+  .edit-wordset-panel{background:#f0f7ff;border-radius:var(--radius-sm);padding:20px;margin-top:10px;display:none;flex-direction:column;gap:14px;border:2px solid rgba(77,150,255,.2)}
+  .edit-wordset-panel.show{display:flex}
+  .word-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+  .word-chip{background:white;border:2px solid #e0e8f0;border-radius:20px;padding:5px 12px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px;color:var(--text-dark)}
+  .word-chip button{background:none;border:none;cursor:pointer;font-size:13px;color:#aaa;padding:0;line-height:1}
+  .word-chip button:hover{color:var(--coral)}
+  .edit-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+  /* SNAKE & LADDER */
+  #screen-snl{padding:0;position:relative;background:#f0f7ff}
+  .snl-topbar{background:var(--card-bg);padding:14px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);z-index:10}
+  .snl-title{font-family:'Fredoka One',cursive;font-size:22px;color:var(--text-dark)}
+  .snl-body{flex:1;display:flex;flex-direction:column;align-items:center;padding:16px;gap:12px;overflow-y:auto}
+  .snl-players{display:flex;gap:10px;width:100%;max-width:500px}
+  .snl-player-card{flex:1;background:var(--card-bg);border-radius:var(--radius-sm);padding:12px 16px;text-align:center;box-shadow:0 3px 12px rgba(0,0,0,.08);border:3px solid transparent;transition:border-color .3s}
+  .snl-player-card.active-turn{border-color:var(--water);background:#f0f7ff}
+  .snl-player-card .p-avatar{font-size:28px}
+  .snl-player-card .p-name{font-size:13px;font-weight:800;color:var(--text-dark)}
+  .snl-player-card .p-square{font-family:'Fredoka One',cursive;font-size:22px;color:var(--water)}
+  .snl-player-card .p-dice{font-size:11px;color:var(--text-mid);font-weight:600}
+  .snl-board-wrap{width:100%;max-width:500px;position:relative}
+  .snl-board{display:grid;grid-template-columns:repeat(10,1fr);border:3px solid #2c3e50;border-radius:12px;overflow:hidden;background:white}
+  .snl-cell{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:800;position:relative;border:1px solid rgba(0,0,0,.08);cursor:default;transition:background .2s}
+  .snl-cell .cell-num{font-size:8px;font-weight:700;color:rgba(0,0,0,.4);position:absolute;top:2px;left:3px;line-height:1}
+  .snl-cell .cell-word{font-size:7px;font-weight:700;color:#555;text-align:center;padding:0 1px;line-height:1.2;max-width:100%}
+  .snl-cell .cell-img{width:70%;height:50%;object-fit:cover;border-radius:3px;margin-bottom:1px}
+  .snl-cell .cell-players{position:absolute;bottom:1px;right:1px;display:flex;gap:1px;flex-wrap:wrap;justify-content:flex-end}
+  .snl-cell .cell-player{font-size:10px;line-height:1}
+  .snl-cell.word-sq{background:#fff9e6}
+  .snl-cell.snake-head{background:#ffe0e0}
+  .snl-cell.ladder-foot{background:#e0ffe8}
+  .snl-cell.start-sq{background:#e8f4ff}
+  .snl-cell.finish-sq{background:#fff3cd}
+  .snl-cell.player-here{box-shadow:inset 0 0 0 2px var(--water)}
+  .snl-controls{width:100%;max-width:500px;display:flex;flex-direction:column;align-items:center;gap:12px}
+  .snl-turn-label{font-family:'Fredoka One',cursive;font-size:20px;color:var(--text-dark);text-align:center}
+  .snl-dice-btn{background:var(--water);color:white;border:none;border-radius:50px;padding:16px 36px;font-size:20px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 6px 20px rgba(77,150,255,.4);transition:transform .15s;display:flex;align-items:center;gap:12px}
+  .snl-dice-btn:active{transform:scale(.95)}
+  .snl-dice-btn:disabled{opacity:.5;cursor:default}
+  .dice-display{font-size:36px;display:inline-block}
+  .dice-display.rolling{animation:diceRoll .6s ease}
+  @keyframes diceRoll{0%,100%{transform:rotate(0deg) scale(1)}25%{transform:rotate(-20deg) scale(1.2)}75%{transform:rotate(20deg) scale(1.2)}}
+  .snl-log{width:100%;max-width:500px;background:var(--card-bg);border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:var(--text-mid);font-weight:600;max-height:80px;overflow-y:auto;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+
+  /* WORD CHALLENGE OVERLAY for S&L */
+  .word-challenge{position:fixed;inset:0;z-index:200;background:rgba(255,255,255,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;pointer-events:none;transition:opacity .3s;padding:24px}
+  .word-challenge.show{opacity:1;pointer-events:all}
+  .wc-landed{font-size:15px;font-weight:700;color:var(--text-mid);text-align:center}
+  .wc-image{width:160px;height:160px;border-radius:20px;object-fit:cover;border:3px solid rgba(77,150,255,.2);background:#f0f7ff;display:flex;align-items:center;justify-content:center;font-size:48px}
+  .wc-image img{width:100%;height:100%;object-fit:cover;border-radius:17px}
+  .wc-word{font-family:'Fredoka One',cursive;font-size:48px;color:var(--water);letter-spacing:2px}
+  .wc-attempts{font-size:14px;color:var(--text-mid);font-weight:700}
+  .wc-actions{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:340px}
+
+  /* SNL WIN SCREEN */
+  .snl-win{position:fixed;inset:0;z-index:300;background:linear-gradient(135deg,#fff9c4,#e8f4ff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;pointer-events:none;transition:opacity .4s;padding:24px}
+  .snl-win.show{opacity:1;pointer-events:all}
+  .snl-win h2{font-family:'Fredoka One',cursive;font-size:48px;color:var(--coral);text-align:center}
+  .snl-win p{font-size:20px;font-weight:700;color:var(--text-mid);text-align:center}
   /* LOADING */
   .loading-screen{position:fixed;inset:0;background:var(--sky);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;z-index:999}
   .loading-screen.hidden{display:none}
@@ -332,6 +407,14 @@
     <div class="screen-title">🐾 Animal Parade</div>
     <div class="word-counter" id="word-counter">1 / 12</div>
   </div>
+  <div class="settings-bar">
+    <span>🎤 Speech recognition</span>
+    <label class="toggle-switch">
+      <input type="checkbox" id="sr-toggle" checked onchange="toggleSR()">
+      <span class="toggle-slider"></span>
+    </label>
+    <span id="sr-label" style="font-size:13px;color:#aaa">On</span>
+  </div>
   <div class="game-area">
     <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div>
     <div class="word-card" id="word-card">
@@ -350,8 +433,17 @@
     </div>
     <div class="mic-area">
       <button class="hear-btn" onclick="hearWord()">🔊 Hear the word</button>
-      <button class="mic-btn" id="mic-btn" onclick="startListening()">🎤</button>
-      <div class="mic-hint" id="mic-hint">Tap the mic and say the word!</div>
+      <div id="sr-mode">
+        <button class="mic-btn" id="mic-btn" onclick="startListening()">🎤</button>
+        <div class="mic-hint" id="mic-hint">Tap the mic and say the word!</div>
+      </div>
+      <div id="yn-mode" style="display:none;flex-direction:column;align-items:center;gap:12px">
+        <div class="mic-hint">Did she say the word correctly?</div>
+        <div class="yes-no-btns">
+          <button class="yn-btn yes" onclick="markCorrect()">✅ Yes!</button>
+          <button class="yn-btn no" onclick="markRetry()">🔁 Try again</button>
+        </div>
+      </div>
     </div>
   </div>
   <div class="result-overlay" id="result-overlay">
@@ -391,6 +483,61 @@
       </div>
       <button class="play-again-btn" onclick="showScreen('wordsets')">Play again 🎮</button>
     </div>
+  </div>
+</div>
+
+
+<!-- SNAKE & LADDER -->
+<div class="screen" id="screen-snl">
+  <div class="snl-topbar">
+    <button class="back-btn" onclick="showScreen('games')">←</button>
+    <div class="snl-title">🐍 Snake & Ladder</div>
+    <div class="sticker-badge" style="margin-left:auto">⭐ <span id="snl-stickers">0</span></div>
+  </div>
+  <div class="snl-body">
+    <div class="snl-players" id="snl-players"></div>
+    <div class="snl-board-wrap">
+      <div class="snl-board" id="snl-board"></div>
+    </div>
+    <div class="snl-controls">
+      <div class="snl-turn-label" id="snl-turn-label">Roll the dice!</div>
+      <button class="snl-dice-btn" id="snl-dice-btn" onclick="snlRollDice()">
+        <span class="dice-display" id="snl-dice-display">🎲</span>
+        <span id="snl-dice-text">Roll!</span>
+      </button>
+      <div class="snl-log" id="snl-log"></div>
+    </div>
+  </div>
+
+  <!-- Word Challenge Overlay -->
+  <div class="word-challenge" id="word-challenge">
+    <div class="wc-landed" id="wc-landed">You landed on square 42!</div>
+    <div class="wc-image" id="wc-image">🖼️</div>
+    <div class="wc-word" id="wc-word">seven</div>
+    <div class="wc-attempts" id="wc-attempts"></div>
+    <div class="wc-actions">
+      <button class="hear-btn" onclick="snlHearWord()">🔊 Hear the word</button>
+      <div id="wc-sr-mode">
+        <button class="mic-btn" id="wc-mic-btn" onclick="snlStartListening()">🎤</button>
+        <div class="mic-hint" id="wc-mic-hint">Tap mic and say the word!</div>
+      </div>
+      <div id="wc-yn-mode" style="display:none;flex-direction:column;align-items:center;gap:10px">
+        <div class="mic-hint">Did they say it correctly?</div>
+        <div class="yes-no-btns">
+          <button class="yn-btn yes" onclick="snlWordResult(true)">✅ Yes!</button>
+          <button class="yn-btn no" onclick="snlWordResult(false)">🔁 Try again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Win screen -->
+  <div class="snl-win" id="snl-win">
+    <div class="confetti-container" id="snl-confetti"></div>
+    <div style="font-size:100px" id="snl-win-avatar">🏆</div>
+    <h2 id="snl-win-title">You won!</h2>
+    <p id="snl-win-msg">Amazing job!</p>
+    <button class="play-again-btn" onclick="showScreen('games')">Play again 🎮</button>
   </div>
 </div>
 
@@ -476,9 +623,10 @@
           </div>
         </div>
         <table class="data-table" style="margin-top:8px">
-          <thead><tr><th>Set Name</th><th>Sound Focus</th><th>Words</th><th>Status</th></tr></thead>
-          <tbody id="wordsets-tbody"><tr><td colspan="4" style="padding:16px;color:#aaa">Loading...</td></tr></tbody>
+          <thead><tr><th>Set Name</th><th>Sound Focus</th><th>Words</th><th>Status</th><th></th></tr></thead>
+          <tbody id="wordsets-tbody"><tr><td colspan="5" style="padding:16px;color:#aaa">Loading...</td></tr></tbody>
         </table>
+        <div id="edit-wordset-container"></div>
       </div>
       <div class="parent-section">
         <h2>🎮 Games</h2>
@@ -581,7 +729,7 @@ function shuffle(arr){
 }
 
 // ── State ────────────────────────────────────────────────────────────
-let S={
+let S={srEnabled:true,
   child:null,words:[],wordIdx:0,wordsPassed:0,wordsAttempted:0,
   stickersEarned:0,walletPage:null,walletStickers:0,showWord:true,
   sessionStart:null,allChildren:[],allWordsets:[],allGames:[],
@@ -687,7 +835,11 @@ function selectWordSet(wsId){
 // ── Games ─────────────────────────────────────────────────────────────
 function renderGames(){
   const grid=document.getElementById('games-grid');
-  grid.innerHTML=S.allGames.map(g=>{
+  const visible=S.allGames.filter(g=>{
+    const s=getProp(g,'Status','select');
+    return s==='Active'||s==='Coming Soon';
+  });
+  grid.innerHTML=visible.map(g=>{
     const name=getProp(g,'Game Name','title');
     const emoji=getProp(g,'Emoji','text')||'🎮';
     const desc=getProp(g,'Description','text');
@@ -707,6 +859,9 @@ function renderGames(){
 // ── Animal Parade ─────────────────────────────────────────────────────
 function startGame(gameId){
   if(!S.selectedWordSet){alert('Please select a word set first!');return;}
+  // Check if it's Snake & Ladder
+  const game=S.allGames.find(g=>g.id===gameId);
+  if(game&&getProp(game,'Route','text').includes('snake')){startSnakeAndLadder(gameId);return;}
   const setName=getProp(S.selectedWordSet,'Set Name','title');
   const wordsForSet=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===setName);
   if(!wordsForSet.length){alert('No words found in this set!');return;}
@@ -899,6 +1054,339 @@ async function endGame(){
   }catch(e){console.log('Session save error',e);}
 }
 
+
+// ── Snake & Ladder ────────────────────────────────────────────────────
+const SNL_LADDERS={4:14,9:31,20:38,28:84,40:59,63:81};
+const SNL_SNAKES={17:7,54:34,62:19,64:60,87:24,93:73,99:78};
+const SNL_WORD_SQUARES=new Set([2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100]);
+
+let SNL={
+  players:[],currentTurn:0,words:[],wordMap:{},
+  wordsPassed:0,stickersEarned:0,sessionWords:{},
+  challenge:{square:0,wordPage:null,attempts:0,maxAttempts:2,playerIdx:0},
+  log:[],gameOver:false,solo:false,
+};
+
+const DICE_FACES=['⚀','⚁','⚂','⚃','⚄','⚅'];
+const DICE_FACES_8=['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣'];
+
+function startSnakeAndLadder(gameId){
+  if(!S.selectedWordSet){alert('Please select a word set first!');return;}
+  const setName=getProp(S.selectedWordSet,'Set Name','title');
+  const wordsForSet=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===setName);
+  if(!wordsForSet.length){alert('No words found in this set!');return;}
+
+  // Shuffle and map words to word squares
+  const shuffled=shuffle(wordsForSet);
+  const wordSquares=[...SNL_WORD_SQUARES];
+  SNL.wordMap={};
+  wordSquares.forEach((sq,i)=>{
+    SNL.wordMap[sq]=shuffled[i%shuffled.length];
+  });
+  SNL.words=shuffled;
+  SNL.wordsPassed=0;SNL.stickersEarned=0;SNL.log=[];SNL.gameOver=false;
+  SNL.sessionWords={};
+
+  // Set up players
+  const childName=getProp(S.child,'Name','title');
+  const childAvatar=getProp(S.child,'Avatar','select')||'🐼';
+
+  // Solo or 2 player?
+  const twoPlayer=confirm(`Play with 2 players?
+
+OK = ${childName} + Parent
+Cancel = Solo mode`);
+  SNL.solo=!twoPlayer;
+
+  SNL.players=[{
+    name:childName,avatar:childAvatar,square:0,
+    diceType:8,maxAttempts:2,isChild:true,
+  }];
+  if(twoPlayer){
+    SNL.players.push({name:'Parent',avatar:'👨‍👧',square:0,diceType:6,maxAttempts:1,isChild:false});
+  }
+  SNL.currentTurn=0;
+
+  document.getElementById('snl-stickers').textContent=S.walletStickers;
+  showScreen('snl');
+  renderSnlBoard();
+  renderSnlPlayers();
+  snlUpdateTurnLabel();
+}
+
+function renderSnlBoard(){
+  const board=document.getElementById('snl-board');
+  board.innerHTML='';
+  // Build 10x10 grid, snake-style (bottom-left = 1, alternating direction)
+  const rows=[];
+  for(let r=0;r<10;r++){
+    const row=[];
+    for(let c=0;c<10;c++){
+      const sq=r%2===0?(10-r)*10-c:(10-r)*10-9+c;
+      row.push(sq);
+    }
+    rows.push(row);
+  }
+  rows.forEach(row=>{
+    row.forEach(sq=>{
+      const cell=document.createElement('div');
+      cell.className='snl-cell';
+      cell.id=`snl-cell-${sq}`;
+      const isWord=SNL_WORD_SQUARES.has(sq);
+      const isSnakeHead=SNL_SNAKES[sq]!==undefined;
+      const isLadderFoot=SNL_LADDERS[sq]!==undefined;
+      if(sq===1)cell.classList.add('start-sq');
+      else if(sq===100)cell.classList.add('finish-sq');
+      else if(isSnakeHead)cell.classList.add('snake-head');
+      else if(isLadderFoot)cell.classList.add('ladder-foot');
+      else if(isWord)cell.classList.add('word-sq');
+
+      const numEl=document.createElement('div');
+      numEl.className='cell-num';numEl.textContent=sq;
+      cell.appendChild(numEl);
+
+      if(sq===100){cell.innerHTML+='<div style="font-size:14px">🏆</div>';}
+      else if(sq===1){cell.innerHTML+='<div style="font-size:14px">🚀</div>';}
+      else if(isSnakeHead){cell.innerHTML+=`<div style="font-size:12px">🐍→${SNL_SNAKES[sq]}</div>`;}
+      else if(isLadderFoot){cell.innerHTML+=`<div style="font-size:12px">🪜→${SNL_LADDERS[sq]}</div>`;}
+      else if(isWord){
+        const wp=SNL.wordMap[sq];
+        const word=wp?getProp(wp,'Word','title'):'';
+        const imgUrl=wp?getProp(wp,'Image URL','url'):'';
+        if(imgUrl){cell.innerHTML+=`<img class="cell-img" src="${imgUrl}" onerror="this.style.display='none'">`;}
+        cell.innerHTML+=`<div class="cell-word">${word}</div>`;
+      }
+
+      const playersEl=document.createElement('div');
+      playersEl.className='cell-players';
+      cell.appendChild(playersEl);
+      board.appendChild(cell);
+    });
+  });
+  updatePlayerPositions();
+}
+
+function updatePlayerPositions(){
+  // Clear all player markers
+  document.querySelectorAll('.cell-players').forEach(el=>el.innerHTML='');
+  SNL.players.forEach((p,i)=>{
+    if(p.square>=1){
+      const cell=document.getElementById(`snl-cell-${p.square}`);
+      if(cell){
+        const playersEl=cell.querySelector('.cell-players');
+        if(playersEl){
+          const span=document.createElement('span');
+          span.className='cell-player';span.textContent=p.avatar;
+          playersEl.appendChild(span);
+        }
+      }
+    }
+  });
+}
+
+function renderSnlPlayers(){
+  const div=document.getElementById('snl-players');
+  div.innerHTML=SNL.players.map((p,i)=>`
+    <div class="snl-player-card ${i===SNL.currentTurn?'active-turn':''}" id="snl-pcard-${i}">
+      <div class="p-avatar">${p.avatar}</div>
+      <div class="p-name">${p.name}</div>
+      <div class="p-square">Sq ${p.square||'Start'}</div>
+      <div class="p-dice">${p.diceType}-sided dice</div>
+    </div>
+  `).join('');
+}
+
+function snlUpdateTurnLabel(){
+  const p=SNL.players[SNL.currentTurn];
+  document.getElementById('snl-turn-label').textContent=`${p.avatar} ${p.name}'s turn!`;
+  document.getElementById('snl-dice-text').textContent=`Roll ${p.diceType}-sided dice!`;
+  document.getElementById('snl-dice-btn').disabled=false;
+}
+
+function snlLog(msg){
+  SNL.log.unshift(msg);
+  const logEl=document.getElementById('snl-log');
+  logEl.innerHTML=SNL.log.slice(0,8).join('<br>');
+}
+
+async function snlRollDice(){
+  if(SNL.gameOver)return;
+  const btn=document.getElementById('snl-dice-btn');
+  btn.disabled=true;
+  const p=SNL.players[SNL.currentTurn];
+  const diceEl=document.getElementById('snl-dice-display');
+  // Animate dice
+  diceEl.classList.add('rolling');
+  await new Promise(r=>setTimeout(r,600));
+  diceEl.classList.remove('rolling');
+  const roll=Math.floor(Math.random()*p.diceType)+1;
+  const face=p.diceType===8?DICE_FACES_8[roll-1]:DICE_FACES[roll-1];
+  diceEl.textContent=face;
+  snlLog(`${p.avatar} ${p.name} rolled a ${roll}`);
+  // Move player
+  let newSquare=p.square+roll;
+  if(newSquare>100){
+    snlLog(`${p.name} needs exact roll to reach 100! Stay on ${p.square}.`);
+    await new Promise(r=>setTimeout(r,1000));
+    snlNextTurn();return;
+  }
+  SNL.preRollSquare=p.square; // save pre-move position
+  p.square=newSquare;
+  updatePlayerPositions();
+  await new Promise(r=>setTimeout(r,400));
+
+  // Check snake/ladder
+  if(SNL_SNAKES[newSquare]!==undefined){
+    const to=SNL_SNAKES[newSquare];
+    snlLog(`🐍 Oh no! Snake on ${newSquare}! Down to ${to}...`);
+    await new Promise(r=>setTimeout(r,800));
+    p.square=to;updatePlayerPositions();
+    await new Promise(r=>setTimeout(r,400));
+    snlNextTurn();return;
+  }
+  if(SNL_LADDERS[newSquare]!==undefined){
+    const to=SNL_LADDERS[newSquare];
+    snlLog(`🪜 Ladder on ${newSquare}! Up to ${to}!`);
+    await new Promise(r=>setTimeout(r,800));
+    p.square=to;updatePlayerPositions();
+    await new Promise(r=>setTimeout(r,400));
+  }
+
+  // Check win
+  if(p.square===100){snlWin(SNL.currentTurn);return;}
+
+  // Check word square
+  if(SNL_WORD_SQUARES.has(p.square)&&SNL.wordMap[p.square]){
+    showWordChallenge(p.square,SNL.currentTurn);return;
+  }
+  snlNextTurn();
+}
+
+function showWordChallenge(square,playerIdx){
+  const wp=SNL.wordMap[square];
+  const word=getProp(wp,'Word','title');
+  const imgUrl=getProp(wp,'Image URL','url');
+  const p=SNL.players[playerIdx];
+  SNL.challenge={square,wordPage:wp,attempts:0,maxAttempts:p.maxAttempts,playerIdx,prevSquare:SNL.preRollSquare||0};
+  document.getElementById('wc-landed').textContent=`${p.avatar} ${p.name} landed on square ${square}!`;
+  document.getElementById('wc-word').textContent=word;
+  const imgEl=document.getElementById('wc-image');
+  if(imgUrl){imgEl.innerHTML=`<img src="${imgUrl}" alt="${word}" onerror="this.innerHTML='🖼️'">`;}
+  else{imgEl.textContent='🖼️';}
+  updateChallengeAttempts();
+  // Show correct input mode
+  const srOn=S.srEnabled&&p.isChild;
+  document.getElementById('wc-sr-mode').style.display=srOn?'':'none';
+  document.getElementById('wc-yn-mode').style.display=srOn?'none':'flex';
+  document.getElementById('wc-mic-btn').className='mic-btn';
+  document.getElementById('word-challenge').className='word-challenge show';
+}
+
+function updateChallengeAttempts(){
+  const{attempts,maxAttempts}=SNL.challenge;
+  const remaining=maxAttempts-attempts;
+  document.getElementById('wc-attempts').textContent=
+    maxAttempts>1?`Attempt ${attempts+1} of ${maxAttempts}`:'';
+}
+
+function snlHearWord(){
+  const word=getProp(SNL.challenge.wordPage,'Word','title');
+  const u=new SpeechSynthesisUtterance(word);
+  u.rate=0.85;u.pitch=1.1;speechSynthesis.speak(u);
+}
+
+function snlStartListening(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){snlWordResult(null);return;}
+  const btn=document.getElementById('wc-mic-btn');
+  btn.classList.add('listening');
+  document.getElementById('wc-mic-hint').textContent='Listening...';
+  const rec=new SR();
+  rec.lang='en-GB';rec.interimResults=false;rec.maxAlternatives=3;
+  rec.onresult=(e)=>{
+    btn.classList.remove('listening');
+    const target=getProp(SNL.challenge.wordPage,'Word','title').toLowerCase().trim();
+    let matched=false;
+    for(let i=0;i<e.results[0].length;i++){
+      const h=e.results[0][i].transcript.toLowerCase().trim();
+      if(h===target||h.includes(target)||target.includes(h)){matched=true;break;}
+    }
+    if(matched)snlWordResult(true);
+    else snlWordResult(null); // uncertain — show parent confirm
+  };
+  rec.onerror=()=>{btn.classList.remove('listening');snlWordResult(null);};
+  rec.start();
+}
+
+function snlWordResult(correct){
+  document.getElementById('wc-mic-btn').className='mic-btn';
+  document.getElementById('wc-mic-hint').textContent='Tap mic and say the word!';
+  if(correct===null){
+    // Uncertain - show parent confirm buttons
+    document.getElementById('wc-sr-mode').style.display='none';
+    document.getElementById('wc-yn-mode').style.display='flex';
+    return;
+  }
+  if(correct){
+    SNL.wordsPassed++;
+    const word=getProp(SNL.challenge.wordPage,'Word','title');
+    snlLog(`✅ ${SNL.players[SNL.challenge.playerIdx].name} said "${word}" correctly!`);
+    document.getElementById('word-challenge').className='word-challenge';
+    // Check sticker
+    const perSticker=getProp(S.selectedWordSet,'Words Per Sticker','number')||12;
+    if(SNL.wordsPassed>0&&SNL.wordsPassed%perSticker===0){
+      SNL.stickersEarned++;S.walletStickers++;
+      document.getElementById('snl-stickers').textContent=S.walletStickers;
+      setTimeout(()=>{
+        document.getElementById('sticker-celebration').className='sticker-celebration show';
+        document.getElementById('sticker-total-msg').textContent=`You have ${S.walletStickers} sticker${S.walletStickers!==1?'s':''}!`;
+        launchConfetti();
+        setTimeout(()=>{document.getElementById('sticker-celebration').className='sticker-celebration';snlNextTurn();},2500);
+      },300);
+      return;
+    }
+    snlNextTurn();
+  }else{
+    SNL.challenge.attempts++;
+    if(SNL.challenge.attempts>=SNL.challenge.maxAttempts){
+      const p=SNL.players[SNL.challenge.playerIdx];
+      const word=getProp(SNL.challenge.wordPage,'Word','title');
+      snlLog(`❌ ${p.name} couldn't say "${word}". Back to previous square!`);
+      p.square=SNL.challenge.prevSquare-SNL.players[SNL.challenge.playerIdx].square===0?0:SNL.challenge.prevSquare-(SNL.challenge.square-SNL.challenge.prevSquare+SNL.challenge.square-p.square);
+      // Simpler: go back to where they were before rolling
+      p.square=Math.max(0,p.square-1); // fallback: move back 1
+      updatePlayerPositions();
+      document.getElementById('word-challenge').className='word-challenge';
+      snlNextTurn();
+    }else{
+      updateChallengeAttempts();
+      // Reset to correct input mode
+      const srOn=S.srEnabled&&SNL.players[SNL.challenge.playerIdx].isChild;
+      document.getElementById('wc-sr-mode').style.display=srOn?'':'none';
+      document.getElementById('wc-yn-mode').style.display=srOn?'none':'flex';
+    }
+  }
+}
+
+function snlNextTurn(){
+  renderSnlPlayers();
+  if(SNL.solo){SNL.currentTurn=0;}
+  else{SNL.currentTurn=(SNL.currentTurn+1)%SNL.players.length;}
+  snlUpdateTurnLabel();
+}
+
+function snlWin(playerIdx){
+  SNL.gameOver=true;
+  const p=SNL.players[playerIdx];
+  launchConfetti();
+  document.getElementById('snl-confetti').appendChild(document.getElementById('confetti-container').cloneNode(true));
+  document.getElementById('snl-win-avatar').textContent=p.avatar;
+  document.getElementById('snl-win-title').textContent=`${p.name} wins! 🎉`;
+  document.getElementById('snl-win-msg').textContent=`${SNL.wordsPassed} words said correctly · ⭐ ${SNL.stickersEarned} stickers earned`;
+  document.getElementById('snl-win').className='snl-win show';
+  launchConfetti();
+}
+
 // ── PIN ───────────────────────────────────────────────────────────────
 let pinBuf='';
 function goToPin(){pinBuf='';updatePinDots();document.getElementById('pin-error').textContent='';showScreen('pin');}
@@ -1036,14 +1524,134 @@ function renderWordsetsTable(wordsets){
     const name=getProp(ws,'Set Name','title');
     const focus=getProp(ws,'Sound Focus','text');
     const status=getProp(ws,'Status','select');
+    const isActive=status==='Active';
     const wc=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===name).length;
     return`<tr>
       <td><strong>${name}</strong></td>
       <td style="color:#888;font-size:14px">${focus}</td>
       <td style="color:#888;font-size:13px">${wc} words</td>
-      <td><span class="status-badge ${status==='Active'?'active':'inactive'}">${status}</span></td>
+      <td><span class="status-badge ${isActive?'active':'inactive'}">${status}</span></td>
+      <td><button class="toggle-btn ${isActive?'deactivate':'activate'}" onclick="editWordSet('${ws.id}')">✏️ Edit</button></td>
     </tr>`;
-  }).join('')||'<tr><td colspan="4" style="color:#aaa;padding:16px">No word sets</td></tr>';
+  }).join('')||'<tr><td colspan="5" style="color:#aaa;padding:16px">No word sets</td></tr>';
+}
+
+function editWordSet(wsId){
+  const container=document.getElementById('edit-wordset-container');
+  const ws=S.allWordsets.find(w=>w.id===wsId);
+  if(!ws)return;
+  const name=getProp(ws,'Set Name','title');
+  const focus=getProp(ws,'Sound Focus','text');
+  const perSticker=getProp(ws,'Words Per Sticker','number')||12;
+  const status=getProp(ws,'Status','select');
+  const isActive=status==='Active';
+  const words=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===name)
+    .sort((a,b)=>getProp(a,'Order','number')-getProp(b,'Order','number'));
+  const chips=words.map(wp=>{
+    const word=getProp(wp,'Word','title');
+    return`<span class="word-chip">${word}<button onclick="removeWord('${wp.id}','${wsId}')">✕</button></span>`;
+  }).join('');
+  container.innerHTML=`<div class="edit-wordset-panel show" id="edit-panel-${wsId}">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <strong style="font-size:16px">✏️ Editing: ${name}</strong>
+      <button class="img-search-close" onclick="closeEditWordSet()">✕</button>
+    </div>
+    <div class="form-row-2">
+      <div class="form-row">
+        <div class="form-label">Set Name</div>
+        <input class="form-input" id="edit-name-${wsId}" value="${name}">
+      </div>
+      <div class="form-row">
+        <div class="form-label">Sound Focus</div>
+        <input class="form-input" id="edit-focus-${wsId}" value="${focus}">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">Words per Sticker</div>
+      <input class="form-input" id="edit-sticker-${wsId}" type="number" value="${perSticker}" style="max-width:100px">
+    </div>
+    <div class="form-row">
+      <div class="form-label">Current Words</div>
+      <div class="word-chips" id="chips-${wsId}">${chips}</div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">Add More Words (one per line)</div>
+      <textarea class="form-textarea" id="edit-new-words-${wsId}" placeholder="Type new words here..." style="min-height:80px"></textarea>
+    </div>
+    <div class="edit-actions">
+      <button class="btn-primary" onclick="saveEditWordSet('${wsId}')">💾 Save Changes</button>
+      <button class="toggle-btn ${isActive?'deactivate':'activate'}" onclick="toggleWordSetStatus('${wsId}','${status}')">
+        ${isActive?'⏸ Deactivate':'▶ Activate'}
+      </button>
+      <button class="btn-secondary" onclick="closeEditWordSet()">Cancel</button>
+    </div>
+  </div>`;
+  container.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function closeEditWordSet(){
+  document.getElementById('edit-wordset-container').innerHTML='';
+}
+
+async function removeWord(wordPageId, wsId){
+  if(!confirm('Remove this word?'))return;
+  try{
+    await notionUpdate(wordPageId,{'Order':{number:-1}});
+    // Mark as removed by setting word set name to empty
+    await fetch(`${PROXY}?path=/pages/${wordPageId}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({archived:true})});
+    S.allWords=S.allWords.filter(w=>w.id!==wordPageId);
+    loadParentDashboard();
+  }catch(e){alert('Error removing word.');}
+}
+
+async function saveEditWordSet(wsId){
+  const ws=S.allWordsets.find(w=>w.id===wsId);
+  const oldName=getProp(ws,'Set Name','title');
+  const newName=document.getElementById(`edit-name-${wsId}`).value.trim();
+  const newFocus=document.getElementById(`edit-focus-${wsId}`).value.trim();
+  const newSticker=parseInt(document.getElementById(`edit-sticker-${wsId}`).value)||12;
+  const newWordsRaw=document.getElementById(`edit-new-words-${wsId}`).value.trim();
+  if(!newName){alert('Set name cannot be empty');return;}
+  try{
+    await notionUpdate(wsId,{
+      'Set Name':{title:[{text:{content:newName}}]},
+      'Sound Focus':{rich_text:[{text:{content:newFocus}}]},
+      'Words Per Sticker':{number:newSticker},
+    });
+    // Add new words if any
+    if(newWordsRaw){
+      const newWords=newWordsRaw.split('\n').map(w=>w.trim()).filter(Boolean);
+      const existing=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===oldName);
+      let order=existing.length+1;
+      for(const word of newWords){
+        await notionCreate(DB.words,{
+          'Word':{title:[{text:{content:word}}]},
+          'Word Set Name':{rich_text:[{text:{content:newName}}]},
+          'Order':{number:order++},
+        });
+      }
+    }
+    // If name changed, update all word rows
+    if(newName!==oldName){
+      const wordsToUpdate=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===oldName);
+      for(const w of wordsToUpdate){
+        await notionUpdate(w.id,{'Word Set Name':{rich_text:[{text:{content:newName}}]}});
+      }
+    }
+    alert(`✅ Word set updated!`);
+    closeEditWordSet();
+    loadParentDashboard();
+  }catch(e){alert('Error saving. Try again.');}
+}
+
+async function toggleWordSetStatus(wsId,currentStatus){
+  const newStatus=currentStatus==='Active'?'Inactive':'Active';
+  if(!confirm(`${newStatus==='Inactive'?'Deactivate':'Activate'} this word set?`))return;
+  try{
+    await notionUpdate(wsId,{'Status':{select:{name:newStatus}}});
+    closeEditWordSet();
+    loadParentDashboard();
+  }catch(e){alert('Error updating status.');}
 }
 
 function renderGamesTable(games){
@@ -1224,6 +1832,13 @@ async function saveSelectedImage(){
     renderImageManager(S.allWords,S.allWordsets);
   }catch(e){alert('Error saving image. Try again.');}
   btn.textContent='✅ Use this image';btn.disabled=false;
+}
+
+function toggleSR(){
+  S.srEnabled=document.getElementById('sr-toggle').checked;
+  document.getElementById('sr-label').textContent=S.srEnabled?'On':'Off';
+  document.getElementById('sr-mode').style.display=S.srEnabled?'':'none';
+  document.getElementById('yn-mode').style.display=S.srEnabled?'none':'flex';
 }
 
 init();
