@@ -330,12 +330,12 @@
   @keyframes cellPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15);z-index:5}}
 
   /* PIECE — absolutely positioned over board */
-  .snl-piece{position:absolute;font-size:28px;z-index:10;transform:translate(-50%,-50%);transition:left .35s cubic-bezier(.4,0,.2,1),top .35s cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 3px 6px rgba(0,0,0,.35));pointer-events:none}
+  .snl-piece{position:absolute;font-size:28px;z-index:10;transform:translate(-50%,-50%);transition:left .6s cubic-bezier(.4,0,.2,1),top .6s cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 3px 6px rgba(0,0,0,.35));pointer-events:none}
   .snl-piece.bounce{animation:pieceBounce .4s ease}
   @keyframes pieceBounce{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-70%) scale(1.3)}}
-  .snl-piece.snake-slide{animation:snakeWiggle 1s ease}
+  .snl-piece.snake-slide{animation:snakeWiggle 2.5s ease}
   @keyframes snakeWiggle{0%,100%{transform:translate(-50%,-50%) rotate(0deg)}25%{transform:translate(-50%,-50%) rotate(-15deg)}75%{transform:translate(-50%,-50%) rotate(15deg)}}
-  .snl-piece.ladder-climb{animation:ladderClimb .8s ease}
+  .snl-piece.ladder-climb{animation:ladderClimb 2.5s ease}
   @keyframes ladderClimb{0%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-80%) scale(1.4)}100%{transform:translate(-50%,-50%) scale(1)}}
 
   /* DICE */
@@ -343,7 +343,7 @@
   .snl-turn-label{font-family:'Fredoka One',cursive;font-size:20px;color:var(--text-dark);text-align:center}
   .dice-3d-wrap{perspective:200px}
   .dice-3d{width:64px;height:64px;position:relative;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.4,0,.2,1)}
-  .dice-3d.rolling{animation:dice3dRoll 1.6s ease forwards}
+  .dice-3d.rolling{animation:dice3dRoll 2.5s ease forwards}
   @keyframes dice3dRoll{0%{transform:rotateX(0) rotateY(0)}30%{transform:rotateX(360deg) rotateY(180deg)}60%{transform:rotateX(180deg) rotateY(360deg)}100%{transform:rotateX(0) rotateY(0)}}
   .dice-face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:42px;line-height:1;background:white;border-radius:12px;border:3px solid #ddd;box-shadow:inset 0 0 8px rgba(0,0,0,.05)}
   .snl-dice-btn{background:var(--water);color:white;border:none;border-radius:50px;padding:14px 32px;font-size:18px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 6px 20px rgba(77,150,255,.4);transition:transform .15s;display:flex;align-items:center;gap:12px}
@@ -1298,7 +1298,7 @@ async function animatePieceStep(playerIdx,fromSq,toSq){
   for(let sq=fromSq;sq!==toSq;sq+=direction){
     SNL.players[playerIdx].square=sq;
     updatePiecePos(playerIdx,sq,true);
-    await delay(200);
+    await delay(400);
   }
   SNL.players[playerIdx].square=toSq;
   updatePiecePos(playerIdx,toSq,true);
@@ -1313,18 +1313,18 @@ async function animatePieceStep(playerIdx,fromSq,toSq){
 async function animateSnake(playerIdx,from,to){
   const piece=document.getElementById(`snl-piece-${playerIdx}`);
   if(piece){piece.classList.add('snake-slide');}
-  await delay(300);
+  await delay(600);
   updatePiecePos(playerIdx,to,true);
-  await delay(1400);
+  await delay(2500);
   if(piece){piece.classList.remove('snake-slide');}
 }
 
 async function animateLadder(playerIdx,from,to){
   const piece=document.getElementById(`snl-piece-${playerIdx}`);
   if(piece){piece.classList.add('ladder-climb');}
-  await delay(300);
+  await delay(600);
   updatePiecePos(playerIdx,to,true);
-  await delay(1400);
+  await delay(2500);
   if(piece){piece.classList.remove('ladder-climb');}
 }
 
@@ -1348,9 +1348,9 @@ async function showEventPopup(type,from,to){
   }
   route.textContent=`${from} → ${to}`;
   popup.className='snl-event-popup show';
-  await delay(2200);
+  await delay(3000);
   popup.className='snl-event-popup';
-  await delay(300);
+  await delay(400);
 }
 
 // ── Dice animation ────────────────────────────────────────────────────
@@ -1359,12 +1359,12 @@ async function animateDice(diceType,result){
   const face=document.getElementById('snl-dice-face');
   dice.classList.add('rolling');
   // Flash random faces
-  for(let i=0;i<12;i++){
+  for(let i=0;i<14;i++){
     const r=Math.floor(Math.random()*diceType)+1;
     face.textContent=diceType===6?DICE_FACES_6[r-1]:r+'';
-    await delay(130);
+    await delay(180);
   }
-  await delay(200);
+  await delay(400);
   dice.classList.remove('rolling');
   face.textContent=diceType===6?DICE_FACES_6[result-1]:result+'';
 }
@@ -1489,6 +1489,7 @@ async function snlRollDice(){
   if(SNL_SNAKES[newSquare]!==undefined){
     const to=SNL_SNAKES[newSquare];
     snlLog(`🐍 Snake! ${newSquare} → ${to}`);
+    await delay(600);
     await showEventPopup('snake',newSquare,to);
     await animateSnake(SNL.currentTurn,newSquare,to);
     p.square=to;renderSnlPlayers();
@@ -1498,6 +1499,7 @@ async function snlRollDice(){
   if(SNL_LADDERS[newSquare]!==undefined){
     const to=SNL_LADDERS[newSquare];
     snlLog(`🪜 Ladder! ${newSquare} → ${to}`);
+    await delay(600);
     await showEventPopup('ladder',newSquare,to);
     await animateLadder(SNL.currentTurn,newSquare,to);
     p.square=to;renderSnlPlayers();
@@ -1505,6 +1507,7 @@ async function snlRollDice(){
 
   if(p.square===36){snlWin(SNL.currentTurn);return;}
   if(SNL_WORD_SQUARES.has(p.square)&&SNL.wordMap[p.square]){
+    await delay(1200);
     showWordChallenge(p.square,SNL.currentTurn);return;
   }
   snlNextTurn();
