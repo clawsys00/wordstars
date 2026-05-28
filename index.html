@@ -330,7 +330,7 @@
   @keyframes cellPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15);z-index:5}}
 
   /* PIECE — absolutely positioned over board */
-  .snl-piece{position:absolute;font-size:16px;z-index:10;transform:translate(-50%,-50%);transition:left .35s cubic-bezier(.4,0,.2,1),top .35s cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 2px 3px rgba(0,0,0,.3));pointer-events:none}
+  .snl-piece{position:absolute;font-size:28px;z-index:10;transform:translate(-50%,-50%);transition:left .35s cubic-bezier(.4,0,.2,1),top .35s cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 3px 6px rgba(0,0,0,.35));pointer-events:none}
   .snl-piece.bounce{animation:pieceBounce .4s ease}
   @keyframes pieceBounce{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-70%) scale(1.3)}}
   .snl-piece.snake-slide{animation:snakeWiggle 1s ease}
@@ -373,6 +373,10 @@
   .wc-word{font-family:'Fredoka One',cursive;font-size:48px;color:var(--water);letter-spacing:2px}
   .wc-attempts{font-size:14px;color:var(--text-mid);font-weight:700}
   .wc-actions{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:340px}
+  .wc-amazing{position:absolute;inset:0;background:rgba(255,255,255,.97);display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px;border-radius:0;z-index:10}
+  .wc-amazing.show{display:flex;animation:wcAmazingIn .4s cubic-bezier(.34,1.56,.64,1)}
+  @keyframes wcAmazingIn{0%{opacity:0;transform:scale(.8)}100%{opacity:1;transform:scale(1)}}
+  @keyframes starBurst{0%{opacity:1;transform:scale(0) rotate(0deg)}100%{opacity:0;transform:scale(1.5) translateY(-40px) rotate(180deg)}}
   .wc-correct-flash{animation:wcCorrect .5s ease}
   @keyframes wcCorrect{0%,100%{background:rgba(255,255,255,.97)}50%{background:#eafff0}}
   .wc-wrong-shake{animation:wcShake .4s ease}
@@ -564,6 +568,12 @@
 
   <!-- Word Challenge Overlay -->
   <div class="word-challenge" id="word-challenge">
+    <!-- SNL correct result overlay -->
+    <div class="wc-amazing" id="wc-amazing">
+      <div class="result-emoji" id="wc-amazing-emoji">🎉</div>
+      <div class="result-text correct" id="wc-amazing-text">Amazing!</div>
+      <button class="result-btn next" id="wc-next-btn" onclick="snlAfterCorrect()">Next →</button>
+    </div>
     <div style="display:flex;align-items:center;gap:10px;background:#f8f9fa;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:700;color:var(--text-mid)">
       <span>🎤 Speech recognition</span>
       <label class="toggle-switch">
@@ -1378,8 +1388,8 @@ function startSnakeAndLadder(gameId){
   const twoPlayer=confirm(`Play with 2 players?\n\nOK = ${childName} + Parent\nCancel = Solo mode`);
   SNL.solo=!twoPlayer;
 
-  SNL.players=[{name:childName,avatar:childAvatar,square:0,diceType:8,maxAttempts:2,isChild:true}];
-  if(twoPlayer){SNL.players.push({name:'Parent',avatar:'👨‍👧',square:0,diceType:6,maxAttempts:1,isChild:false});}
+  SNL.players=[{name:childName,avatar:childAvatar,square:0,diceType:8,maxAttempts:3,isChild:true}];
+  if(twoPlayer){SNL.players.push({name:'Parent',avatar:'👨‍👧',square:0,diceType:6,maxAttempts:3,isChild:false});}
   SNL.currentTurn=0;
 
   document.getElementById('snl-stickers').textContent=S.walletStickers;
@@ -1418,8 +1428,8 @@ function renderSnlBoard(){
       numEl.className='cell-num';numEl.textContent=sq;
       cell.appendChild(numEl);
 
-      if(sq===100)cell.innerHTML+='<div style="font-size:12px">🏆</div>';
-      else if(sq===1)cell.innerHTML+='<div style="font-size:12px">🚀</div>';
+      if(sq===36)cell.innerHTML+='<div style="font-size:20px;line-height:1">🏁🏆</div>';
+      else if(sq===1)cell.innerHTML+='<div style="font-size:20px;line-height:1">🚀</div>';
       else if(SNL_WORD_SQUARES.has(sq)){
         const wp=SNL.wordMap[sq];
         const imgUrl=wp?getProp(wp,'Image URL','url'):'';
@@ -1511,9 +1521,8 @@ function showWordChallenge(square,playerIdx){
   const imgEl=document.getElementById('wc-image');
   imgEl.innerHTML=imgUrl?`<img src="${imgUrl}" alt="${word}" onerror="this.parentElement.innerHTML='🖼️'">`:'🖼️';
   updateChallengeAttempts();
-  const srOn=S.srEnabled&&p.isChild;
-  document.getElementById('wc-sr-mode').style.display=srOn?'flex':'none';
-  document.getElementById('wc-yn-mode').style.display=srOn?'none':'flex';
+  document.getElementById('wc-sr-mode').style.display=S.srEnabled?'flex':'none';
+  document.getElementById('wc-yn-mode').style.display=S.srEnabled?'none':'flex';
   document.getElementById('wc-mic-btn').className='mic-btn';
   const wcTog=document.getElementById('wc-sr-toggle');
   if(wcTog)wcTog.checked=S.srEnabled;
@@ -1565,22 +1574,14 @@ function snlWordResult(correct){
   const wc=document.getElementById('word-challenge');
   if(correct){
     SNL.wordsPassed++;
-    wc.classList.add('wc-correct-flash');
-    setTimeout(()=>{wc.classList.remove('wc-correct-flash');},500);
     const word=getProp(SNL.challenge.wordPage,'Word','title');
     snlLog(`✅ ${SNL.players[SNL.challenge.playerIdx].name} said "${word}"!`);
-    setTimeout(()=>{
-      document.getElementById('word-challenge').className='word-challenge';
-      const perSticker=getProp(S.selectedWordSet,'Words Per Sticker','number')||12;
-      if(SNL.wordsPassed>0&&SNL.wordsPassed%perSticker===0){
-        SNL.stickersEarned++;S.walletStickers++;
-        document.getElementById('snl-stickers').textContent=S.walletStickers;
-        document.getElementById('sticker-celebration').className='sticker-celebration show';
-        document.getElementById('sticker-total-msg').textContent=`You have ${S.walletStickers} sticker${S.walletStickers!==1?'s':''}!`;
-        launchConfetti();
-        setTimeout(()=>{document.getElementById('sticker-celebration').className='sticker-celebration';snlNextTurn();},2500);
-      }else{snlNextTurn();}
-    },600);
+    // Show Amazing overlay
+    const amazing=document.getElementById('wc-amazing');
+    document.getElementById('wc-amazing-emoji').textContent='🎉';
+    document.getElementById('wc-amazing-text').textContent='Amazing!';
+    amazing.className='wc-amazing show';
+    launchSnlStars();
   }else{
     SNL.challenge.attempts++;
     wc.classList.add('wc-wrong-shake');
@@ -1595,10 +1596,35 @@ function snlWordResult(correct){
       setTimeout(()=>{document.getElementById('word-challenge').className='word-challenge';snlNextTurn();},600);
     }else{
       updateChallengeAttempts();
-      const srOn=S.srEnabled&&SNL.players[SNL.challenge.playerIdx].isChild;
-      document.getElementById('wc-sr-mode').style.display=srOn?'flex':'none';
-      document.getElementById('wc-yn-mode').style.display=srOn?'none':'flex';
+      document.getElementById('wc-sr-mode').style.display=S.srEnabled?'flex':'none';
+      document.getElementById('wc-yn-mode').style.display=S.srEnabled?'none':'flex';
     }
+  }
+}
+
+function snlAfterCorrect(){
+  document.getElementById('wc-amazing').className='wc-amazing';
+  document.getElementById('word-challenge').className='word-challenge';
+  const perSticker=getProp(S.selectedWordSet,'Words Per Sticker','number')||12;
+  if(SNL.wordsPassed>0&&SNL.wordsPassed%perSticker===0){
+    SNL.stickersEarned++;S.walletStickers++;
+    document.getElementById('snl-stickers').textContent=S.walletStickers;
+    document.getElementById('sticker-celebration').className='sticker-celebration show';
+    document.getElementById('sticker-total-msg').textContent=`You have ${S.walletStickers} sticker${S.walletStickers!==1?'s':''}!`;
+    launchConfetti();
+    setTimeout(()=>{document.getElementById('sticker-celebration').className='sticker-celebration';snlNextTurn();},2500);
+  }else{snlNextTurn();}
+}
+
+function launchSnlStars(){
+  const wc=document.getElementById('word-challenge');
+  const colors=['#FFD93D','#FF6B6B','#4D96FF','#6BCB77','#FF6EB4'];
+  for(let i=0;i<20;i++){
+    const star=document.createElement('div');
+    star.style.cssText=`position:absolute;font-size:${14+Math.random()*16}px;left:${20+Math.random()*60}%;top:${20+Math.random()*60}%;animation:starBurst ${.6+Math.random()*.8}s ease forwards;pointer-events:none;z-index:11`;
+    star.textContent='⭐';
+    wc.appendChild(star);
+    setTimeout(()=>star.remove(),1400);
   }
 }
 
