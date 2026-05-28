@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      const images = (data.hits || []).map(h => ({ url: h.webformatURL }));
+      const images = (data.hits || []).map(h => ({ url: h.largeImageURL || h.previewURL || h.webformatURL }));
       const totalHits = data.totalHits || 0;
       const hasMore = pageNum * perPage < totalHits;
       return res.status(200).json({ images, hasMore, totalHits });

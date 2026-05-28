@@ -1021,6 +1021,14 @@ function nextWord(){
   S.animalIdx++;S.wordIdx++;
   document.getElementById('result-overlay').className='result-overlay';
   document.getElementById('word-card').className='word-card';
+  // Restore correct input mode after overlay closes
+  if(!S.srEnabled){
+    document.getElementById('sr-mode').style.display='none';
+    document.getElementById('yn-mode').style.display='flex';
+  } else {
+    document.getElementById('sr-mode').style.display='flex';
+    document.getElementById('yn-mode').style.display='none';
+  }
   renderWordCard();
 }
 
@@ -1841,22 +1849,31 @@ function toggleSR(){
   document.getElementById('yn-mode').style.display=S.srEnabled?'none':'flex';
 }
 
-// SR-off mode: Yes/Try Again directly advance without showing result overlay
+// SR-off mode: Yes shows Amazing popup same as SR-on mode
 function ynMarkCorrect(){
-  S.wordsPassed++;
   S.wordsAttempted++;
-  // Brief flash on card
+  // Hide the yn buttons area during overlay
+  document.getElementById('yn-mode').style.display='none';
+  // Show result overlay exactly like SR-on correct
+  const overlay=document.getElementById('result-overlay');
+  overlay.className='result-overlay show';
+  document.getElementById('result-emoji').textContent='🎉';
+  document.getElementById('result-text').textContent='Amazing!';
+  document.getElementById('result-text').className='result-text correct';
+  document.getElementById('result-text').style.fontSize='';
+  document.getElementById('parent-confirm').style.display='none';
+  document.getElementById('next-actions').style.display='flex';
   document.getElementById('word-card').classList.add('correct-flash','dance');
-  setTimeout(()=>document.getElementById('word-card').classList.remove('dance'),900);
+  S.wordsPassed++;
   checkSticker();
-  // Only advance if sticker celebration not showing
-  if(S.wordsPassed%( getProp(S.selectedWordSet,'Words Per Sticker','number')||12 )!==0){
-    setTimeout(nextWord,600);
-  }
 }
 
 function ynMarkRetry(){
   S.wordsAttempted++;
+  // Restore yn buttons if SR is off
+  if(!S.srEnabled){
+    document.getElementById('yn-mode').style.display='flex';
+  }
   hearWord();
 }
 
