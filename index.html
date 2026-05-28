@@ -433,15 +433,15 @@
     </div>
     <div class="mic-area">
       <button class="hear-btn" onclick="hearWord()">🔊 Hear the word</button>
-      <div id="sr-mode">
+      <div id="sr-mode" style="display:flex;flex-direction:column;align-items:center;gap:14px">
         <button class="mic-btn" id="mic-btn" onclick="startListening()">🎤</button>
         <div class="mic-hint" id="mic-hint">Tap the mic and say the word!</div>
       </div>
       <div id="yn-mode" style="display:none;flex-direction:column;align-items:center;gap:12px">
         <div class="mic-hint">Did she say the word correctly?</div>
         <div class="yes-no-btns">
-          <button class="yn-btn yes" onclick="markCorrect()">✅ Yes!</button>
-          <button class="yn-btn no" onclick="markRetry()">🔁 Try again</button>
+          <button class="yn-btn yes" onclick="ynMarkCorrect()">✅ Yes!</button>
+          <button class="yn-btn no" onclick="ynMarkRetry()">🔁 Try again</button>
         </div>
       </div>
     </div>
@@ -717,7 +717,7 @@ function getProp(page,name,type){
   if(type==='select')return p.select?.name||'';
   if(type==='number')return p.number??0;
   if(type==='checkbox')return p.checkbox??false;
-  if(type==='url')return p.url||'';
+  if(type==='url')return p.url||p.rich_text?.map(t=>t.plain_text).join('')||'';
   return'';
 }
 
@@ -1837,8 +1837,27 @@ async function saveSelectedImage(){
 function toggleSR(){
   S.srEnabled=document.getElementById('sr-toggle').checked;
   document.getElementById('sr-label').textContent=S.srEnabled?'On':'Off';
-  document.getElementById('sr-mode').style.display=S.srEnabled?'':'none';
+  document.getElementById('sr-mode').style.display=S.srEnabled?'flex':'none';
   document.getElementById('yn-mode').style.display=S.srEnabled?'none':'flex';
+}
+
+// SR-off mode: Yes/Try Again directly advance without showing result overlay
+function ynMarkCorrect(){
+  S.wordsPassed++;
+  S.wordsAttempted++;
+  // Brief flash on card
+  document.getElementById('word-card').classList.add('correct-flash','dance');
+  setTimeout(()=>document.getElementById('word-card').classList.remove('dance'),900);
+  checkSticker();
+  // Only advance if sticker celebration not showing
+  if(S.wordsPassed%( getProp(S.selectedWordSet,'Words Per Sticker','number')||12 )!==0){
+    setTimeout(nextWord,600);
+  }
+}
+
+function ynMarkRetry(){
+  S.wordsAttempted++;
+  hearWord();
 }
 
 init();
