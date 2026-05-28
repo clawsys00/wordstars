@@ -389,6 +389,56 @@
   .snl-win p{font-size:20px;font-weight:700;color:var(--text-mid);text-align:center}
   .win-avatar-dance{font-size:100px;animation:winDance 1s ease infinite}
   @keyframes winDance{0%,100%{transform:rotate(-10deg) scale(1)}50%{transform:rotate(10deg) scale(1.15)}}
+
+  /* PRINCESS WORD QUEST */
+  #screen-pwq{padding:0;position:relative;overflow:hidden}
+  .pwq-topbar{background:rgba(255,255,255,.92);padding:12px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);z-index:10;position:relative}
+  .pwq-title{font-family:'Fredoka One',cursive;font-size:20px;color:var(--purple)}
+  .pwq-progress-wrap{flex:1;display:flex;flex-direction:column;gap:3px}
+  .pwq-progress-label{font-size:11px;font-weight:700;color:var(--text-mid)}
+  .pwq-progress-bar{background:rgba(0,0,0,.1);border-radius:20px;height:8px;overflow:hidden}
+  .pwq-progress-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:20px;transition:width .6s ease}
+
+  /* SCENE */
+  .pwq-scene{position:relative;width:100%;flex:0 0 auto;overflow:hidden;transition:background 2s ease}
+  .pwq-scene-bg{position:absolute;inset:0;transition:opacity 1.5s ease}
+  .pwq-scene-svg{width:100%;display:block;position:relative;z-index:2}
+  .pwq-narration{margin:0 16px;background:rgba(255,255,255,.92);border-radius:16px;padding:12px 18px;font-size:14px;font-weight:700;color:var(--purple);text-align:center;box-shadow:0 3px 12px rgba(0,0,0,.08);position:relative;z-index:3;border:2px solid rgba(155,89,182,.2);min-height:44px;transition:opacity .5s}
+  .pwq-narration::before{content:'✨';margin-right:6px}
+  .pwq-narration::after{content:'✨';margin-left:6px}
+
+  /* HAMMY SPEECH BUBBLE */
+  .hammy-bubble{position:absolute;background:white;border-radius:16px;padding:6px 12px;font-size:12px;font-weight:800;color:var(--purple);white-space:nowrap;box-shadow:0 3px 12px rgba(0,0,0,.15);opacity:0;transition:opacity .3s;z-index:20;border:2px solid rgba(155,89,182,.2);pointer-events:none}
+  .hammy-bubble.show{opacity:1}
+  .hammy-bubble::after{content:'';position:absolute;bottom:-8px;left:12px;border:4px solid transparent;border-top-color:white}
+
+  /* WORD CARD in PWQ */
+  .pwq-word-area{padding:12px 16px;display:flex;flex-direction:column;align-items:center;gap:12px;flex:1}
+  .pwq-word-card{background:var(--card-bg);border-radius:var(--radius);padding:16px;width:100%;max-width:400px;box-shadow:0 6px 24px rgba(0,0,0,.12);border:3px solid rgba(155,89,182,.2);position:relative;display:flex;align-items:center;gap:16px}
+  .pwq-word-card.correct-flash{animation:pwqCorrect .5s ease}
+  .pwq-word-card.wrong-shake{animation:pwqShake .4s ease}
+  @keyframes pwqCorrect{0%,100%{background:var(--card-bg)}50%{background:#f3e8ff;border-color:var(--purple)}}
+  @keyframes pwqShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+  .pwq-word-img{width:80px;height:80px;border-radius:14px;object-fit:cover;background:#f0e8ff;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:32px;overflow:hidden;border:2px solid rgba(155,89,182,.15)}
+  .pwq-word-img img{width:100%;height:100%;object-fit:cover}
+  .pwq-word-info{flex:1}
+  .pwq-word-text{font-family:'Fredoka One',cursive;font-size:36px;color:var(--purple);letter-spacing:1px;transition:opacity .3s}
+  .pwq-word-text.hidden{opacity:0}
+  .pwq-word-toggle{font-size:12px;font-weight:700;color:var(--text-mid);cursor:pointer;text-decoration:underline;margin-top:2px;display:inline-block}
+  .pwq-word-attempts{font-size:12px;font-weight:700;color:var(--text-mid);margin-top:4px}
+  .pwq-controls{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:400px}
+  .pwq-settings-bar{background:var(--card-bg);padding:8px 16px;border-radius:20px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--text-mid);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+
+  /* CELEBRATION */
+  .pwq-celebration{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;opacity:0;pointer-events:none;transition:opacity .5s;padding:24px;overflow:hidden}
+  .pwq-celebration.show{opacity:1;pointer-events:all}
+  .pwq-celebration-bg{position:absolute;inset:0;background:linear-gradient(135deg,#9B59B6,#FF6EB4,#FFD700);animation:celebBg 3s ease infinite alternate}
+  @keyframes celebBg{0%{background:linear-gradient(135deg,#9B59B6,#FF6EB4)}100%{background:linear-gradient(135deg,#FF6EB4,#FFD700)}}
+  .pwq-celebration-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+  .pwq-celebration h2{font-family:'Fredoka One',cursive;font-size:42px;color:white;text-shadow:2px 2px 0 rgba(0,0,0,.2)}
+  .pwq-celebration p{font-size:18px;font-weight:700;color:rgba(255,255,255,.9)}
+  .pwq-celebration-princess{font-size:80px;animation:princessDance 1s ease infinite}
+  @keyframes princessDance{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(8deg) scale(1.1)}}
   /* LOADING */
   .loading-screen{position:fixed;inset:0;background:var(--sky);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;z-index:999}
   .loading-screen.hidden{display:none}
@@ -609,6 +659,84 @@
     <h2 id="snl-win-title">You won!</h2>
     <p id="snl-win-msg">Amazing job!</p>
     <button class="play-again-btn" onclick="showScreen('games')">Play again 🎮</button>
+  </div>
+</div>
+
+
+<!-- PRINCESS WORD QUEST -->
+<div class="screen" id="screen-pwq">
+  <div class="pwq-topbar">
+    <button class="back-btn" onclick="showScreen('games')" style="flex-shrink:0">←</button>
+    <div class="pwq-progress-wrap">
+      <div class="pwq-progress-label" id="pwq-progress-label">0 / 12 words</div>
+      <div class="pwq-progress-bar"><div class="pwq-progress-fill" id="pwq-progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="sticker-badge" style="flex-shrink:0">⭐ <span id="pwq-stickers">0</span></div>
+  </div>
+
+  <!-- Scene -->
+  <div class="pwq-scene" id="pwq-scene">
+    <svg class="pwq-scene-svg" id="pwq-scene-svg" viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div id="hammy-bubble" class="hammy-bubble">Let's save the princess! 🌟</div>
+  </div>
+
+  <div class="pwq-narration" id="pwq-narration">An evil spell has trapped the princess! Say the magic words to set her free...</div>
+
+  <!-- Word area -->
+  <div class="pwq-word-area">
+    <div class="pwq-word-card" id="pwq-word-card">
+      <div class="pwq-word-img" id="pwq-word-img">🖼️</div>
+      <div class="pwq-word-info">
+        <div class="pwq-word-text" id="pwq-word-text">seven</div>
+        <div class="pwq-word-toggle" onclick="pwqToggleWord()">hide word</div>
+        <div class="pwq-word-attempts" id="pwq-word-attempts"></div>
+      </div>
+    </div>
+    <div class="pwq-controls">
+      <div class="pwq-settings-bar">
+        <span>🎤 Speech recognition</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="pwq-sr-toggle" checked onchange="syncSRToggle('pwq')">
+          <span class="toggle-slider"></span>
+        </label>
+        <span id="pwq-sr-label">On</span>
+      </div>
+      <button class="hear-btn" onclick="pwqHearWord()">🔊 Hear the word</button>
+      <div id="pwq-sr-mode" style="display:flex;flex-direction:column;align-items:center;gap:12px">
+        <button class="mic-btn" id="pwq-mic-btn" onclick="pwqStartListening()">🎤</button>
+        <div class="mic-hint" id="pwq-mic-hint">Tap the mic and say the word!</div>
+      </div>
+      <div id="pwq-yn-mode" style="display:none;flex-direction:column;align-items:center;gap:10px">
+        <div class="mic-hint">Did she say it correctly?</div>
+        <div class="yes-no-btns">
+          <button class="yn-btn yes" onclick="pwqYnCorrect()">✅ Yes!</button>
+          <button class="yn-btn no" onclick="pwqYnRetry()">🔁 Try again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result overlay -->
+  <div class="result-overlay" id="pwq-result-overlay">
+    <div class="result-emoji" id="pwq-result-emoji">🎉</div>
+    <div class="result-text correct" id="pwq-result-text">Amazing!</div>
+    <div class="result-actions">
+      <button class="result-btn next" onclick="pwqNextWord()">Next word →</button>
+    </div>
+  </div>
+
+  <!-- Celebration screen -->
+  <div class="pwq-celebration" id="pwq-celebration">
+    <div class="pwq-celebration-bg"></div>
+    <div class="confetti-container" id="pwq-confetti"></div>
+    <div class="pwq-celebration-content">
+      <div class="pwq-celebration-princess" id="pwq-celeb-princess">👸</div>
+      <h2 id="pwq-celeb-title">She's free!</h2>
+      <p id="pwq-celeb-msg">You broke the spell! 🌟</p>
+      <div style="font-size:48px;animation:princessDance 0.8s ease infinite">🐹</div>
+      <p style="font-size:16px;font-weight:800;color:white">Little Hammy: "WE DID IT!! 🎊🎊🎊"</p>
+      <button class="play-again-btn" onclick="showScreen('games')" style="margin-top:8px">Play again 🎮</button>
+    </div>
   </div>
 </div>
 
@@ -933,6 +1061,7 @@ function startGame(gameId){
   // Check if it's Snake & Ladder
   const game=S.allGames.find(g=>g.id===gameId);
   if(game&&getProp(game,'Route','text').includes('snake')){startSnakeAndLadder(gameId);return;}
+  if(game&&getProp(game,'Route','text').includes('princess')){startPrincessQuest(gameId);return;}
   const setName=getProp(S.selectedWordSet,'Set Name','title');
   const wordsForSet=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===setName);
   if(!wordsForSet.length){alert('No words found in this set!');return;}
@@ -2100,21 +2229,23 @@ function syncSRToggle(source){
     ? document.getElementById('sr-toggle').checked
     : document.getElementById('wc-sr-toggle').checked;
   S.srEnabled = val;
-  // Sync both toggles
-  const mainToggle = document.getElementById('sr-toggle');
-  const wcToggle = document.getElementById('wc-sr-toggle');
-  if(mainToggle) mainToggle.checked = val;
-  if(wcToggle) wcToggle.checked = val;
-  // Update labels
-  const mainLabel = document.getElementById('sr-label');
-  const wcLabel = document.getElementById('wc-sr-label');
-  if(mainLabel) mainLabel.textContent = val?'On':'Off';
-  if(wcLabel) wcLabel.textContent = val?'On':'Off';
-  // Show/hide modes in Animal Parade
-  const srMode = document.getElementById('sr-mode');
-  const ynMode = document.getElementById('yn-mode');
-  if(srMode) srMode.style.display = val?'flex':'none';
-  if(ynMode) ynMode.style.display = val?'none':'flex';
+  // Sync all toggles
+  ['sr-toggle','wc-sr-toggle','pwq-sr-toggle'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.checked=val;
+  });
+  ['sr-label','wc-sr-label','pwq-sr-label'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.textContent=val?'On':'Off';
+  });
+  // Animal Parade
+  const srMode=document.getElementById('sr-mode');
+  const ynMode=document.getElementById('yn-mode');
+  if(srMode)srMode.style.display=val?'flex':'none';
+  if(ynMode)ynMode.style.display=val?'none':'flex';
+  // PWQ
+  const pwqSr=document.getElementById('pwq-sr-mode');
+  const pwqYn=document.getElementById('pwq-yn-mode');
+  if(pwqSr)pwqSr.style.display=val?'flex':'none';
+  if(pwqYn)pwqYn.style.display=val?'none':'flex';
 }
 
 function toggleSR(){
@@ -2153,3 +2284,585 @@ init();
 </script>
 </body>
 </html>
+<script id="pwq-script">
+// ═══════════════════════════════════════════════════════════════════
+// PRINCESS WORD QUEST
+// ═══════════════════════════════════════════════════════════════════
+
+// ── Sound Engine ─────────────────────────────────────────────────────
+let audioCtx = null;
+function getAudio(){
+  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  return audioCtx;
+}
+function playTone(freq, dur, type='sine', vol=0.3, delay=0){
+  try{
+    const ctx=getAudio();
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+    osc.connect(gain);gain.connect(ctx.destination);
+    osc.type=type;osc.frequency.setValueAtTime(freq,ctx.currentTime+delay);
+    gain.gain.setValueAtTime(0,ctx.currentTime+delay);
+    gain.gain.linearRampToValueAtTime(vol,ctx.currentTime+delay+0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+delay+dur);
+    osc.start(ctx.currentTime+delay);
+    osc.stop(ctx.currentTime+delay+dur+0.05);
+  }catch(e){}
+}
+function soundCorrect(){
+  playTone(523,.12,'sine',.25,0);
+  playTone(659,.12,'sine',.25,0.13);
+  playTone(784,.25,'sine',.3,0.26);
+}
+function soundWrong(){
+  playTone(220,.15,'sawtooth',.2,0);
+  playTone(180,.25,'sawtooth',.15,0.15);
+}
+function soundLockBreak(){
+  playTone(800,.04,'square',.2,0);
+  playTone(1200,.06,'sine',.15,0.04);
+  playTone(600,.1,'sine',.1,0.1);
+}
+function soundChainRattle(){
+  for(let i=0;i<6;i++) playTone(150+Math.random()*50,.05,'sawtooth',.08,i*0.04);
+}
+function soundStageComplete(){
+  [523,587,659,698,784].forEach((f,i)=>playTone(f,.15,'sine',.25,i*0.12));
+}
+function soundVictory(){
+  const melody=[523,659,784,1047,784,880,1047,1319];
+  melody.forEach((f,i)=>playTone(f,.2,'sine',.3,i*0.15));
+  [261,329,392].forEach((f,i)=>playTone(f,.6,'sine',.15,i*0.05));
+}
+function soundHammyChirp(){
+  playTone(900,.05,'sine',.15,0);
+  playTone(1100,.05,'sine',.15,0.06);
+}
+function soundFanfare(){
+  soundStageComplete();
+  setTimeout(()=>soundStageComplete(),800);
+}
+
+// ── PWQ State ─────────────────────────────────────────────────────────
+let PWQ={
+  words:[],wordIdx:0,wordsPassed:0,wordsAttempted:0,
+  stickersEarned:0,stages:1,currentStage:0,
+  showWord:true,attempts:0,maxAttempts:3,
+  princessName:'',hammyFloat:null,locksTotal:0,locksBroken:0,
+};
+
+const HAMMY_CORRECT=[
+  "Amazing! You did it! 🎉","Woohoo!! ⭐","Yes yes YES! 🐹",
+  "You're incredible! 🌟","The spell is breaking! ✨","So proud of you! 💪"
+];
+const HAMMY_WRONG=[
+  "Oops! Try again! 💪","You can do it! 🌟",
+  "Almost! One more try! 🐹","Don't give up! ✨"
+];
+const STAGE_NARRATIONS=[
+  "An evil spell has trapped Princess {name}! Say the magic words to set her free...",
+  "The spell is weakening! Keep going, brave one!",
+  "You're doing it! The chains are breaking! ✨",
+  "Almost there! Princess {name} can almost feel freedom!",
+  "One last push! The princess is counting on you! 🌟"
+];
+
+// ── Adaptive stages ───────────────────────────────────────────────────
+function calcStages(wordCount){
+  if(wordCount<=4) return 2;
+  if(wordCount<=8) return 2;
+  if(wordCount<=15) return 3;
+  if(wordCount<=24) return 4;
+  return 5;
+}
+
+// ── Start PWQ ─────────────────────────────────────────────────────────
+function startPrincessQuest(gameId){
+  if(!S.selectedWordSet){alert('Please select a word set first!');return;}
+  const setName=getProp(S.selectedWordSet,'Set Name','title');
+  const wordsForSet=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===setName);
+  if(!wordsForSet.length){alert('No words found in this set!');return;}
+
+  const childName=getProp(S.child,'Name','title');
+  PWQ.princessName=childName;
+  PWQ.words=shuffle(wordsForSet);
+  PWQ.wordIdx=0;PWQ.wordsPassed=0;PWQ.wordsAttempted=0;
+  PWQ.stickersEarned=0;PWQ.showWord=true;PWQ.attempts=0;PWQ.maxAttempts=3;
+  PWQ.stages=calcStages(PWQ.words.length);
+  PWQ.currentStage=0;
+  PWQ.locksTotal=PWQ.words.length;
+  PWQ.locksBroken=0;
+
+  document.getElementById('pwq-stickers').textContent=S.walletStickers;
+  showScreen('pwq');
+
+  // Sync SR toggle
+  const tog=document.getElementById('pwq-sr-toggle');
+  if(tog){tog.checked=S.srEnabled;}
+  document.getElementById('pwq-sr-label').textContent=S.srEnabled?'On':'Off';
+  document.getElementById('pwq-sr-mode').style.display=S.srEnabled?'flex':'none';
+  document.getElementById('pwq-yn-mode').style.display=S.srEnabled?'none':'flex';
+
+  setTimeout(()=>{
+    drawScene();
+    renderPWQWord();
+    hammySpeak("Let's save Princess "+PWQ.princessName+"! 🌟", 2000);
+    soundHammyChirp();
+    startHammyFloat();
+  },50);
+}
+
+// ── SVG Scene Drawing ─────────────────────────────────────────────────
+function drawScene(){
+  const svg=document.getElementById('pwq-scene-svg');
+  if(!svg)return;
+  const stage=PWQ.currentStage;
+  const progress=PWQ.wordsPassed/PWQ.locksTotal;
+  svg.innerHTML='';
+
+  // Sky gradient — darkens to lightens with progress
+  const skyLight=Math.floor(180+progress*60);
+  const skyDark=Math.floor(100+progress*80);
+  const defs=makePWQEl('defs',{});
+  const skyGrad=makePWQEl('linearGradient',{id:'skyGrad',x1:'0',y1:'0',x2:'0',y2:'1'});
+  skyGrad.appendChild(makePWQEl('stop',{offset:'0%','stop-color':`rgb(${skyDark},${skyDark+20},${skyLight})`}));
+  skyGrad.appendChild(makePWQEl('stop',{offset:'100%','stop-color':`rgb(${skyLight},${skyLight+10},${skyLight+30})`}));
+  defs.appendChild(skyGrad);
+  svg.appendChild(defs);
+
+  // Background sky
+  svg.appendChild(makePWQEl('rect',{width:'400',height:'280',fill:'url(#skyGrad)'}));
+
+  // Stars (appear as progress increases)
+  const starCount=Math.floor(progress*12);
+  for(let i=0;i<starCount;i++){
+    const star=makePWQEl('text',{x:10+i*33,y:20+((i*17)%40),
+      'font-size':'14','opacity':0.6+progress*0.4,
+      'text-anchor':'middle'});
+    star.textContent='⭐';
+    svg.appendChild(star);
+  }
+
+  // Ground
+  svg.appendChild(makePWQEl('rect',{x:'0',y:'230',width:'400',height:'50',fill:'#4a7c59'}));
+  svg.appendChild(makePWQEl('rect',{x:'0',y:'228',width:'400',height:'8',fill:'#6BCB77'}));
+
+  // Castle silhouette
+  drawCastle(svg, progress);
+
+  // Cage
+  drawCage(svg);
+
+  // Princess
+  drawPrincess(svg, stage, progress);
+
+  // Little Hammy
+  drawHammy(svg);
+
+  // Scene label
+  updateNarration();
+}
+
+function drawCastle(svg, progress){
+  const brightness=Math.floor(60+progress*80);
+  const col=`rgb(${brightness+20},${brightness},${brightness+40})`;
+  const colDark=`rgb(${brightness},${brightness-10},${brightness+20})`;
+  // Main tower
+  svg.appendChild(makePWQEl('rect',{x:'280',y:'80',width:'80',height:'160',fill:col}));
+  // Battlements
+  for(let i=0;i<5;i++){
+    svg.appendChild(makePWQEl('rect',{x:280+i*18,y:'65',width:'10',height:'20',fill:col}));
+  }
+  // Tower left
+  svg.appendChild(makePWQEl('rect',{x:'250',y:'110',width:'50',height:'130',fill:colDark}));
+  for(let i=0;i<3;i++) svg.appendChild(makePWQEl('rect',{x:250+i*18,y:'98',width:'10',height:'18',fill:colDark}));
+  // Tower right
+  svg.appendChild(makePWQEl('rect',{x:'330',y:'110',width:'50',height:'130',fill:colDark}));
+  for(let i=0;i<3;i++) svg.appendChild(makePWQEl('rect',{x:330+i*18,y:'98',width:'10',height:'18',fill:colDark}));
+  // Windows glowing
+  const glowCol=progress>0.5?`rgb(255,${200+Math.floor(progress*55)},100)`:'#555';
+  for(let w of[[295,100],[335,100],[295,145],[335,145]]){
+    svg.appendChild(makePWQEl('rect',{x:w[0],y:w[1],width:'12',height:'16',rx:'6',fill:glowCol}));
+  }
+  // Gate
+  svg.appendChild(makePWQEl('rect',{x:'305',y:'185',width:'30',height:'40',fill:'#1a0a00'}));
+  svg.appendChild(makePWQEl('ellipse',{cx:'320',cy:'185',rx:'15',ry:'12',fill:'#1a0a00'}));
+}
+
+function drawCage(svg){
+  const cx=110, cy=155, w=90, h=90;
+  // Cage shadow
+  svg.appendChild(makePWQEl('ellipse',{cx:cx,cy:cy+h/2+5,rx:w/2,ry:8,fill:'rgba(0,0,0,.2)'}));
+  // Cage top bar
+  svg.appendChild(makePWQEl('rect',{x:cx-w/2,y:cy-h/2,width:w,height:6,rx:'3',fill:'#555'}));
+  // Cage bottom bar
+  svg.appendChild(makePWQEl('rect',{x:cx-w/2,y:cy+h/2-6,width:w,height:6,rx:'3',fill:'#555'}));
+  // Bars
+  const bars=6;
+  for(let i=0;i<=bars;i++){
+    const x=cx-w/2+i*(w/bars);
+    svg.appendChild(makePWQEl('rect',{x:x-2,y:cy-h/2+6,width:4,height:h-12,rx:'2',fill:'#666'}));
+  }
+
+  // Locks — broken ones fall away
+  const locksToShow=PWQ.locksTotal-PWQ.locksBroken;
+  const maxVisible=Math.min(locksToShow,6);
+  for(let i=0;i<maxVisible;i++){
+    const lx=cx-w/2+10+i*(w-16)/(Math.max(maxVisible-1,1));
+    const ly=cy-h/2-8;
+    // Lock body
+    const lockG=makePWQEl('g',{opacity:'0.9'});
+    lockG.appendChild(makePWQEl('rect',{x:lx-6,y:ly,width:12,height:10,rx:'2',fill:'#e74c3c'}));
+    lockG.appendChild(makePWQEl('path',{d:`M${lx-4},${ly} Q${lx},${ly-8} ${lx+4},${ly}`,
+      fill:'none',stroke:'#c0392b','stroke-width':'3','stroke-linecap':'round'}));
+    svg.appendChild(lockG);
+  }
+}
+
+function drawPrincess(svg, stage, progress){
+  const cx=110, cy=155;
+  const emotion=progress<0.25?'sad':progress<0.5?'worried':progress<0.75?'hopeful':'excited';
+
+  // Dress
+  const dressCol=progress<0.3?'#8a8a8a':progress<0.6?'#c39bd3':'#9B59B6';
+  const dressBright=progress<0.3?'#aaa':progress<0.6?'#d7bde2':'#BB8FCE';
+  svg.appendChild(makePWQEl('ellipse',{cx:cx,cy:cy+20,rx:22,ry:30,fill:dressCol}));
+  svg.appendChild(makePWQEl('ellipse',{cx:cx,cy:cy+10,rx:14,ry:22,fill:dressBright}));
+
+  // Body
+  svg.appendChild(makePWQEl('rect',{x:cx-10,y:cy-20,width:20,height:28,rx:'8',fill:'#FDEBD0'}));
+
+  // Arms
+  if(emotion==='excited'||emotion==='hopeful'){
+    svg.appendChild(makePWQEl('line',{x1:cx-10,y1:cy-10,x2:cx-24,y2:cy-22,stroke:'#FDEBD0','stroke-width':'5','stroke-linecap':'round'}));
+    svg.appendChild(makePWQEl('line',{x1:cx+10,y1:cy-10,x2:cx+24,y2:cy-22,stroke:'#FDEBD0','stroke-width':'5','stroke-linecap':'round'}));
+  } else {
+    svg.appendChild(makePWQEl('line',{x1:cx-10,y1:cy-5,x2:cx-24,y2:cy+8,stroke:'#FDEBD0','stroke-width':'5','stroke-linecap':'round'}));
+    svg.appendChild(makePWQEl('line',{x1:cx+10,y1:cy-5,x2:cx+24,y2:cy+8,stroke:'#FDEBD0','stroke-width':'5','stroke-linecap':'round'}));
+  }
+
+  // Head
+  svg.appendChild(makePWQEl('circle',{cx:cx,cy:cy-28,r:'18',fill:'#FDEBD0'}));
+
+  // Hair
+  svg.appendChild(makePWQEl('ellipse',{cx:cx,cy:cy-38,rx:18,ry:10,fill:'#8B4513'}));
+  svg.appendChild(makePWQEl('ellipse',{cx:cx-16,cy:cy-24,rx:5,ry:14,fill:'#8B4513'}));
+  svg.appendChild(makePWQEl('ellipse',{cx:cx+16,cy:cy-24,rx:5,ry:14,fill:'#8B4513'}));
+
+  // Eyes
+  const eyeY=cy-28;
+  if(emotion==='sad'){
+    // Sad curved down
+    svg.appendChild(makePWQEl('path',{d:`M${cx-9},${eyeY-2} Q${cx-6},${eyeY+2} ${cx-3},${eyeY-2}`,fill:'none',stroke:'#2c3e50','stroke-width':'2'}));
+    svg.appendChild(makePWQEl('path',{d:`M${cx+3},${eyeY-2} Q${cx+6},${eyeY+2} ${cx+9},${eyeY-2}`,fill:'none',stroke:'#2c3e50','stroke-width':'2'}));
+    // Tears
+    svg.appendChild(makePWQEl('ellipse',{cx:cx-6,cy:eyeY+5,rx:2,ry:3,fill:'#5DADE2',opacity:'0.7'}));
+  } else {
+    // Happy/normal eyes
+    svg.appendChild(makePWQEl('circle',{cx:cx-6,cy:eyeY,r:'3',fill:'#2c3e50'}));
+    svg.appendChild(makePWQEl('circle',{cx:cx+6,cy:eyeY,r:'3',fill:'#2c3e50'}));
+    svg.appendChild(makePWQEl('circle',{cx:cx-5,cy:eyeY-1,r:'1',fill:'white'}));
+    svg.appendChild(makePWQEl('circle',{cx:cx+7,cy:eyeY-1,r:'1',fill:'white'}));
+  }
+
+  // Mouth
+  if(emotion==='sad'){
+    svg.appendChild(makePWQEl('path',{d:`M${cx-6},${eyeY+10} Q${cx},${eyeY+8} ${cx+6},${eyeY+10}`,fill:'none',stroke:'#c0392b','stroke-width':'2','stroke-linecap':'round'}));
+  } else if(emotion==='excited'){
+    svg.appendChild(makePWQEl('path',{d:`M${cx-7},${eyeY+8} Q${cx},${eyeY+16} ${cx+7},${eyeY+8}`,fill:'#c0392b',stroke:'none'}));
+    svg.appendChild(makePWQEl('ellipse',{cx:cx,cy:eyeY+11,rx:5,ry:4,fill:'#7f0000'}));
+  } else {
+    svg.appendChild(makePWQEl('path',{d:`M${cx-6},${eyeY+9} Q${cx},${eyeY+14} ${cx+6},${eyeY+9}`,fill:'none',stroke:'#c0392b','stroke-width':'2','stroke-linecap':'round'}));
+  }
+
+  // Crown
+  const crownCol=progress<0.3?'#aaa':'#FFD700';
+  svg.appendChild(makePWQEl('path',{d:`M${cx-12},${cy-44} L${cx-10},${cy-54} L${cx},${cy-50} L${cx+10},${cy-54} L${cx+12},${cy-44} Z`,fill:crownCol}));
+  if(progress>0.3){
+    for(let gem of[[cx-10,cy-48],[cx,cy-48],[cx+10,cy-48]]){
+      svg.appendChild(makePWQEl('circle',{cx:gem[0],cy:gem[1],r:'2.5',fill:'#e74c3c'}));
+    }
+  }
+}
+
+function drawHammy(svg){
+  // Little Hammy position (animated via JS, start at right of cage)
+  const hx=165, hy=120;
+  const g=makePWQEl('g',{id:'hammy-svg',transform:`translate(${hx},${hy})`});
+
+  // Wings
+  g.appendChild(makePWQEl('ellipse',{cx:'-12',cy:'-4',rx:'10',ry:'6',fill:'rgba(173,216,230,0.7)',stroke:'#87CEEB','stroke-width':'1'}));
+  g.appendChild(makePWQEl('ellipse',{cx:'12',cy:'-4',rx:'10',ry:'6',fill:'rgba(173,216,230,0.7)',stroke:'#87CEEB','stroke-width':'1'}));
+
+  // Body
+  g.appendChild(makePWQEl('ellipse',{cx:'0',cy:'0',rx:'14',ry:'12',fill:'#D2691E'}));
+  g.appendChild(makePWQEl('ellipse',{cx:'0',cy:'2',rx:'9',ry:'8',fill:'#F4A460'}));
+
+  // Ears
+  g.appendChild(makePWQEl('circle',{cx:'-11',cy:'-9',r:'5',fill:'#D2691E'}));
+  g.appendChild(makePWQEl('circle',{cx:'11',cy:'-9',r:'5',fill:'#D2691E'}));
+  g.appendChild(makePWQEl('circle',{cx:'-11',cy:'-9',r:'3',fill:'#FFB6C1'}));
+  g.appendChild(makePWQEl('circle',{cx:'11',cy:'-9',r:'3',fill:'#FFB6C1'}));
+
+  // Face
+  g.appendChild(makePWQEl('circle',{cx:'-5',cy:'-2',r:'2.5',fill:'#2c3e50'}));
+  g.appendChild(makePWQEl('circle',{cx:'5',cy:'-2',r:'2.5',fill:'#2c3e50'}));
+  g.appendChild(makePWQEl('circle',{cx:'-4',cy:'-3',r:'1',fill:'white'}));
+  g.appendChild(makePWQEl('circle',{cx:'6',cy:'-3',r:'1',fill:'white'}));
+  // Nose
+  g.appendChild(makePWQEl('ellipse',{cx:'0',cy:'2',rx:'2',ry:'1.5',fill:'#FF9999'}));
+  // Cheeks
+  g.appendChild(makePWQEl('ellipse',{cx:'-8',cy:'3',rx:'4',ry:'2.5',fill:'rgba(255,182,193,0.5)'}));
+  g.appendChild(makePWQEl('ellipse',{cx:'8',cy:'3',rx:'4',ry:'2.5',fill:'rgba(255,182,193,0.5)'}));
+  // Paws
+  g.appendChild(makePWQEl('ellipse',{cx:'-14',cy:'6',rx:'4',ry:'3',fill:'#D2691E'}));
+  g.appendChild(makePWQEl('ellipse',{cx:'14',cy:'6',rx:'4',ry:'3',fill:'#D2691E'}));
+
+  svg.appendChild(g);
+}
+
+function makePWQEl(tag,attrs){
+  const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
+  Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+  return el;
+}
+
+// ── Hammy animation ───────────────────────────────────────────────────
+let hammyAngle=0, hammyAnimFrame=null;
+function startHammyFloat(){
+  stopHammyFloat();
+  const svg=document.getElementById('pwq-scene-svg');
+  function animate(){
+    hammyAngle+=0.02;
+    const hx=155+Math.sin(hammyAngle)*25;
+    const hy=118+Math.sin(hammyAngle*2)*8;
+    const hammy=document.getElementById('hammy-svg');
+    if(hammy) hammy.setAttribute('transform',`translate(${hx},${hy}) rotate(${Math.sin(hammyAngle)*8})`);
+    hammyAnimFrame=requestAnimationFrame(animate);
+  }
+  hammyAnimFrame=requestAnimationFrame(animate);
+}
+function stopHammyFloat(){
+  if(hammyAnimFrame){cancelAnimationFrame(hammyAnimFrame);hammyAnimFrame=null;}
+}
+function hammySpeak(msg, duration=2000){
+  soundHammyChirp();
+  const bubble=document.getElementById('hammy-bubble');
+  if(!bubble)return;
+  bubble.textContent=msg;
+  bubble.className='hammy-bubble show';
+  setTimeout(()=>bubble.className='hammy-bubble',duration);
+}
+function hammyReact(correct){
+  const msgs=correct?HAMMY_CORRECT:HAMMY_WRONG;
+  const msg=msgs[Math.floor(Math.random()*msgs.length)];
+  hammySpeak(msg,2200);
+  // Animate Hammy
+  const hammy=document.getElementById('hammy-svg');
+  if(!hammy)return;
+  if(correct){
+    let t=0;
+    const orig=hammy.getAttribute('transform');
+    const spin=setInterval(()=>{
+      t+=0.3;
+      const hx=155+Math.sin(hammyAngle)*25;
+      const hy=118+Math.sin(hammyAngle*2)*8;
+      hammy.setAttribute('transform',`translate(${hx},${hy-Math.sin(t)*15}) rotate(${t*20})`);
+      if(t>3){clearInterval(spin);}
+    },50);
+  }
+}
+
+// ── Narration ─────────────────────────────────────────────────────────
+function updateNarration(){
+  const el=document.getElementById('pwq-narration');
+  if(!el)return;
+  const stageIdx=Math.min(PWQ.currentStage,STAGE_NARRATIONS.length-1);
+  const text=STAGE_NARRATIONS[stageIdx].replace(/{name}/g,PWQ.princessName);
+  el.style.opacity='0';
+  setTimeout(()=>{el.textContent='';el.textContent=text;el.style.opacity='1';},300);
+}
+
+// ── Word rendering ────────────────────────────────────────────────────
+function renderPWQWord(){
+  if(PWQ.wordIdx>=PWQ.words.length){pwqFinish();return;}
+  const wp=PWQ.words[PWQ.wordIdx];
+  const word=getProp(wp,'Word','title');
+  const imgUrl=getProp(wp,'Image URL','url');
+  const total=PWQ.words.length;
+
+  // Progress
+  document.getElementById('pwq-progress-label').textContent=`${PWQ.wordsPassed} / ${total} words`;
+  document.getElementById('pwq-progress-fill').style.width=`${(PWQ.wordsPassed/total)*100}%`;
+
+  // Word image
+  const imgEl=document.getElementById('pwq-word-img');
+  if(imgUrl) imgEl.innerHTML=`<img src="${imgUrl}" alt="${word}" onerror="this.parentElement.textContent='🖼️'" style="width:100%;height:100%;object-fit:cover;border-radius:12px">`;
+  else imgEl.textContent='🖼️';
+
+  // Word text
+  document.getElementById('pwq-word-text').textContent=word;
+  document.getElementById('pwq-word-text').className=`pwq-word-text ${PWQ.showWord?'':'hidden'}`;
+
+  // Reset attempts
+  PWQ.attempts=0;
+  document.getElementById('pwq-word-attempts').textContent='';
+
+  // Reset overlays
+  document.getElementById('pwq-result-overlay').className='result-overlay';
+  document.getElementById('pwq-mic-btn').className='mic-btn';
+  document.getElementById('pwq-mic-hint').textContent='Tap the mic and say the word!';
+
+  // SR mode
+  document.getElementById('pwq-sr-mode').style.display=S.srEnabled?'flex':'none';
+  document.getElementById('pwq-yn-mode').style.display=S.srEnabled?'none':'flex';
+
+  // Update stage
+  const stagesPerWord=total/PWQ.stages;
+  const newStage=Math.min(Math.floor(PWQ.wordsPassed/stagesPerWord),PWQ.stages-1);
+  if(newStage!==PWQ.currentStage){
+    PWQ.currentStage=newStage;
+    soundStageComplete();
+    hammySpeak(["Wow! The chains are breaking! ✨","Keep going! You're amazing! 🌟","The princess can feel it! 💪"][newStage%3],2500);
+    drawScene();
+  }
+}
+
+function pwqToggleWord(){
+  PWQ.showWord=!PWQ.showWord;
+  document.getElementById('pwq-word-text').className=`pwq-word-text ${PWQ.showWord?'':'hidden'}`;
+  document.querySelector('.pwq-word-toggle').textContent=PWQ.showWord?'hide word':'show word';
+}
+
+function pwqHearWord(){
+  const wp=PWQ.words[PWQ.wordIdx];
+  const word=getProp(wp,'Word','title');
+  const u=new SpeechSynthesisUtterance(word);u.rate=0.85;u.pitch=1.1;speechSynthesis.speak(u);
+  // Hammy bounces when hear button tapped
+  hammySpeak('Listen carefully! 👂',1200);
+}
+
+function pwqStartListening(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){pwqShowParentConfirm();return;}
+  const btn=document.getElementById('pwq-mic-btn');
+  btn.classList.add('listening');
+  document.getElementById('pwq-mic-hint').textContent='Listening...';
+  const rec=new SR();
+  rec.lang='en-GB';rec.interimResults=false;rec.maxAlternatives=3;
+  rec.onresult=(e)=>{
+    btn.classList.remove('listening');
+    const target=getProp(PWQ.words[PWQ.wordIdx],'Word','title').toLowerCase().trim();
+    let matched=false;
+    for(let i=0;i<e.results[0].length;i++){
+      const h=e.results[0][i].transcript.toLowerCase().trim();
+      if(h===target||h.includes(target)||target.includes(h)){matched=true;break;}
+    }
+    if(matched) pwqCorrect();
+    else pwqShowParentConfirm();
+    PWQ.wordsAttempted++;
+  };
+  rec.onerror=()=>{btn.classList.remove('listening');PWQ.wordsAttempted++;pwqShowParentConfirm();};
+  rec.start();
+}
+
+function pwqShowParentConfirm(){
+  document.getElementById('pwq-sr-mode').style.display='none';
+  document.getElementById('pwq-yn-mode').style.display='flex';
+}
+
+function pwqYnCorrect(){
+  PWQ.wordsAttempted++;
+  pwqCorrect();
+}
+function pwqYnRetry(){
+  PWQ.wordsAttempted++;
+  pwqWrong();
+}
+
+function pwqCorrect(){
+  soundCorrect();
+  soundLockBreak();
+  PWQ.wordsPassed++;
+  PWQ.locksBroken++;
+  hammyReact(true);
+
+  // Flash card
+  const card=document.getElementById('pwq-word-card');
+  card.classList.add('correct-flash');
+  setTimeout(()=>card.classList.remove('correct-flash'),500);
+
+  // Redraw scene (one less lock)
+  drawScene();
+
+  // Show Amazing overlay
+  const overlay=document.getElementById('pwq-result-overlay');
+  document.getElementById('pwq-result-emoji').textContent='🎉';
+  document.getElementById('pwq-result-text').textContent='Amazing!';
+  overlay.className='result-overlay show';
+
+  // Update progress
+  const total=PWQ.words.length;
+  document.getElementById('pwq-progress-label').textContent=`${PWQ.wordsPassed} / ${total} words`;
+  document.getElementById('pwq-progress-fill').style.width=`${(PWQ.wordsPassed/total)*100}%`;
+
+  // Check sticker
+  const perSticker=getProp(S.selectedWordSet,'Words Per Sticker','number')||12;
+  if(PWQ.wordsPassed>0&&PWQ.wordsPassed%perSticker===0){
+    PWQ.stickersEarned++;S.walletStickers++;
+    document.getElementById('pwq-stickers').textContent=S.walletStickers;
+  }
+}
+
+function pwqNextWord(){
+  document.getElementById('pwq-result-overlay').className='result-overlay';
+  // Reset SR mode
+  document.getElementById('pwq-sr-mode').style.display=S.srEnabled?'flex':'none';
+  document.getElementById('pwq-yn-mode').style.display=S.srEnabled?'none':'flex';
+  document.getElementById('pwq-mic-btn').className='mic-btn';
+  PWQ.wordIdx++;
+  renderPWQWord();
+}
+
+function pwqWrong(){
+  soundWrong();
+  soundChainRattle();
+  PWQ.attempts++;
+  hammyReact(false);
+
+  const card=document.getElementById('pwq-word-card');
+  card.classList.add('wrong-shake');
+  setTimeout(()=>card.classList.remove('wrong-shake'),400);
+
+  const maxAtt=PWQ.maxAttempts;
+  const remaining=maxAtt-PWQ.attempts;
+  if(remaining>0){
+    document.getElementById('pwq-word-attempts').textContent=`${remaining} attempt${remaining!==1?'s':''} left`;
+    // Reset for another try
+    document.getElementById('pwq-mic-btn').className='mic-btn';
+    document.getElementById('pwq-mic-hint').textContent='Try again!';
+    document.getElementById('pwq-sr-mode').style.display=S.srEnabled?'flex':'none';
+    document.getElementById('pwq-yn-mode').style.display=S.srEnabled?'none':'flex';
+  }else{
+    // Out of attempts — skip word
+    document.getElementById('pwq-word-attempts').textContent='';
+    hammySpeak("That was tricky! Keep going! 💪",2000);
+    setTimeout(()=>{
+      PWQ.wordIdx++;
+      renderPWQWord();
+    },1500);
+  }
+}
+
+function pwqFinish(){
+  stopHammyFloat();
+  soundVictory();
+  setTimeout(()=>{
+    document.getElementById('pwq-celeb-title').textContent=`Princess ${PWQ.princessName} is free!`;
+    document.getElementById('pwq-celeb-msg').textContent=`You said ${PWQ.wordsPassed} words correctly! ⭐ ${PWQ.stickersEarned} stickers earned`;
+    document.getElementById('pwq-celebration').className='pwq-celebration show';
+    launchConfetti();
+    document.getElementById('pwq-confetti').innerHTML=document.getElementById('confetti-container').innerHTML;
+  },500);
+}
+</script>
