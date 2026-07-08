@@ -113,7 +113,7 @@
   .hear-btn:active{transform:scale(.95)}
   .mic-btn{background:var(--coral);color:white;border:none;border-radius:50%;width:86px;height:86px;font-size:34px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s;box-shadow:0 8px 28px rgba(255,107,107,.45)}
   .mic-btn.listening{background:#27ae60;animation:pulse 1s infinite}
-  @keyframes pulse{0%,100%{box-shadow:0 8px 28px rgba(39,174,96,.45);transform:scale(1)}50%{box-shadow:0 8px 40px rgba(39,174,96,.7);transform:scale(1.06)}}
+  @keyframes pulse{0%,100%{background:#27ae60;box-shadow:0 8px 28px rgba(39,174,96,.45);transform:scale(1)}50%{background:#27ae60;box-shadow:0 8px 40px rgba(39,174,96,.7);transform:scale(1.06)}}
   .mic-hint{font-size:14px;color:var(--text-mid);font-weight:700}
 
   /* RESULT */
@@ -666,7 +666,7 @@
 <!-- PRINCESS WORD QUEST -->
 <div class="screen" id="screen-pwq">
   <div class="pwq-topbar">
-    <button class="back-btn" onclick="showScreen('games')" style="flex-shrink:0">←</button>
+    <button class="back-btn" onclick="stopHammyFloat();showScreen('games')" style="flex-shrink:0">←</button>
     <div class="pwq-progress-wrap">
       <div class="pwq-progress-label" id="pwq-progress-label">0 / 12 words</div>
       <div class="pwq-progress-bar"><div class="pwq-progress-fill" id="pwq-progress-fill" style="width:0%"></div></div>
@@ -1202,9 +1202,9 @@ function dismissSticker(){
   nextWord();
 }
 
-function launchConfetti(){
+function launchConfetti(containerId='confetti-container'){
   const colors=['#FFD93D','#FF6B6B','#4D96FF','#6BCB77','#FF6EB4','#FF8C42'];
-  const c=document.getElementById('confetti-container');c.innerHTML='';
+  const c=document.getElementById(containerId);c.innerHTML='';
   for(let i=0;i<60;i++){
     const el=document.createElement('div');el.className='confetti-piece';
     el.style.left=Math.random()*100+'vw';
@@ -2227,6 +2227,8 @@ function syncSRToggle(source){
   // Keep both toggles in sync
   const val = source==='main'
     ? document.getElementById('sr-toggle').checked
+    : source==='pwq'
+    ? document.getElementById('pwq-sr-toggle').checked
     : document.getElementById('wc-sr-toggle').checked;
   S.srEnabled = val;
   // Sync all toggles
@@ -2282,8 +2284,6 @@ function ynMarkRetry(){
 
 init();
 </script>
-</body>
-</html>
 <script id="pwq-script">
 // ═══════════════════════════════════════════════════════════════════
 // PRINCESS WORD QUEST
@@ -2388,6 +2388,7 @@ function startPrincessQuest(gameId){
   PWQ.words=shuffle(wordsForSet);
   PWQ.wordIdx=0;PWQ.wordsPassed=0;PWQ.wordsAttempted=0;
   PWQ.stickersEarned=0;PWQ.showWord=true;PWQ.attempts=0;PWQ.maxAttempts=3;
+  PWQ.sessionStart=Date.now();
   PWQ.stages=calcStages(PWQ.words.length);
   PWQ.currentStage=0;
   PWQ.locksTotal=PWQ.words.length;
@@ -2758,11 +2759,11 @@ function pwqStartListening(){
       const h=e.results[0][i].transcript.toLowerCase().trim();
       if(h===target||h.includes(target)||target.includes(h)){matched=true;break;}
     }
-    if(matched) pwqCorrect();
-    else pwqShowParentConfirm();
-    PWQ.wordsAttempted++;
+    if(matched){PWQ.wordsAttempted++;pwqCorrect();}
+    else{pwqShowParentConfirm();}
   };
-  rec.onerror=()=>{btn.classList.remove('listening');PWQ.wordsAttempted++;pwqShowParentConfirm();};
+  rec.onerror=()=>{btn.classList.remove('listening');pwqShowParentConfirm();};
+  rec.onend=()=>{btn.classList.remove('listening');document.getElementById('pwq-mic-hint').textContent='Tap the mic and say the word!';};
   rec.start();
 }
 
@@ -2854,15 +2855,39 @@ function pwqWrong(){
   }
 }
 
-function pwqFinish(){
+async function pwqFinish(){
   stopHammyFloat();
   soundVictory();
+  try{
+    const childName=getProp(S.child,'Name','title');
+    const setName=getProp(S.selectedWordSet,'Set Name','title');
+    const elapsed=Math.round((Date.now()-PWQ.sessionStart)/1000);
+    const sid=`${childName}-PWQ-${new Date().toISOString().slice(0,10)}-${Date.now().toString().slice(-4)}`;
+    await notionCreate(DB.sessions,{
+      'Session ID':{title:[{text:{content:sid}}]},
+      'Child Name':{rich_text:[{text:{content:childName}}]},
+      'Game':{rich_text:[{text:{content:'Princess Word Quest'}}]},
+      'Word Set':{rich_text:[{text:{content:setName}}]},
+      'Words Attempted':{number:PWQ.wordsAttempted},
+      'Words Passed':{number:PWQ.wordsPassed},
+      'Time Taken (secs)':{number:elapsed},
+      'Stickers Earned':{number:PWQ.stickersEarned},
+    });
+    if(S.walletPage&&PWQ.stickersEarned>0){
+      await notionUpdate(S.walletPage.id,{
+        'Total Stickers Earned':{number:getProp(S.walletPage,'Total Stickers Earned','number')+PWQ.stickersEarned},
+        'Total Words Completed':{number:getProp(S.walletPage,'Total Words Completed','number')+PWQ.wordsPassed},
+        'Stickers Available':{number:getProp(S.walletPage,'Stickers Available','number')+PWQ.stickersEarned},
+      });
+    }
+  }catch(e){console.log('PWQ session save error',e);}
   setTimeout(()=>{
     document.getElementById('pwq-celeb-title').textContent=`Princess ${PWQ.princessName} is free!`;
     document.getElementById('pwq-celeb-msg').textContent=`You said ${PWQ.wordsPassed} words correctly! ⭐ ${PWQ.stickersEarned} stickers earned`;
     document.getElementById('pwq-celebration').className='pwq-celebration show';
-    launchConfetti();
-    document.getElementById('pwq-confetti').innerHTML=document.getElementById('confetti-container').innerHTML;
+    launchConfetti('pwq-confetti');
   },500);
 }
 </script>
+</body>
+</html>
