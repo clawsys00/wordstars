@@ -391,7 +391,7 @@
   @keyframes winDance{0%,100%{transform:rotate(-10deg) scale(1)}50%{transform:rotate(10deg) scale(1.15)}}
 
   /* PRINCESS WORD QUEST */
-  #screen-pwq{padding:0;position:relative;overflow:hidden}
+  #screen-pwq{padding:0;position:relative;overflow-y:auto}
   .pwq-topbar{background:rgba(255,255,255,.92);padding:12px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);z-index:10;position:relative}
   .pwq-title{font-family:'Fredoka One',cursive;font-size:20px;color:var(--purple)}
   .pwq-progress-wrap{flex:1;display:flex;flex-direction:column;gap:3px}
@@ -400,7 +400,7 @@
   .pwq-progress-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:20px;transition:width .6s ease}
 
   /* SCENE */
-  .pwq-scene{position:relative;width:100%;flex:0 0 auto;overflow:hidden;transition:background 2s ease}
+  .pwq-scene{position:relative;width:100%;flex:0 0 auto;overflow:hidden;transition:background 2s ease;max-height:min(35vh,200px)}
   .pwq-scene-bg{position:absolute;inset:0;transition:opacity 1.5s ease}
   .pwq-scene-svg{width:100%;display:block;position:relative;z-index:2}
   .pwq-narration{margin:0 16px;background:rgba(255,255,255,.92);border-radius:16px;padding:12px 18px;font-size:14px;font-weight:700;color:var(--purple);text-align:center;box-shadow:0 3px 12px rgba(0,0,0,.08);position:relative;z-index:3;border:2px solid rgba(155,89,182,.2);min-height:44px;transition:opacity .5s}
@@ -408,9 +408,9 @@
   .pwq-narration::after{content:'✨';margin-left:6px}
 
   /* HAMMY SPEECH BUBBLE */
-  .hammy-bubble{position:absolute;background:white;border-radius:16px;padding:6px 12px;font-size:12px;font-weight:800;color:var(--purple);white-space:nowrap;box-shadow:0 3px 12px rgba(0,0,0,.15);opacity:0;transition:opacity .3s;z-index:20;border:2px solid rgba(155,89,182,.2);pointer-events:none}
+  .hammy-bubble{position:absolute;top:6px;left:50%;transform:translateX(-50%);background:white;border-radius:16px;padding:6px 12px;font-size:12px;font-weight:800;color:var(--purple);white-space:nowrap;box-shadow:0 3px 12px rgba(0,0,0,.15);opacity:0;transition:opacity .3s;z-index:20;border:2px solid rgba(155,89,182,.2);pointer-events:none}
   .hammy-bubble.show{opacity:1}
-  .hammy-bubble::after{content:'';position:absolute;bottom:-8px;left:12px;border:4px solid transparent;border-top-color:white}
+  .hammy-bubble::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:white}
 
   /* WORD CARD in PWQ */
   .pwq-word-area{padding:12px 16px;display:flex;flex-direction:column;align-items:center;gap:12px;flex:1}
@@ -676,7 +676,7 @@
 
   <!-- Scene -->
   <div class="pwq-scene" id="pwq-scene">
-    <svg class="pwq-scene-svg" id="pwq-scene-svg" viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg"></svg>
+    <svg class="pwq-scene-svg" id="pwq-scene-svg" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg"></svg>
     <div id="hammy-bubble" class="hammy-bubble">Let's save the princess! 🌟</div>
   </div>
 
@@ -2432,12 +2432,12 @@ function drawScene(){
   svg.appendChild(defs);
 
   // Background sky
-  svg.appendChild(makePWQEl('rect',{width:'400',height:'280',fill:'url(#skyGrad)'}));
+  svg.appendChild(makePWQEl('rect',{width:'400',height:'200',fill:'url(#skyGrad)'}));
 
   // Stars (appear as progress increases)
   const starCount=Math.floor(progress*12);
   for(let i=0;i<starCount;i++){
-    const star=makePWQEl('text',{x:10+i*33,y:20+((i*17)%40),
+    const star=makePWQEl('text',{x:10+i*33,y:14+((i*12)%29),
       'font-size':'14','opacity':0.6+progress*0.4,
       'text-anchor':'middle'});
     star.textContent='⭐';
@@ -2445,8 +2445,8 @@ function drawScene(){
   }
 
   // Ground
-  svg.appendChild(makePWQEl('rect',{x:'0',y:'230',width:'400',height:'50',fill:'#4a7c59'}));
-  svg.appendChild(makePWQEl('rect',{x:'0',y:'228',width:'400',height:'8',fill:'#6BCB77'}));
+  svg.appendChild(makePWQEl('rect',{x:'0',y:'164',width:'400',height:'50',fill:'#4a7c59'}));
+  svg.appendChild(makePWQEl('rect',{x:'0',y:'162',width:'400',height:'8',fill:'#6BCB77'}));
 
   // Castle silhouette
   drawCastle(svg, progress);
@@ -2456,6 +2456,9 @@ function drawScene(){
 
   // Princess
   drawPrincess(svg, stage, progress);
+
+  // Cage front bars (drawn after princess so she looks trapped inside)
+  drawCageFront(svg);
 
   // Little Hammy
   drawHammy(svg);
@@ -2469,29 +2472,29 @@ function drawCastle(svg, progress){
   const col=`rgb(${brightness+20},${brightness},${brightness+40})`;
   const colDark=`rgb(${brightness},${brightness-10},${brightness+20})`;
   // Main tower
-  svg.appendChild(makePWQEl('rect',{x:'280',y:'80',width:'80',height:'160',fill:col}));
+  svg.appendChild(makePWQEl('rect',{x:'280',y:'57',width:'80',height:'114',fill:col}));
   // Battlements
   for(let i=0;i<5;i++){
-    svg.appendChild(makePWQEl('rect',{x:280+i*18,y:'65',width:'10',height:'20',fill:col}));
+    svg.appendChild(makePWQEl('rect',{x:280+i*18,y:'46',width:'10',height:'16',fill:col}));
   }
   // Tower left
-  svg.appendChild(makePWQEl('rect',{x:'250',y:'110',width:'50',height:'130',fill:colDark}));
-  for(let i=0;i<3;i++) svg.appendChild(makePWQEl('rect',{x:250+i*18,y:'98',width:'10',height:'18',fill:colDark}));
+  svg.appendChild(makePWQEl('rect',{x:'250',y:'79',width:'50',height:'93',fill:colDark}));
+  for(let i=0;i<3;i++) svg.appendChild(makePWQEl('rect',{x:250+i*18,y:'70',width:'10',height:'14',fill:colDark}));
   // Tower right
-  svg.appendChild(makePWQEl('rect',{x:'330',y:'110',width:'50',height:'130',fill:colDark}));
-  for(let i=0;i<3;i++) svg.appendChild(makePWQEl('rect',{x:330+i*18,y:'98',width:'10',height:'18',fill:colDark}));
+  svg.appendChild(makePWQEl('rect',{x:'330',y:'79',width:'50',height:'93',fill:colDark}));
+  for(let i=0;i<3;i++) svg.appendChild(makePWQEl('rect',{x:330+i*18,y:'70',width:'10',height:'14',fill:colDark}));
   // Windows glowing
   const glowCol=progress>0.5?`rgb(255,${200+Math.floor(progress*55)},100)`:'#555';
-  for(let w of[[295,100],[335,100],[295,145],[335,145]]){
-    svg.appendChild(makePWQEl('rect',{x:w[0],y:w[1],width:'12',height:'16',rx:'6',fill:glowCol}));
+  for(let w of[[295,71],[335,71],[295,104],[335,104]]){
+    svg.appendChild(makePWQEl('rect',{x:w[0],y:w[1],width:'12',height:'14',rx:'6',fill:glowCol}));
   }
   // Gate
-  svg.appendChild(makePWQEl('rect',{x:'305',y:'185',width:'30',height:'40',fill:'#1a0a00'}));
-  svg.appendChild(makePWQEl('ellipse',{cx:'320',cy:'185',rx:'15',ry:'12',fill:'#1a0a00'}));
+  svg.appendChild(makePWQEl('rect',{x:'305',y:'132',width:'30',height:'38',fill:'#1a0a00'}));
+  svg.appendChild(makePWQEl('ellipse',{cx:'320',cy:'132',rx:'15',ry:'12',fill:'#1a0a00'}));
 }
 
 function drawCage(svg){
-  const cx=110, cy=155, w=90, h=90;
+  const cx=110, cy=111, w=90, h=64;
   // Cage shadow
   svg.appendChild(makePWQEl('ellipse',{cx:cx,cy:cy+h/2+5,rx:w/2,ry:8,fill:'rgba(0,0,0,.2)'}));
   // Cage top bar
@@ -2520,8 +2523,20 @@ function drawCage(svg){
   }
 }
 
+function drawCageFront(svg){
+  // Re-draw every-other cage bar on top of princess so she looks trapped inside
+  const cx=110, cy=111, w=90, h=64;
+  const bars=6;
+  for(let i=1;i<=bars;i+=2){
+    const x=cx-w/2+i*(w/bars);
+    svg.appendChild(makePWQEl('rect',{x:x-2,y:cy-h/2+6,width:4,height:h-12,rx:'2',fill:'rgba(60,60,60,0.45)'}));
+  }
+  // Front top and bottom bar reinforcement
+  svg.appendChild(makePWQEl('rect',{x:cx-w/2,y:cy-h/2,width:w,height:6,rx:'3',fill:'rgba(60,60,60,0.3)'}));
+}
+
 function drawPrincess(svg, stage, progress){
-  const cx=110, cy=155;
+  const cx=110, cy=111;
   const emotion=progress<0.25?'sad':progress<0.5?'worried':progress<0.75?'hopeful':'excited';
 
   // Dress
@@ -2550,15 +2565,22 @@ function drawPrincess(svg, stage, progress){
   svg.appendChild(makePWQEl('ellipse',{cx:cx-16,cy:cy-24,rx:5,ry:14,fill:'#8B4513'}));
   svg.appendChild(makePWQEl('ellipse',{cx:cx+16,cy:cy-24,rx:5,ry:14,fill:'#8B4513'}));
 
-  // Eyes
-  const eyeY=cy-28;
+  // Eyes — lowered 4px below hair boundary so they're always visible
+  const eyeY=cy-24;
   if(emotion==='sad'){
+    // White sclera backing so eyes show against dark hair
+    svg.appendChild(makePWQEl('ellipse',{cx:cx-6,cy:eyeY,rx:5,ry:4,fill:'white',opacity:'0.9'}));
+    svg.appendChild(makePWQEl('ellipse',{cx:cx+6,cy:eyeY,rx:5,ry:4,fill:'white',opacity:'0.9'}));
     // Sad curved down
-    svg.appendChild(makePWQEl('path',{d:`M${cx-9},${eyeY-2} Q${cx-6},${eyeY+2} ${cx-3},${eyeY-2}`,fill:'none',stroke:'#2c3e50','stroke-width':'2'}));
-    svg.appendChild(makePWQEl('path',{d:`M${cx+3},${eyeY-2} Q${cx+6},${eyeY+2} ${cx+9},${eyeY-2}`,fill:'none',stroke:'#2c3e50','stroke-width':'2'}));
-    // Tears
-    svg.appendChild(makePWQEl('ellipse',{cx:cx-6,cy:eyeY+5,rx:2,ry:3,fill:'#5DADE2',opacity:'0.7'}));
+    svg.appendChild(makePWQEl('path',{d:`M${cx-9},${eyeY-2} Q${cx-6},${eyeY+2} ${cx-3},${eyeY-2}`,fill:'none',stroke:'#2c3e50','stroke-width':'3'}));
+    svg.appendChild(makePWQEl('path',{d:`M${cx+3},${eyeY-2} Q${cx+6},${eyeY+2} ${cx+9},${eyeY-2}`,fill:'none',stroke:'#2c3e50','stroke-width':'3'}));
+    // Tears on both eyes
+    svg.appendChild(makePWQEl('ellipse',{cx:cx-6,cy:eyeY+5,rx:2,ry:3,fill:'#5DADE2',opacity:'0.8'}));
+    svg.appendChild(makePWQEl('ellipse',{cx:cx+6,cy:eyeY+5,rx:2,ry:3,fill:'#5DADE2',opacity:'0.8'}));
   } else {
+    // White sclera backing
+    svg.appendChild(makePWQEl('circle',{cx:cx-6,cy:eyeY,r:'4',fill:'white'}));
+    svg.appendChild(makePWQEl('circle',{cx:cx+6,cy:eyeY,r:'4',fill:'white'}));
     // Happy/normal eyes
     svg.appendChild(makePWQEl('circle',{cx:cx-6,cy:eyeY,r:'3',fill:'#2c3e50'}));
     svg.appendChild(makePWQEl('circle',{cx:cx+6,cy:eyeY,r:'3',fill:'#2c3e50'}));
@@ -2588,7 +2610,7 @@ function drawPrincess(svg, stage, progress){
 
 function drawHammy(svg){
   // Little Hammy position (animated via JS, start at right of cage)
-  const hx=165, hy=120;
+  const hx=165, hy=86;
   const g=makePWQEl('g',{id:'hammy-svg',transform:`translate(${hx},${hy})`});
 
   // Wings
@@ -2636,7 +2658,7 @@ function startHammyFloat(){
   function animate(){
     hammyAngle+=0.02;
     const hx=155+Math.sin(hammyAngle)*25;
-    const hy=118+Math.sin(hammyAngle*2)*8;
+    const hy=84+Math.sin(hammyAngle*2)*8;
     const hammy=document.getElementById('hammy-svg');
     if(hammy) hammy.setAttribute('transform',`translate(${hx},${hy}) rotate(${Math.sin(hammyAngle)*8})`);
     hammyAnimFrame=requestAnimationFrame(animate);
@@ -2667,7 +2689,7 @@ function hammyReact(correct){
     const spin=setInterval(()=>{
       t+=0.3;
       const hx=155+Math.sin(hammyAngle)*25;
-      const hy=118+Math.sin(hammyAngle*2)*8;
+      const hy=84+Math.sin(hammyAngle*2)*8;
       hammy.setAttribute('transform',`translate(${hx},${hy-Math.sin(t)*15}) rotate(${t*20})`);
       if(t>3){clearInterval(spin);}
     },50);
