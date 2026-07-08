@@ -400,9 +400,9 @@
   .pwq-progress-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:20px;transition:width .6s ease}
 
   /* SCENE */
-  .pwq-scene{position:relative;width:100%;flex:0 0 auto;overflow:hidden;transition:background 2s ease;max-height:min(35vh,200px)}
+  .pwq-scene{position:relative;width:100%;flex:0 0 auto;overflow:hidden;transition:background 2s ease}
   .pwq-scene-bg{position:absolute;inset:0;transition:opacity 1.5s ease}
-  .pwq-scene-svg{width:100%;display:block;position:relative;z-index:2}
+  .pwq-scene-svg{width:100%;max-width:400px;height:auto;display:block;position:relative;z-index:2;margin:0 auto}
   .pwq-narration{margin:0 16px;background:rgba(255,255,255,.92);border-radius:16px;padding:12px 18px;font-size:14px;font-weight:700;color:var(--purple);text-align:center;box-shadow:0 3px 12px rgba(0,0,0,.08);position:relative;z-index:3;border:2px solid rgba(155,89,182,.2);min-height:44px;transition:opacity .5s}
   .pwq-narration::before{content:'✨';margin-right:6px}
   .pwq-narration::after{content:'✨';margin-left:6px}
