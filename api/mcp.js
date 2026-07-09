@@ -147,9 +147,9 @@ export default async function handler(req, res) {
           })
         });
 
+        const putBody = await putRes.json();
         if (!putRes.ok) {
-          const ghErr = await putRes.json();
-          throw new Error(`GitHub: ${ghErr.message}`);
+          throw new Error(`GitHub ${putRes.status}: ${putBody.message}`);
         }
 
         // Update Notion Image URL if page ID supplied
