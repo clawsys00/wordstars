@@ -208,8 +208,9 @@ export default async function handler(req, res) {
             const wordProp = page.properties['Word'] || page.properties['Name'];
             const imgProp  = page.properties['Image URL'];
             const word = wordProp?.title?.[0]?.plain_text || wordProp?.rich_text?.[0]?.plain_text || '?';
-            const hasImg = !!(imgProp?.url);
-            if (!hasImg) results.push({ word, word_page_id: page.id });
+            const imgUrl = imgProp?.url || '';
+            const hasGithubImg = imgUrl.startsWith('https://raw.githubusercontent.com/clawsys00/wordstars/');
+            if (!hasGithubImg) results.push({ word, word_page_id: page.id, current_url: imgUrl || null });
           }
           cursor = data.next_cursor;
         } while (cursor);
@@ -218,9 +219,11 @@ export default async function handler(req, res) {
           content: [{
             type: 'text',
             text: results.length === 0
-              ? '✅ All words already have images!'
-              : `${results.length} words need images:\n\n` +
-                results.map(r => `• ${r.word}  (page_id: ${r.word_page_id})`).join('\n')
+              ? '✅ All words already have GitHub-hosted images!'
+              : `${results.length} words need GitHub images:\n\n` +
+                results.map(r =>
+                  `• ${r.word}  (page_id: ${r.word_page_id})${r.current_url ? '  ⚠️ has expiring URL' : '  ❌ no image'}`
+                ).join('\n')
           }]
         });
       } catch (e) {
