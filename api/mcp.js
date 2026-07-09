@@ -71,17 +71,12 @@ export default async function handler(req, res) {
         {
           name: 'list_words_needing_images',
           description:
-            'Query a Notion words database and return all words that do not yet have an Image URL set. ' +
-            'Use this to know which words still need images.',
+            'Return all vocabulary words that do not yet have an image. ' +
+            'Call this first to get the list, then generate and upload an image for each word.',
           inputSchema: {
             type: 'object',
-            properties: {
-              database_id: {
-                type: 'string',
-                description: 'Notion database ID for the Words database.'
-              }
-            },
-            required: ['database_id']
+            properties: {},
+            required: []
           }
         }
       ]
@@ -185,7 +180,7 @@ export default async function handler(req, res) {
 
     // ── list_words_needing_images ──────────────────────────────────────────
     if (name === 'list_words_needing_images') {
-      const { database_id } = args;
+      const database_id = 'e8409cb3-c415-4101-bd74-0b92646e58ec';
       try {
         const results = [];
         let cursor;
