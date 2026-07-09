@@ -123,7 +123,7 @@ export default async function handler(req, res) {
         const rawUrl      = `https://raw.githubusercontent.com/clawsys00/wordstars/main/${githubPath}`;
 
         const ghHeaders = {
-          'Authorization': `Bearer ${process.env.WORDSTARS}`,
+          'Authorization': `Bearer ${process.env.GITHUB_WRITE_TOKEN}`,
           'Accept': 'application/vnd.github+json',
           'X-GitHub-Api-Version': '2022-11-28'
         };
