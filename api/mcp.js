@@ -4,9 +4,15 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Mcp-Session-Id');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  // Health check / discovery
+  // SSE transport — Claude.ai GETs first to get the POST endpoint URL
   if (req.method === 'GET') {
-    return res.status(200).json({ name: 'wordstars-images', version: '1.0.0' });
+    const postUrl = `https://${req.headers.host}/api/mcp`;
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.write(`event: endpoint\ndata: ${postUrl}\n\n`);
+    res.end();
+    return;
   }
 
   if (req.method !== 'POST') return res.status(405).end();
