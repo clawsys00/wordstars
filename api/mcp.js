@@ -151,6 +151,7 @@ export default async function handler(req, res) {
         if (!putRes.ok) {
           throw new Error(`GitHub ${putRes.status}: ${putBody.message}`);
         }
+        const commitSha = putBody?.commit?.sha || putBody?.content?.sha || 'unknown';
 
         // Update Notion Image URL if page ID supplied
         if (word_page_id) {
@@ -175,6 +176,7 @@ export default async function handler(req, res) {
             text: [
               `✅ Image saved!`,
               `Word: ${word_name}`,
+              `GitHub status: ${putRes.status}, commit: ${commitSha}`,
               `URL: ${rawUrl}`,
               word_page_id ? `Notion: updated` : `Notion: skipped (no word_page_id)`
             ].join('\n')
