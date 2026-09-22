@@ -2258,6 +2258,11 @@ function syncSRToggle(source){
   const pwqYn=document.getElementById('pwq-yn-mode');
   if(pwqSr)pwqSr.style.display=val?'flex':'none';
   if(pwqYn)pwqYn.style.display=val?'none':'flex';
+  // Snakes & Ladders word challenge
+  const wcSr=document.getElementById('wc-sr-mode');
+  const wcYn=document.getElementById('wc-yn-mode');
+  if(wcSr)wcSr.style.display=val?'flex':'none';
+  if(wcYn)wcYn.style.display=val?'none':'flex';
 }
 
 function toggleSR(){
