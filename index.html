@@ -3164,9 +3164,9 @@ function drawPrincess(svg, stage, progress){
 
   // Gradient defs — rebuilt each draw since the svg is cleared beforehand, so plain (non-unique-per-frame) ids are safe
   const defs=makePWQEl('defs',{});
-  const dressGrad=makePWQEl('linearGradient',{id:'princessDress',x1:'0',y1:'0',x2:'1',y2:'1'});
-  dressGrad.appendChild(makePWQEl('stop',{offset:'0%','stop-color':dressLight}));
-  dressGrad.appendChild(makePWQEl('stop',{offset:'55%','stop-color':dressMid}));
+  const dressGrad=makePWQEl('radialGradient',{id:'princessDress',cx:'50%',cy:'10%',r:'95%'});
+  dressGrad.appendChild(makePWQEl('stop',{offset:'0%','stop-color':dressMid}));
+  dressGrad.appendChild(makePWQEl('stop',{offset:'60%','stop-color':dressDeep}));
   dressGrad.appendChild(makePWQEl('stop',{offset:'100%','stop-color':dressDeep}));
   defs.appendChild(dressGrad);
   const hairGrad=makePWQEl('linearGradient',{id:'princessHair',x1:'0',y1:'0',x2:'0',y2:'1'});
@@ -3189,7 +3189,7 @@ function drawPrincess(svg, stage, progress){
 
   // Skirt — flowing scalloped silhouette
   svg.appendChild(makePWQEl('path',{d:`M${cx-24},${cy+44} Q${cx-28},${cy+8} ${cx-14},${cy-2} L${cx+14},${cy-2} Q${cx+28},${cy+8} ${cx+24},${cy+44} Q${cx},${cy+53} ${cx-24},${cy+44} Z`,fill:'url(#princessDress)'}));
-  svg.appendChild(makePWQEl('path',{d:`M${cx-9},${cy-2} Q${cx-11},${cy+24} ${cx-7},${cy+44} L${cx+7},${cy+44} Q${cx+11},${cy+24} ${cx+9},${cy-2} Z`,fill:dressLight,opacity:'0.6'}));
+  svg.appendChild(makePWQEl('path',{d:`M${cx-4},${cy-2} Q${cx-5},${cy+24} ${cx-3},${cy+44} L${cx+3},${cy+44} Q${cx+5},${cy+24} ${cx+4},${cy-2} Z`,fill:dressLight,opacity:'0.35'}));
   for(let i=-2;i<=2;i++) svg.appendChild(makePWQEl('circle',{cx:cx+i*10,cy:cy+47,r:'5',fill:dressDeep,opacity:'0.35'}));
   if(progress>0.4){
     for(const[sx,sy]of[[cx-15,cy+15],[cx+13,cy+27],[cx-3,cy+37]]){
@@ -3219,19 +3219,19 @@ function drawPrincess(svg, stage, progress){
   svg.appendChild(makePWQEl('rect',{x:cx-5,y:cy-26,width:'10',height:'8',fill:'url(#princessSkin)'}));
   svg.appendChild(makePWQEl('circle',{cx,cy:cy-34,r:'17',fill:'url(#princessSkin)'}));
 
-  // Hair — flowing locks behind the shoulders
-  svg.appendChild(makePWQEl('path',{d:`M${cx-16},${cy-36} Q${cx-25},${cy-8} ${cx-14},${cy+8} Q${cx-9},${cy-6} ${cx-13},${cy-30} Z`,fill:'url(#princessHair)'}));
-  svg.appendChild(makePWQEl('path',{d:`M${cx+16},${cy-36} Q${cx+25},${cy-8} ${cx+14},${cy+8} Q${cx+9},${cy-6} ${cx+13},${cy-30} Z`,fill:'url(#princessHair)'}));
+  // Hair — slim tapered locks hugging the head, not blobs sticking out past the jaw
+  svg.appendChild(makePWQEl('path',{d:`M${cx-13},${cy-40} Q${cx-22},${cy-30} ${cx-18},${cy-16} Q${cx-14},${cy-10} ${cx-12},${cy-22} Q${cx-14},${cy-34} ${cx-13},${cy-40} Z`,fill:'url(#princessHair)'}));
+  svg.appendChild(makePWQEl('path',{d:`M${cx+13},${cy-40} Q${cx+22},${cy-30} ${cx+18},${cy-16} Q${cx+14},${cy-10} ${cx+12},${cy-22} Q${cx+14},${cy-34} ${cx+13},${cy-40} Z`,fill:'url(#princessHair)'}));
 
   // Hair crown cap + fringe framing the face
   svg.appendChild(makePWQEl('path',{d:`M${cx-17},${cy-38} Q${cx-19},${cy-53} ${cx},${cy-54} Q${cx+19},${cy-53} ${cx+17},${cy-38} Q${cx+10},${cy-46} ${cx},${cy-45} Q${cx-10},${cy-46} ${cx-17},${cy-38} Z`,fill:'url(#princessHair)'}));
   svg.appendChild(makePWQEl('path',{d:`M${cx-9},${cy-48} Q${cx-3},${cy-52} ${cx+4},${cy-49}`,fill:'none',stroke:'#C68642','stroke-width':'2','stroke-linecap':'round',opacity:'0.7'}));
 
-  // Eyebrows
+  // Eyebrows — kept high near the hairline so they read as brows, not glasses frames
   const eyeY=cy-24;
-  const browY=emotion==='sad'?eyeY-7:eyeY-8;
-  svg.appendChild(makePWQEl('path',{d:`M${cx-9},${browY+(emotion==='sad'?1:0)} Q${cx-6},${browY-2} ${cx-3},${browY}`,fill:'none',stroke:'#5C3317','stroke-width':'1.6','stroke-linecap':'round'}));
-  svg.appendChild(makePWQEl('path',{d:`M${cx+3},${browY} Q${cx+6},${browY-2} ${cx+9},${browY+(emotion==='sad'?1:0)}`,fill:'none',stroke:'#5C3317','stroke-width':'1.6','stroke-linecap':'round'}));
+  const browY=eyeY-11;
+  svg.appendChild(makePWQEl('path',{d:`M${cx-8.5},${browY+1} Q${cx-6},${browY-0.5} ${cx-3.5},${browY+0.5}`,fill:'none',stroke:'#6B4226','stroke-width':'1.3','stroke-linecap':'round'}));
+  svg.appendChild(makePWQEl('path',{d:`M${cx+3.5},${browY+0.5} Q${cx+6},${browY-0.5} ${cx+8.5},${browY+1}`,fill:'none',stroke:'#6B4226','stroke-width':'1.3','stroke-linecap':'round'}));
 
   // Eyes
   if(emotion==='sad'){
