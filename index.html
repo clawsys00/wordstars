@@ -390,6 +390,67 @@
   .win-avatar-dance{font-size:100px;animation:winDance 1s ease infinite}
   @keyframes winDance{0%,100%{transform:rotate(-10deg) scale(1)}50%{transform:rotate(10deg) scale(1.15)}}
 
+  /* TREASURE ISLAND */
+  #screen-treasure{padding:0;position:relative;background:linear-gradient(180deg,#e0f4ff 0%,#cdeeff 100%)}
+  .ti-topbar{background:var(--card-bg);padding:14px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);z-index:10}
+  .ti-title{font-family:'Fredoka One',cursive;font-size:22px;color:var(--water-dark)}
+  .ti-body{flex:1;display:flex;flex-direction:column;align-items:center;padding:16px;gap:12px;overflow-y:auto}
+  .ti-players{display:flex;gap:10px;width:100%;max-width:520px}
+  .ti-player-card{flex:1;background:var(--card-bg);border-radius:var(--radius-sm);padding:12px 16px;text-align:center;box-shadow:0 3px 12px rgba(0,0,0,.08);border:3px solid transparent;transition:all .3s}
+  .ti-player-card.active-turn{border-color:var(--gold);background:#fffbea;animation:playerPulse 1.5s ease infinite}
+  .ti-player-card .p-avatar{font-size:28px}
+  .ti-player-card .p-name{font-size:13px;font-weight:800;color:var(--text-dark)}
+  .ti-player-card .p-square{font-family:'Fredoka One',cursive;font-size:22px;color:var(--water-dark)}
+  .ti-player-card .p-dice{font-size:11px;color:var(--text-mid);font-weight:600}
+
+  /* BOARD */
+  .ti-board-wrap{width:100%;max-width:520px;position:relative;user-select:none}
+  .ti-board{display:grid;grid-template-columns:repeat(6,1fr);border:3px solid var(--water-dark);border-radius:16px;overflow:hidden;background:#eaf7ff;position:relative}
+  .ti-svg-overlay{position:absolute;inset:0;pointer-events:none;z-index:2;border-radius:10px}
+  .ti-cell{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;border:1px solid rgba(0,0,0,.08);transition:background .2s;overflow:hidden}
+  .ti-cell .cell-num{font-size:10px;font-weight:700;color:rgba(0,0,0,.35);position:absolute;top:2px;left:3px;line-height:1}
+  .ti-cell .cell-word{font-size:9px;font-weight:700;color:#444;text-align:center;padding:0 2px;line-height:1.2;max-width:100%;position:absolute;bottom:2px;left:0;right:0}
+  .ti-cell .cell-img{width:70%;height:55%;object-fit:cover;border-radius:4px;margin-top:10px}
+  .ti-cell.word-sq{background:#fffbea}
+  .ti-cell.whirlpool-head{background:#e3f3ff}
+  .ti-cell.shortcut-foot{background:#fff8e1}
+  .ti-cell.start-sq{background:#e0f7ea}
+  .ti-cell.finish-sq{background:#fff3b0}
+  .ti-cell.pulse-land{animation:cellPulse .6s ease}
+
+  /* PIECE */
+  .ti-piece{position:absolute;font-size:28px;z-index:10;transform:translate(-50%,-50%);transition:left .6s cubic-bezier(.4,0,.2,1),top .6s cubic-bezier(.4,0,.2,1);filter:drop-shadow(0 3px 6px rgba(0,0,0,.35));pointer-events:none}
+  .ti-piece.bounce{animation:pieceBounce .4s ease}
+  .ti-piece.whirlpool-spin{animation:whirlpoolSpin 2.5s ease}
+  @keyframes whirlpoolSpin{0%{transform:translate(-50%,-50%) rotate(0deg) scale(1)}50%{transform:translate(-50%,-50%) rotate(360deg) scale(.6)}100%{transform:translate(-50%,-50%) rotate(720deg) scale(1)}}
+  .ti-piece.gust-boost{animation:gustBoost 2.5s ease}
+  @keyframes gustBoost{0%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-90%) scale(1.3) rotate(10deg)}100%{transform:translate(-50%,-50%) scale(1)}}
+
+  /* DICE / CONTROLS */
+  .ti-controls{width:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;gap:12px}
+  .ti-turn-label{font-family:'Fredoka One',cursive;font-size:20px;color:var(--text-dark);text-align:center}
+  .ti-dice-btn{background:var(--water-dark);color:white;border:none;border-radius:50px;padding:14px 32px;font-size:18px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 6px 20px rgba(45,111,212,.4);transition:transform .15s;display:flex;align-items:center;gap:12px}
+  .ti-dice-btn:active{transform:scale(.95)}
+  .ti-dice-btn:disabled{opacity:.5;cursor:default}
+  .ti-log{width:100%;max-width:520px;background:var(--card-bg);border-radius:var(--radius-sm);padding:12px 16px;font-size:13px;color:var(--text-mid);font-weight:600;max-height:72px;overflow-y:auto;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+
+  /* EVENT POPUP */
+  .ti-event-popup{position:fixed;inset:0;z-index:150;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .3s}
+  .ti-event-popup.show{opacity:1;pointer-events:all}
+  .ti-event-card{background:white;border-radius:28px;padding:36px 40px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:eventPop .4s cubic-bezier(.34,1.56,.64,1)}
+  .ti-event-icon{font-size:80px;animation:iconWiggle 1s ease infinite}
+  .ti-event-title{font-family:'Fredoka One',cursive;font-size:32px}
+  .ti-event-title.whirlpool{color:var(--water-dark)}
+  .ti-event-title.gust{color:var(--gold)}
+  .ti-event-msg{font-size:18px;font-weight:700;color:var(--text-mid)}
+  .ti-event-route{font-family:'Fredoka One',cursive;font-size:22px;color:var(--water-dark)}
+
+  /* WIN */
+  .ti-win{position:fixed;inset:0;z-index:300;background:linear-gradient(135deg,#fff3b0,#cdeeff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;opacity:0;pointer-events:none;transition:opacity .4s;padding:24px}
+  .ti-win.show{opacity:1;pointer-events:all}
+  .ti-win h2{font-family:'Fredoka One',cursive;font-size:48px;color:var(--water-dark);text-align:center}
+  .ti-win p{font-size:20px;font-weight:700;color:var(--text-mid);text-align:center}
+
   /* PRINCESS WORD QUEST */
   #screen-pwq{padding:0;position:relative;overflow-y:auto}
   .pwq-topbar{background:rgba(255,255,255,.92);padding:12px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);z-index:10;position:relative}
@@ -499,10 +560,10 @@
   <div class="settings-bar">
     <span>🎤 Speech recognition</span>
     <label class="toggle-switch">
-      <input type="checkbox" id="sr-toggle" checked onchange="syncSRToggle('main')">
+      <input type="checkbox" id="sr-toggle" onchange="syncSRToggle('main')">
       <span class="toggle-slider"></span>
     </label>
-    <span id="sr-label" style="font-size:13px;color:#aaa">On</span>
+    <span id="sr-label" style="font-size:13px;color:#aaa">Off</span>
   </div>
   <div class="game-area">
     <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div>
@@ -522,11 +583,11 @@
     </div>
     <div class="mic-area">
       <button class="hear-btn" onclick="hearWord()">🔊 Hear the word</button>
-      <div id="sr-mode" style="display:flex;flex-direction:column;align-items:center;gap:14px">
+      <div id="sr-mode" style="display:none;flex-direction:column;align-items:center;gap:14px">
         <button class="mic-btn" id="mic-btn" onclick="startListening()">🎤</button>
         <div class="mic-hint" id="mic-hint">Tap the mic and say the word!</div>
       </div>
-      <div id="yn-mode" style="display:none;flex-direction:column;align-items:center;gap:12px">
+      <div id="yn-mode" style="display:flex;flex-direction:column;align-items:center;gap:12px">
         <div class="mic-hint">Did she say the word correctly?</div>
         <div class="yes-no-btns">
           <button class="yn-btn yes" onclick="ynMarkCorrect()">✅ Yes!</button>
@@ -549,13 +610,14 @@
       <button class="result-btn next" onclick="nextWord()">Next word →</button>
     </div>
   </div>
-  <div class="sticker-celebration" id="sticker-celebration">
-    <div class="confetti-container" id="confetti-container"></div>
-    <div class="big-sticker">⭐</div>
-    <h2>You earned a sticker!</h2>
-    <p id="sticker-total-msg">You have 1 sticker!</p>
-    <button class="play-again-btn" onclick="dismissSticker()">Keep going! 🎉</button>
-  </div>
+</div>
+
+<div class="sticker-celebration" id="sticker-celebration">
+  <div class="confetti-container" id="confetti-container"></div>
+  <div class="big-sticker">⭐</div>
+  <h2>You earned a sticker!</h2>
+  <p id="sticker-total-msg">You have 1 sticker!</p>
+  <button class="play-again-btn" onclick="dismissSticker()">Keep going! 🎉</button>
 </div>
 
 <!-- FINISH -->
@@ -627,10 +689,10 @@
     <div style="display:flex;align-items:center;gap:10px;background:#f8f9fa;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:700;color:var(--text-mid)">
       <span>🎤 Speech recognition</span>
       <label class="toggle-switch">
-        <input type="checkbox" id="wc-sr-toggle" checked onchange="syncSRToggle('wc')">
+        <input type="checkbox" id="wc-sr-toggle" onchange="syncSRToggle('wc')">
         <span class="toggle-slider"></span>
       </label>
-      <span id="wc-sr-label">On</span>
+      <span id="wc-sr-label">Off</span>
     </div>
     <div class="wc-landed" id="wc-landed">You landed on square 42!</div>
     <div class="wc-image" id="wc-image">🖼️</div>
@@ -638,11 +700,11 @@
     <div class="wc-attempts" id="wc-attempts"></div>
     <div class="wc-actions">
       <button class="hear-btn" onclick="snlHearWord()">🔊 Hear the word</button>
-      <div id="wc-sr-mode" style="display:flex;flex-direction:column;align-items:center;gap:12px">
+      <div id="wc-sr-mode" style="display:none;flex-direction:column;align-items:center;gap:12px">
         <button class="mic-btn" id="wc-mic-btn" onclick="snlStartListening()">🎤</button>
         <div class="mic-hint" id="wc-mic-hint">Tap mic and say the word!</div>
       </div>
-      <div id="wc-yn-mode" style="display:none;flex-direction:column;align-items:center;gap:10px">
+      <div id="wc-yn-mode" style="display:flex;flex-direction:column;align-items:center;gap:10px">
         <div class="mic-hint">Did they say it correctly?</div>
         <div class="yes-no-btns">
           <button class="yn-btn yes" onclick="snlWordResult(true)">✅ Yes!</button>
@@ -658,6 +720,93 @@
     <div class="win-avatar-dance" id="snl-win-avatar">🏆</div>
     <h2 id="snl-win-title">You won!</h2>
     <p id="snl-win-msg">Amazing job!</p>
+    <button class="play-again-btn" onclick="showScreen('games')">Play again 🎮</button>
+  </div>
+</div>
+
+
+<!-- TREASURE ISLAND -->
+<div class="screen" id="screen-treasure">
+  <div class="ti-topbar">
+    <button class="back-btn" onclick="showScreen('games')">←</button>
+    <div class="ti-title">🏝️ Treasure Island</div>
+    <div class="sticker-badge" style="margin-left:auto">⭐ <span id="ti-stickers">0</span></div>
+  </div>
+  <div class="ti-body">
+    <div class="ti-players" id="ti-players"></div>
+    <div class="ti-board-wrap" id="ti-board-wrap">
+      <div class="ti-board" id="ti-board"></div>
+      <svg class="ti-svg-overlay" id="ti-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div id="ti-pieces"></div>
+    </div>
+    <div class="ti-controls">
+      <div class="ti-turn-label" id="ti-turn-label">Roll the dice!</div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <div class="dice-3d-wrap">
+          <div class="dice-3d" id="ti-dice-3d">
+            <div class="dice-face" id="ti-dice-face">🎲</div>
+          </div>
+        </div>
+        <button class="ti-dice-btn" id="ti-dice-btn" onclick="tiRollDice()">
+          <span id="ti-dice-text">Roll!</span>
+        </button>
+      </div>
+      <div class="ti-log" id="ti-log"></div>
+    </div>
+  </div>
+
+  <!-- Whirlpool/gust event popup -->
+  <div class="ti-event-popup" id="ti-event-popup">
+    <div class="ti-event-card">
+      <div class="ti-event-icon" id="ti-event-icon">🌀</div>
+      <div class="ti-event-title" id="ti-event-title">Oh no!</div>
+      <div class="ti-event-msg" id="ti-event-msg">A whirlpool pulled you back!</div>
+      <div class="ti-event-route" id="ti-event-route">42 → 17</div>
+    </div>
+  </div>
+
+  <!-- Word Challenge Overlay -->
+  <div class="word-challenge" id="tc-challenge">
+    <!-- Correct result overlay -->
+    <div class="wc-amazing" id="tc-amazing">
+      <div class="result-emoji" id="tc-amazing-emoji">🎉</div>
+      <div class="result-text correct" id="tc-amazing-text">Amazing!</div>
+      <button class="result-btn next" id="tc-next-btn" onclick="tiAfterCorrect()">Next →</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;background:#f8f9fa;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:700;color:var(--text-mid)">
+      <span>🎤 Speech recognition</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="tc-sr-toggle" onchange="syncSRToggle('tc')">
+        <span class="toggle-slider"></span>
+      </label>
+      <span id="tc-sr-label">Off</span>
+    </div>
+    <div class="wc-landed" id="tc-landed">You landed on square 42!</div>
+    <div class="wc-image" id="tc-image">🖼️</div>
+    <div class="wc-word" id="tc-word">seven</div>
+    <div class="wc-attempts" id="tc-attempts"></div>
+    <div class="wc-actions">
+      <button class="hear-btn" onclick="tcHearWord()">🔊 Hear the word</button>
+      <div id="tc-sr-mode" style="display:none;flex-direction:column;align-items:center;gap:12px">
+        <button class="mic-btn" id="tc-mic-btn" onclick="tcStartListening()">🎤</button>
+        <div class="mic-hint" id="tc-mic-hint">Tap mic and say the word!</div>
+      </div>
+      <div id="tc-yn-mode" style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <div class="mic-hint">Did they say it correctly?</div>
+        <div class="yes-no-btns">
+          <button class="yn-btn yes" onclick="tcWordResult(true)">✅ Yes!</button>
+          <button class="yn-btn no" onclick="tcWordResult(false)">🔁 Try again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Win screen -->
+  <div class="ti-win" id="ti-win">
+    <div class="confetti-container" id="ti-confetti"></div>
+    <div class="win-avatar-dance" id="ti-win-avatar">🏆</div>
+    <h2 id="ti-win-title">You won!</h2>
+    <p id="ti-win-msg">Amazing job!</p>
     <button class="play-again-btn" onclick="showScreen('games')">Play again 🎮</button>
   </div>
 </div>
@@ -696,17 +845,17 @@
       <div class="pwq-settings-bar">
         <span>🎤 Speech recognition</span>
         <label class="toggle-switch">
-          <input type="checkbox" id="pwq-sr-toggle" checked onchange="syncSRToggle('pwq')">
+          <input type="checkbox" id="pwq-sr-toggle" onchange="syncSRToggle('pwq')">
           <span class="toggle-slider"></span>
         </label>
-        <span id="pwq-sr-label">On</span>
+        <span id="pwq-sr-label">Off</span>
       </div>
       <button class="hear-btn" onclick="pwqHearWord()">🔊 Hear the word</button>
-      <div id="pwq-sr-mode" style="display:flex;flex-direction:column;align-items:center;gap:12px">
+      <div id="pwq-sr-mode" style="display:none;flex-direction:column;align-items:center;gap:12px">
         <button class="mic-btn" id="pwq-mic-btn" onclick="pwqStartListening()">🎤</button>
         <div class="mic-hint" id="pwq-mic-hint">Tap the mic and say the word!</div>
       </div>
-      <div id="pwq-yn-mode" style="display:none;flex-direction:column;align-items:center;gap:10px">
+      <div id="pwq-yn-mode" style="display:flex;flex-direction:column;align-items:center;gap:10px">
         <div class="mic-hint">Did she say it correctly?</div>
         <div class="yes-no-btns">
           <button class="yn-btn yes" onclick="pwqYnCorrect()">✅ Yes!</button>
@@ -928,7 +1077,7 @@ function shuffle(arr){
 }
 
 // ── State ────────────────────────────────────────────────────────────
-let S={srEnabled:true,
+let S={srEnabled:false,
   child:null,words:[],wordIdx:0,wordsPassed:0,wordsAttempted:0,
   stickersEarned:0,walletPage:null,walletStickers:0,showWord:true,
   sessionStart:null,allChildren:[],allWordsets:[],allGames:[],
@@ -1062,6 +1211,7 @@ function startGame(gameId){
   const game=S.allGames.find(g=>g.id===gameId);
   if(game&&getProp(game,'Route','text').includes('snake')){startSnakeAndLadder(gameId);return;}
   if(game&&getProp(game,'Route','text').includes('princess')){startPrincessQuest(gameId);return;}
+  if(game&&getProp(game,'Route','text').includes('treasure')){startTreasureIsland(gameId);return;}
   const setName=getProp(S.selectedWordSet,'Set Name','title');
   const wordsForSet=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===setName);
   if(!wordsForSet.length){alert('No words found in this set!');return;}
@@ -1483,9 +1633,9 @@ async function showEventPopup(type,from,to){
 }
 
 // ── Dice animation ────────────────────────────────────────────────────
-async function animateDice(diceType,result){
-  const dice=document.getElementById('snl-dice-3d');
-  const face=document.getElementById('snl-dice-face');
+async function animateDice(diceType,result,prefix='snl'){
+  const dice=document.getElementById(`${prefix}-dice-3d`);
+  const face=document.getElementById(`${prefix}-dice-face`);
   dice.classList.add('rolling');
   // Flash random faces
   for(let i=0;i<14;i++){
@@ -1774,6 +1924,448 @@ function snlWin(playerIdx){
   document.getElementById('snl-win-msg').textContent=`${SNL.wordsPassed} words · ⭐ ${SNL.stickersEarned} stickers`;
   document.getElementById('snl-win').className='snl-win show';
   launchConfetti();
+}
+
+// ── Treasure Island ───────────────────────────────────────────────────
+const TI_GUSTS={3:16,11:25,21:33};
+const TI_WHIRLPOOLS={19:8,28:12,34:22};
+const TI_WORD_SQUARES=new Set([2, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 20, 22, 23, 24, 25, 26, 27, 29, 30, 31, 32, 33, 35]);
+
+let TI={
+  players:[],currentTurn:0,words:[],wordMap:{},
+  wordsPassed:0,stickersEarned:0,
+  challenge:{square:0,wordPage:null,attempts:0,maxAttempts:2,playerIdx:0,prevSquare:0},
+  log:[],gameOver:false,solo:false,preRollSquare:0,
+};
+
+function tiPxPos(sq){
+  const wrap=document.getElementById('ti-board-wrap');
+  if(!wrap)return{x:0,y:0};
+  const rect=wrap.getBoundingClientRect();
+  const c=snlCellCenter(sq);
+  return{x:(c.x/100)*rect.width,y:(c.y/100)*rect.height};
+}
+
+function drawTiSVG(){
+  const svg=document.getElementById('ti-svg');
+  const wrap=document.getElementById('ti-board-wrap');
+  const rect=wrap.getBoundingClientRect();
+  const W=rect.width,H=rect.height;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  svg.innerHTML='';
+
+  // Draw wind gusts (shortcuts)
+  Object.entries(TI_GUSTS).forEach(([from,to])=>{
+    const f=tiPxPos(parseInt(from));
+    const t=tiPxPos(parseInt(to));
+    const dx=t.x-f.x,dy=t.y-f.y;
+    const len=Math.sqrt(dx*dx+dy*dy)||1;
+    const nx=-dy/len*5,ny=dx/len*5;
+
+    const glow=makeSVGEl('line',{x1:f.x,y1:f.y,x2:t.x,y2:t.y,stroke:'#FFD700','stroke-width':'8',opacity:'0.15','stroke-linecap':'round'});
+    svg.appendChild(glow);
+
+    const dash=makeSVGEl('path',{
+      d:`M${f.x},${f.y} Q${(f.x+t.x)/2+nx*3},${(f.y+t.y)/2+ny*3} ${t.x},${t.y}`,
+      fill:'none',stroke:'#FF8C42','stroke-width':'3','stroke-linecap':'round',
+      'stroke-dasharray':'8 6',opacity:'0.85',
+    });
+    svg.appendChild(dash);
+
+    const angle=Math.atan2(t.y-f.y,t.x-f.x);
+    const ax1=t.x-10*Math.cos(angle-0.4),ay1=t.y-10*Math.sin(angle-0.4);
+    const ax2=t.x-10*Math.cos(angle+0.4),ay2=t.y-10*Math.sin(angle+0.4);
+    const arrow=makeSVGEl('path',{d:`M${ax1},${ay1} L${t.x},${t.y} L${ax2},${ay2}`,fill:'none',stroke:'#FF8C42','stroke-width':'3','stroke-linecap':'round'});
+    svg.appendChild(arrow);
+  });
+
+  // Draw whirlpools
+  Object.entries(TI_WHIRLPOOLS).forEach(([from,to])=>{
+    const f=tiPxPos(parseInt(from));
+    const t=tiPxPos(parseInt(to));
+    const mx=(f.x+t.x)/2+((Math.random()-0.5)*40);
+    const my=(f.y+t.y)/2+((Math.random()-0.5)*40);
+
+    const path=makeSVGEl('path',{
+      d:`M${f.x},${f.y} Q${mx},${my} ${t.x},${t.y}`,
+      fill:'none',stroke:'#4D96FF','stroke-width':'6','stroke-linecap':'round',opacity:'0.6',
+    });
+    const pathInner=makeSVGEl('path',{
+      d:`M${f.x},${f.y} Q${mx},${my} ${t.x},${t.y}`,
+      fill:'none',stroke:'#8ec4ff','stroke-width':'3','stroke-linecap':'round',opacity:'0.5',
+      'stroke-dasharray':'4 8',
+    });
+    const spiral=makeSVGEl('path',{
+      d:`M${f.x},${f.y} m-9,0 a9,9 0 1,1 18,0 a6,6 0 1,1 -12,0 a3,3 0 1,1 6,0`,
+      fill:'none',stroke:'#2d6fd4','stroke-width':'2',opacity:'0.9',
+    });
+    const tail=makeSVGEl('circle',{cx:t.x,cy:t.y,r:'4',fill:'#4D96FF',opacity:'0.6'});
+
+    svg.appendChild(path);svg.appendChild(pathInner);
+    svg.appendChild(tail);svg.appendChild(spiral);
+  });
+}
+
+// ── Animated pieces ───────────────────────────────────────────────────
+function tiInitPieces(){
+  const container=document.getElementById('ti-pieces');
+  container.innerHTML='';
+  container.style.cssText='position:absolute;inset:0;pointer-events:none';
+  TI.players.forEach((p,i)=>{
+    const piece=document.createElement('div');
+    piece.className='ti-piece';
+    piece.id=`ti-piece-${i}`;
+    piece.textContent=p.avatar;
+    piece.style.left='0px';
+    piece.style.top='0px';
+    piece.style.display='none';
+    container.appendChild(piece);
+  });
+}
+
+function tiUpdatePiecePos(playerIdx,sq,animate=true){
+  const piece=document.getElementById(`ti-piece-${playerIdx}`);
+  if(!piece)return;
+  if(sq<=0){piece.style.display='none';return;}
+  piece.style.display='block';
+  const pos=tiPxPos(sq);
+  const offset=playerIdx*8;
+  if(!animate){
+    piece.style.transition='none';
+    piece.style.left=(pos.x+offset)+'px';
+    piece.style.top=(pos.y-offset)+'px';
+    setTimeout(()=>piece.style.transition='',50);
+  }else{
+    piece.style.left=(pos.x+offset)+'px';
+    piece.style.top=(pos.y-offset)+'px';
+  }
+}
+
+async function tiAnimatePieceStep(playerIdx,fromSq,toSq){
+  const direction=toSq>fromSq?1:-1;
+  for(let sq=fromSq;sq!==toSq;sq+=direction){
+    TI.players[playerIdx].square=sq;
+    tiUpdatePiecePos(playerIdx,sq,true);
+    await delay(400);
+  }
+  TI.players[playerIdx].square=toSq;
+  tiUpdatePiecePos(playerIdx,toSq,true);
+  const piece=document.getElementById(`ti-piece-${playerIdx}`);
+  if(piece){piece.classList.add('bounce');setTimeout(()=>piece.classList.remove('bounce'),400);}
+  const cell=document.getElementById(`ti-cell-${toSq}`);
+  if(cell){cell.classList.add('pulse-land');setTimeout(()=>cell.classList.remove('pulse-land'),600);}
+}
+
+async function tiAnimateWhirlpool(playerIdx,from,to){
+  const piece=document.getElementById(`ti-piece-${playerIdx}`);
+  if(piece){piece.classList.add('whirlpool-spin');}
+  await delay(600);
+  tiUpdatePiecePos(playerIdx,to,true);
+  await delay(2500);
+  if(piece){piece.classList.remove('whirlpool-spin');}
+}
+
+async function tiAnimateGust(playerIdx,from,to){
+  const piece=document.getElementById(`ti-piece-${playerIdx}`);
+  if(piece){piece.classList.add('gust-boost');}
+  await delay(600);
+  tiUpdatePiecePos(playerIdx,to,true);
+  await delay(2500);
+  if(piece){piece.classList.remove('gust-boost');}
+}
+
+// ── Event popup ───────────────────────────────────────────────────────
+async function tiShowEventPopup(type,from,to){
+  const popup=document.getElementById('ti-event-popup');
+  const icon=document.getElementById('ti-event-icon');
+  const title=document.getElementById('ti-event-title');
+  const msg=document.getElementById('ti-event-msg');
+  const route=document.getElementById('ti-event-route');
+  if(type==='whirlpool'){
+    icon.textContent='🌀';
+    title.textContent='Oh no!';title.className='ti-event-title whirlpool';
+    msg.textContent='A whirlpool pulled you back!';
+  }else{
+    icon.textContent='💨';
+    title.textContent='Woohoo!';title.className='ti-event-title gust';
+    msg.textContent='A gust of wind blew you forward!';
+  }
+  route.textContent=`${from} → ${to}`;
+  popup.className='ti-event-popup show';
+  await delay(3000);
+  popup.className='ti-event-popup';
+  await delay(400);
+}
+
+// ── Start game ────────────────────────────────────────────────────────
+function startTreasureIsland(gameId){
+  if(!S.selectedWordSet){alert('Please select a word set first!');return;}
+  const setName=getProp(S.selectedWordSet,'Set Name','title');
+  const wordsForSet=S.allWords.filter(w=>getProp(w,'Word Set Name','text')===setName);
+  if(!wordsForSet.length){alert('No words found in this set!');return;}
+
+  const shuffled=shuffle(wordsForSet);
+  const wordSquares=[...TI_WORD_SQUARES];
+  TI.wordMap={};
+  wordSquares.forEach((sq,i)=>{TI.wordMap[sq]=shuffled[i%shuffled.length];});
+  TI.words=shuffled;
+  TI.wordsPassed=0;TI.stickersEarned=0;TI.log=[];TI.gameOver=false;
+
+  const childName=getProp(S.child,'Name','title');
+  const childAvatar=getProp(S.child,'Avatar','select')||'🐼';
+  const twoPlayer=confirm(`Play with 2 players?\n\nOK = ${childName} + Parent\nCancel = Solo mode`);
+  TI.solo=!twoPlayer;
+
+  TI.players=[{name:childName,avatar:childAvatar,square:0,diceType:8,maxAttempts:3,isChild:true}];
+  if(twoPlayer){TI.players.push({name:'Parent',avatar:'⛵',square:0,diceType:6,maxAttempts:3,isChild:false});}
+  TI.currentTurn=0;
+
+  document.getElementById('ti-stickers').textContent=S.walletStickers;
+  showScreen('treasure');
+
+  setTimeout(()=>{
+    renderTiBoard();
+    renderTiPlayers();
+    tiUpdateTurnLabel();
+    tiInitPieces();
+    setTimeout(drawTiSVG,100);
+    window.addEventListener('resize',()=>{if(document.getElementById('screen-treasure').classList.contains('active'))drawTiSVG();});
+  },50);
+}
+
+function renderTiBoard(){
+  const board=document.getElementById('ti-board');
+  board.innerHTML='';
+  for(let r=0;r<6;r++){
+    for(let c=0;c<6;c++){
+      const sq=r%2===0?(6-r)*6-c:(6-r)*6-5+c;
+      const cell=document.createElement('div');
+      cell.className='ti-cell';
+      cell.id=`ti-cell-${sq}`;
+      const isWhirlpoolHead=TI_WHIRLPOOLS[sq]!==undefined;
+      const isGustFoot=TI_GUSTS[sq]!==undefined;
+      if(sq===1)cell.classList.add('start-sq');
+      else if(sq===36)cell.classList.add('finish-sq');
+      else if(isWhirlpoolHead)cell.classList.add('whirlpool-head');
+      else if(isGustFoot)cell.classList.add('shortcut-foot');
+      else if(TI_WORD_SQUARES.has(sq))cell.classList.add('word-sq');
+
+      const numEl=document.createElement('div');
+      numEl.className='cell-num';numEl.textContent=sq;
+      cell.appendChild(numEl);
+
+      if(sq===36)cell.innerHTML+='<div style="font-size:20px;line-height:1">🏆💰</div>';
+      else if(sq===1)cell.innerHTML+='<div style="font-size:20px;line-height:1">⚓️</div>';
+      else if(TI_WORD_SQUARES.has(sq)){
+        const wp=TI.wordMap[sq];
+        const imgUrl=wp?getProp(wp,'Image URL','url'):'';
+        const word=wp?getProp(wp,'Word','title'):'';
+        if(imgUrl)cell.innerHTML+=`<img class="cell-img" src="${imgUrl}" onerror="this.style.display='none'">`;
+        cell.innerHTML+=`<div class="cell-word">${word}</div>`;
+      }
+      board.appendChild(cell);
+    }
+  }
+}
+
+function renderTiPlayers(){
+  const div=document.getElementById('ti-players');
+  div.innerHTML=TI.players.map((p,i)=>`
+    <div class="ti-player-card ${i===TI.currentTurn?'active-turn':''}" id="ti-pcard-${i}">
+      <div class="p-avatar">${p.avatar}</div>
+      <div class="p-name">${p.name}</div>
+      <div class="p-square">Sq ${p.square||'Start'}</div>
+      <div class="p-dice">${p.diceType}-sided dice</div>
+    </div>`).join('');
+}
+
+function tiUpdateTurnLabel(){
+  const p=TI.players[TI.currentTurn];
+  document.getElementById('ti-turn-label').textContent=`${p.avatar} ${p.name}'s turn!`;
+  document.getElementById('ti-dice-text').textContent=`Roll ${p.diceType}-sided dice!`;
+  document.getElementById('ti-dice-btn').disabled=false;
+}
+
+function tiLog(msg){
+  TI.log.unshift(msg);
+  document.getElementById('ti-log').innerHTML=TI.log.slice(0,8).join('<br>');
+}
+
+async function tiRollDice(){
+  if(TI.gameOver)return;
+  document.getElementById('ti-dice-btn').disabled=true;
+  const p=TI.players[TI.currentTurn];
+  const roll=Math.floor(Math.random()*p.diceType)+1;
+  await animateDice(p.diceType,roll,'ti');
+  tiLog(`${p.avatar} ${p.name} rolled a ${roll}`);
+
+  let newSquare=p.square+roll;
+  if(newSquare>36){
+    tiLog(`${p.name} needs exact ${36-p.square} to win! Stay.`);
+    await delay(1000);tiNextTurn();return;
+  }
+
+  TI.preRollSquare=p.square;
+  await tiAnimatePieceStep(TI.currentTurn,p.square,newSquare);
+  p.square=newSquare;
+  renderTiPlayers();
+
+  if(TI_WHIRLPOOLS[newSquare]!==undefined){
+    const to=TI_WHIRLPOOLS[newSquare];
+    tiLog(`🌀 Whirlpool! ${newSquare} → ${to}`);
+    await delay(600);
+    await tiShowEventPopup('whirlpool',newSquare,to);
+    await tiAnimateWhirlpool(TI.currentTurn,newSquare,to);
+    p.square=to;renderTiPlayers();
+    tiNextTurn();return;
+  }
+  if(TI_GUSTS[newSquare]!==undefined){
+    const to=TI_GUSTS[newSquare];
+    tiLog(`💨 Gust of wind! ${newSquare} → ${to}`);
+    await delay(600);
+    await tiShowEventPopup('gust',newSquare,to);
+    await tiAnimateGust(TI.currentTurn,newSquare,to);
+    p.square=to;renderTiPlayers();
+  }
+
+  if(p.square===36){tiWin(TI.currentTurn);return;}
+  if(TI_WORD_SQUARES.has(p.square)&&TI.wordMap[p.square]){
+    await delay(1200);
+    showTreasureChallenge(p.square,TI.currentTurn);return;
+  }
+  tiNextTurn();
+}
+
+function showTreasureChallenge(square,playerIdx){
+  const wp=TI.wordMap[square];
+  const word=getProp(wp,'Word','title');
+  const imgUrl=getProp(wp,'Image URL','url');
+  const p=TI.players[playerIdx];
+  TI.challenge={square,wordPage:wp,attempts:0,maxAttempts:p.maxAttempts,playerIdx,prevSquare:TI.preRollSquare};
+  document.getElementById('tc-landed').textContent=`${p.avatar} ${p.name} landed on square ${square}!`;
+  document.getElementById('tc-word').textContent=word;
+  const imgEl=document.getElementById('tc-image');
+  imgEl.innerHTML=imgUrl?`<img src="${imgUrl}" alt="${word}" onerror="this.parentElement.innerHTML='🖼️'">`:'🖼️';
+  updateTcAttempts();
+  document.getElementById('tc-sr-mode').style.display=S.srEnabled?'flex':'none';
+  document.getElementById('tc-yn-mode').style.display=S.srEnabled?'none':'flex';
+  document.getElementById('tc-mic-btn').className='mic-btn';
+  const tcTog=document.getElementById('tc-sr-toggle');
+  if(tcTog)tcTog.checked=S.srEnabled;
+  const tcLbl=document.getElementById('tc-sr-label');
+  if(tcLbl)tcLbl.textContent=S.srEnabled?'On':'Off';
+  document.getElementById('tc-challenge').className='word-challenge show';
+}
+
+function updateTcAttempts(){
+  const{attempts,maxAttempts}=TI.challenge;
+  document.getElementById('tc-attempts').textContent=maxAttempts>1?`Attempt ${attempts+1} of ${maxAttempts}`:'';
+}
+
+function tcHearWord(){
+  const word=getProp(TI.challenge.wordPage,'Word','title');
+  const u=new SpeechSynthesisUtterance(word);u.rate=0.85;u.pitch=1.1;speechSynthesis.speak(u);
+}
+
+function tcStartListening(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){tcWordResult(null);return;}
+  const btn=document.getElementById('tc-mic-btn');
+  btn.classList.add('listening');
+  document.getElementById('tc-mic-hint').textContent='Listening...';
+  const rec=new SR();
+  rec.lang='en-GB';rec.interimResults=false;rec.maxAlternatives=3;
+  rec.onresult=(e)=>{
+    btn.classList.remove('listening');
+    const target=getProp(TI.challenge.wordPage,'Word','title').toLowerCase().trim();
+    let matched=false;
+    for(let i=0;i<e.results[0].length;i++){
+      const h=e.results[0][i].transcript.toLowerCase().trim();
+      if(h===target||h.includes(target)||target.includes(h)){matched=true;break;}
+    }
+    tcWordResult(matched?true:null);
+  };
+  rec.onerror=()=>{btn.classList.remove('listening');tcWordResult(null);};
+  rec.start();
+}
+
+function tcWordResult(correct){
+  document.getElementById('tc-mic-btn').className='mic-btn';
+  document.getElementById('tc-mic-hint').textContent='Tap mic and say the word!';
+  if(correct===null){
+    document.getElementById('tc-sr-mode').style.display='none';
+    document.getElementById('tc-yn-mode').style.display='flex';
+    return;
+  }
+  const wc=document.getElementById('tc-challenge');
+  if(correct){
+    TI.wordsPassed++;
+    const word=getProp(TI.challenge.wordPage,'Word','title');
+    tiLog(`✅ ${TI.players[TI.challenge.playerIdx].name} said "${word}"!`);
+    const amazing=document.getElementById('tc-amazing');
+    document.getElementById('tc-amazing-emoji').textContent='🎉';
+    document.getElementById('tc-amazing-text').textContent='Amazing!';
+    amazing.className='wc-amazing show';
+    launchTcStars();
+  }else{
+    TI.challenge.attempts++;
+    wc.classList.add('wc-wrong-shake');
+    setTimeout(()=>wc.classList.remove('wc-wrong-shake'),400);
+    if(TI.challenge.attempts>=TI.challenge.maxAttempts){
+      const p=TI.players[TI.challenge.playerIdx];
+      const word=getProp(TI.challenge.wordPage,'Word','title');
+      tiLog(`❌ ${p.name} couldn't say "${word}". Back to ${TI.challenge.prevSquare}!`);
+      p.square=TI.challenge.prevSquare;
+      tiUpdatePiecePos(TI.challenge.playerIdx,p.square,true);
+      renderTiPlayers();
+      setTimeout(()=>{document.getElementById('tc-challenge').className='word-challenge';tiNextTurn();},600);
+    }else{
+      updateTcAttempts();
+      document.getElementById('tc-sr-mode').style.display=S.srEnabled?'flex':'none';
+      document.getElementById('tc-yn-mode').style.display=S.srEnabled?'none':'flex';
+    }
+  }
+}
+
+function tiAfterCorrect(){
+  document.getElementById('tc-amazing').className='wc-amazing';
+  document.getElementById('tc-challenge').className='word-challenge';
+  const perSticker=getProp(S.selectedWordSet,'Words Per Sticker','number')||12;
+  if(TI.wordsPassed>0&&TI.wordsPassed%perSticker===0){
+    TI.stickersEarned++;S.walletStickers++;
+    document.getElementById('ti-stickers').textContent=S.walletStickers;
+    document.getElementById('sticker-celebration').className='sticker-celebration show';
+    document.getElementById('sticker-total-msg').textContent=`You have ${S.walletStickers} sticker${S.walletStickers!==1?'s':''}!`;
+    launchConfetti();
+    setTimeout(()=>{document.getElementById('sticker-celebration').className='sticker-celebration';tiNextTurn();},2500);
+  }else{tiNextTurn();}
+}
+
+function launchTcStars(){
+  const wc=document.getElementById('tc-challenge');
+  for(let i=0;i<20;i++){
+    const star=document.createElement('div');
+    star.style.cssText=`position:absolute;font-size:${14+Math.random()*16}px;left:${20+Math.random()*60}%;top:${20+Math.random()*60}%;animation:starBurst ${.6+Math.random()*.8}s ease forwards;pointer-events:none;z-index:11`;
+    star.textContent='⭐';
+    wc.appendChild(star);
+    setTimeout(()=>star.remove(),1400);
+  }
+}
+
+function tiNextTurn(){
+  renderTiPlayers();
+  TI.currentTurn=TI.solo?0:(TI.currentTurn+1)%TI.players.length;
+  tiUpdateTurnLabel();
+}
+
+function tiWin(playerIdx){
+  TI.gameOver=true;
+  const p=TI.players[playerIdx];
+  document.getElementById('ti-win-avatar').textContent=p.avatar;
+  document.getElementById('ti-win-title').textContent=`${p.name} found the treasure! 🎉`;
+  document.getElementById('ti-win-msg').textContent=`${TI.wordsPassed} words · ⭐ ${TI.stickersEarned} stickers`;
+  document.getElementById('ti-win').className='ti-win show';
+  launchConfetti('ti-confetti');
 }
 
 // ── PIN ───────────────────────────────────────────────────────────────
@@ -2239,13 +2831,15 @@ function syncSRToggle(source){
     ? document.getElementById('sr-toggle').checked
     : source==='pwq'
     ? document.getElementById('pwq-sr-toggle').checked
+    : source==='tc'
+    ? document.getElementById('tc-sr-toggle').checked
     : document.getElementById('wc-sr-toggle').checked;
   S.srEnabled = val;
   // Sync all toggles
-  ['sr-toggle','wc-sr-toggle','pwq-sr-toggle'].forEach(id=>{
+  ['sr-toggle','wc-sr-toggle','pwq-sr-toggle','tc-sr-toggle'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.checked=val;
   });
-  ['sr-label','wc-sr-label','pwq-sr-label'].forEach(id=>{
+  ['sr-label','wc-sr-label','pwq-sr-label','tc-sr-label'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.textContent=val?'On':'Off';
   });
   // Animal Parade
@@ -2263,6 +2857,11 @@ function syncSRToggle(source){
   const wcYn=document.getElementById('wc-yn-mode');
   if(wcSr)wcSr.style.display=val?'flex':'none';
   if(wcYn)wcYn.style.display=val?'none':'flex';
+  // Treasure Island word challenge
+  const tcSr=document.getElementById('tc-sr-mode');
+  const tcYn=document.getElementById('tc-yn-mode');
+  if(tcSr)tcSr.style.display=val?'flex':'none';
+  if(tcYn)tcYn.style.display=val?'none':'flex';
 }
 
 function toggleSR(){
