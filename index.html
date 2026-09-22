@@ -3108,19 +3108,9 @@ function drawCastle(svg, progress){
 }
 
 function drawCage(svg){
-  const cx=110, cy=111, w=90, h=64;
+  const cx=110, cy=111, w=90, h=122;
   // Cage shadow
   svg.appendChild(makePWQEl('ellipse',{cx:cx,cy:cy+h/2+5,rx:w/2,ry:8,fill:'rgba(0,0,0,.2)'}));
-  // Cage top bar
-  svg.appendChild(makePWQEl('rect',{x:cx-w/2,y:cy-h/2,width:w,height:6,rx:'3',fill:'#555'}));
-  // Cage bottom bar
-  svg.appendChild(makePWQEl('rect',{x:cx-w/2,y:cy+h/2-6,width:w,height:6,rx:'3',fill:'#555'}));
-  // Bars
-  const bars=6;
-  for(let i=0;i<=bars;i++){
-    const x=cx-w/2+i*(w/bars);
-    svg.appendChild(makePWQEl('rect',{x:x-2,y:cy-h/2+6,width:4,height:h-12,rx:'2',fill:'#666'}));
-  }
 
   // Locks — broken ones fall away
   const locksToShow=PWQ.locksTotal-PWQ.locksBroken;
@@ -3138,15 +3128,18 @@ function drawCage(svg){
 }
 
 function drawCageFront(svg){
-  // Re-draw every-other cage bar on top of princess so she looks trapped inside
-  const cx=110, cy=111, w=90, h=64;
+  // All bars drawn solid, on top of the princess, so she reads as fully caged
+  const cx=110, cy=111, w=90, h=122;
   const bars=6;
-  for(let i=1;i<=bars;i+=2){
+  // Top bar
+  svg.appendChild(makePWQEl('rect',{x:cx-w/2,y:cy-h/2,width:w,height:6,rx:'3',fill:'#555'}));
+  // Bottom bar
+  svg.appendChild(makePWQEl('rect',{x:cx-w/2,y:cy+h/2-6,width:w,height:6,rx:'3',fill:'#555'}));
+  // Vertical bars
+  for(let i=0;i<=bars;i++){
     const x=cx-w/2+i*(w/bars);
-    svg.appendChild(makePWQEl('rect',{x:x-2,y:cy-h/2+6,width:4,height:h-12,rx:'2',fill:'rgba(60,60,60,0.45)'}));
+    svg.appendChild(makePWQEl('rect',{x:x-2,y:cy-h/2+6,width:4,height:h-12,rx:'2',fill:'#666'}));
   }
-  // Front top and bottom bar reinforcement
-  svg.appendChild(makePWQEl('rect',{x:cx-w/2,y:cy-h/2,width:w,height:6,rx:'3',fill:'rgba(60,60,60,0.3)'}));
 }
 
 function drawPrincess(svg, stage, progress){
@@ -3156,7 +3149,6 @@ function drawPrincess(svg, stage, progress){
   // Palette — drab grey while trapped, warms into royal purple/pink/gold as she's freed
   const dressDeep =progress<0.3?'#8a8a8a':progress<0.6?'#a569bd':'#8e44ad';
   const dressMid  =progress<0.3?'#b0b0b0':progress<0.6?'#d2b4de':'#c39bd3';
-  const dressLight=progress<0.3?'#e2e2e2':progress<0.6?'#f3e9f8':'#f8f0fb';
   const sashCol   =progress<0.3?'#999':'#FF6EB4';
   const crownStart=progress<0.3?'#d8d8d8':'#FFF3B0';
   const crownEnd  =progress<0.3?'#999':'#FFC700';
@@ -3189,8 +3181,6 @@ function drawPrincess(svg, stage, progress){
 
   // Skirt — flowing scalloped silhouette
   svg.appendChild(makePWQEl('path',{d:`M${cx-24},${cy+44} Q${cx-28},${cy+8} ${cx-14},${cy-2} L${cx+14},${cy-2} Q${cx+28},${cy+8} ${cx+24},${cy+44} Q${cx},${cy+53} ${cx-24},${cy+44} Z`,fill:'url(#princessDress)'}));
-  svg.appendChild(makePWQEl('path',{d:`M${cx-4},${cy-2} Q${cx-5},${cy+24} ${cx-3},${cy+44} L${cx+3},${cy+44} Q${cx+5},${cy+24} ${cx+4},${cy-2} Z`,fill:dressLight,opacity:'0.35'}));
-  for(let i=-2;i<=2;i++) svg.appendChild(makePWQEl('circle',{cx:cx+i*10,cy:cy+47,r:'5',fill:dressDeep,opacity:'0.35'}));
   if(progress>0.4){
     for(const[sx,sy]of[[cx-15,cy+15],[cx+13,cy+27],[cx-3,cy+37]]){
       const s=makePWQEl('text',{x:sx,y:sy,'font-size':'7','text-anchor':'middle',opacity:'0.85',fill:'#fff'});
