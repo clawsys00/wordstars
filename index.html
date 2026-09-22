@@ -3153,72 +3153,133 @@ function drawPrincess(svg, stage, progress){
   const cx=110, cy=111;
   const emotion=progress<0.25?'sad':progress<0.5?'worried':progress<0.75?'hopeful':'excited';
 
-  // Dress
-  const dressCol=progress<0.3?'#8a8a8a':progress<0.6?'#c39bd3':'#9B59B6';
-  const dressBright=progress<0.3?'#aaa':progress<0.6?'#d7bde2':'#BB8FCE';
-  svg.appendChild(makePWQEl('ellipse',{cx:cx,cy:cy+20,rx:22,ry:30,fill:dressCol}));
-  svg.appendChild(makePWQEl('ellipse',{cx:cx,cy:cy+10,rx:14,ry:22,fill:dressBright}));
+  // Palette — drab grey while trapped, warms into royal purple/pink/gold as she's freed
+  const dressDeep =progress<0.3?'#8a8a8a':progress<0.6?'#a569bd':'#8e44ad';
+  const dressMid  =progress<0.3?'#b0b0b0':progress<0.6?'#d2b4de':'#c39bd3';
+  const dressLight=progress<0.3?'#e2e2e2':progress<0.6?'#f3e9f8':'#f8f0fb';
+  const sashCol   =progress<0.3?'#999':'#FF6EB4';
+  const crownStart=progress<0.3?'#d8d8d8':'#FFF3B0';
+  const crownEnd  =progress<0.3?'#999':'#FFC700';
+  const gemCol    =progress<0.3?'#bbb':'#e74c3c';
 
-  // Body
-  svg.appendChild(makePWQEl('rect',{x:cx-10,y:cy-20,width:20,height:28,rx:'8',fill:'#FDEBD0'}));
+  // Gradient defs — rebuilt each draw since the svg is cleared beforehand, so plain (non-unique-per-frame) ids are safe
+  const defs=makePWQEl('defs',{});
+  const dressGrad=makePWQEl('linearGradient',{id:'princessDress',x1:'0',y1:'0',x2:'1',y2:'1'});
+  dressGrad.appendChild(makePWQEl('stop',{offset:'0%','stop-color':dressLight}));
+  dressGrad.appendChild(makePWQEl('stop',{offset:'55%','stop-color':dressMid}));
+  dressGrad.appendChild(makePWQEl('stop',{offset:'100%','stop-color':dressDeep}));
+  defs.appendChild(dressGrad);
+  const hairGrad=makePWQEl('linearGradient',{id:'princessHair',x1:'0',y1:'0',x2:'0',y2:'1'});
+  hairGrad.appendChild(makePWQEl('stop',{offset:'0%','stop-color':'#C68642'}));
+  hairGrad.appendChild(makePWQEl('stop',{offset:'40%','stop-color':'#8B4513'}));
+  hairGrad.appendChild(makePWQEl('stop',{offset:'100%','stop-color':'#5C3317'}));
+  defs.appendChild(hairGrad);
+  const skinGrad=makePWQEl('radialGradient',{id:'princessSkin',cx:'35%',cy:'30%',r:'75%'});
+  skinGrad.appendChild(makePWQEl('stop',{offset:'0%','stop-color':'#FFF6E9'}));
+  skinGrad.appendChild(makePWQEl('stop',{offset:'100%','stop-color':'#FBDDBA'}));
+  defs.appendChild(skinGrad);
+  const crownGrad=makePWQEl('linearGradient',{id:'princessCrown',x1:'0',y1:'0',x2:'0',y2:'1'});
+  crownGrad.appendChild(makePWQEl('stop',{offset:'0%','stop-color':crownStart}));
+  crownGrad.appendChild(makePWQEl('stop',{offset:'100%','stop-color':crownEnd}));
+  defs.appendChild(crownGrad);
+  svg.appendChild(defs);
+
+  // Soft ground shadow
+  svg.appendChild(makePWQEl('ellipse',{cx,cy:cy+46,rx:'26',ry:'6',fill:'rgba(0,0,0,.15)'}));
+
+  // Skirt — flowing scalloped silhouette
+  svg.appendChild(makePWQEl('path',{d:`M${cx-24},${cy+44} Q${cx-28},${cy+8} ${cx-14},${cy-2} L${cx+14},${cy-2} Q${cx+28},${cy+8} ${cx+24},${cy+44} Q${cx},${cy+53} ${cx-24},${cy+44} Z`,fill:'url(#princessDress)'}));
+  svg.appendChild(makePWQEl('path',{d:`M${cx-9},${cy-2} Q${cx-11},${cy+24} ${cx-7},${cy+44} L${cx+7},${cy+44} Q${cx+11},${cy+24} ${cx+9},${cy-2} Z`,fill:dressLight,opacity:'0.6'}));
+  for(let i=-2;i<=2;i++) svg.appendChild(makePWQEl('circle',{cx:cx+i*10,cy:cy+47,r:'5',fill:dressDeep,opacity:'0.35'}));
+  if(progress>0.4){
+    for(const[sx,sy]of[[cx-15,cy+15],[cx+13,cy+27],[cx-3,cy+37]]){
+      const s=makePWQEl('text',{x:sx,y:sy,'font-size':'7','text-anchor':'middle',opacity:'0.85',fill:'#fff'});
+      s.textContent='✦';
+      svg.appendChild(s);
+    }
+  }
+
+  // Waist sash
+  svg.appendChild(makePWQEl('path',{d:`M${cx-14},${cy-3} Q${cx},${cy+3} ${cx+14},${cy-3}`,fill:'none',stroke:sashCol,'stroke-width':'4','stroke-linecap':'round'}));
+
+  // Bodice with sweetheart neckline gem
+  svg.appendChild(makePWQEl('path',{d:`M${cx-11},${cy-22} Q${cx},${cy-15} ${cx+11},${cy-22} L${cx+9},${cy-2} L${cx-9},${cy-2} Z`,fill:'url(#princessDress)'}));
+  svg.appendChild(makePWQEl('circle',{cx,cy:cy-17,r:'2.4',fill:gemCol}));
 
   // Arms
   if(emotion==='excited'||emotion==='hopeful'){
-    svg.appendChild(makePWQEl('line',{x1:cx-10,y1:cy-10,x2:cx-24,y2:cy-22,stroke:'#FDEBD0','stroke-width':'5','stroke-linecap':'round'}));
-    svg.appendChild(makePWQEl('line',{x1:cx+10,y1:cy-10,x2:cx+24,y2:cy-22,stroke:'#FDEBD0','stroke-width':'5','stroke-linecap':'round'}));
+    svg.appendChild(makePWQEl('line',{x1:cx-10,y1:cy-18,x2:cx-25,y2:cy-30,stroke:'url(#princessSkin)','stroke-width':'6','stroke-linecap':'round'}));
+    svg.appendChild(makePWQEl('line',{x1:cx+10,y1:cy-18,x2:cx+25,y2:cy-30,stroke:'url(#princessSkin)','stroke-width':'6','stroke-linecap':'round'}));
   } else {
-    svg.appendChild(makePWQEl('line',{x1:cx-10,y1:cy-5,x2:cx-24,y2:cy+8,stroke:'#FDEBD0','stroke-width':'5','stroke-linecap':'round'}));
-    svg.appendChild(makePWQEl('line',{x1:cx+10,y1:cy-5,x2:cx+24,y2:cy+8,stroke:'#FDEBD0','stroke-width':'5','stroke-linecap':'round'}));
+    svg.appendChild(makePWQEl('line',{x1:cx-10,y1:cy-12,x2:cx-24,y2:cy+2,stroke:'url(#princessSkin)','stroke-width':'6','stroke-linecap':'round'}));
+    svg.appendChild(makePWQEl('line',{x1:cx+10,y1:cy-12,x2:cx+24,y2:cy+2,stroke:'url(#princessSkin)','stroke-width':'6','stroke-linecap':'round'}));
   }
 
-  // Head
-  svg.appendChild(makePWQEl('circle',{cx:cx,cy:cy-28,r:'18',fill:'#FDEBD0'}));
+  // Neck + head
+  svg.appendChild(makePWQEl('rect',{x:cx-5,y:cy-26,width:'10',height:'8',fill:'url(#princessSkin)'}));
+  svg.appendChild(makePWQEl('circle',{cx,cy:cy-34,r:'17',fill:'url(#princessSkin)'}));
 
-  // Hair
-  svg.appendChild(makePWQEl('ellipse',{cx:cx,cy:cy-38,rx:18,ry:10,fill:'#8B4513'}));
-  svg.appendChild(makePWQEl('ellipse',{cx:cx-16,cy:cy-24,rx:5,ry:14,fill:'#8B4513'}));
-  svg.appendChild(makePWQEl('ellipse',{cx:cx+16,cy:cy-24,rx:5,ry:14,fill:'#8B4513'}));
+  // Hair — flowing locks behind the shoulders
+  svg.appendChild(makePWQEl('path',{d:`M${cx-16},${cy-36} Q${cx-25},${cy-8} ${cx-14},${cy+8} Q${cx-9},${cy-6} ${cx-13},${cy-30} Z`,fill:'url(#princessHair)'}));
+  svg.appendChild(makePWQEl('path',{d:`M${cx+16},${cy-36} Q${cx+25},${cy-8} ${cx+14},${cy+8} Q${cx+9},${cy-6} ${cx+13},${cy-30} Z`,fill:'url(#princessHair)'}));
 
-  // Eyes — lowered 4px below hair boundary so they're always visible
+  // Hair crown cap + fringe framing the face
+  svg.appendChild(makePWQEl('path',{d:`M${cx-17},${cy-38} Q${cx-19},${cy-53} ${cx},${cy-54} Q${cx+19},${cy-53} ${cx+17},${cy-38} Q${cx+10},${cy-46} ${cx},${cy-45} Q${cx-10},${cy-46} ${cx-17},${cy-38} Z`,fill:'url(#princessHair)'}));
+  svg.appendChild(makePWQEl('path',{d:`M${cx-9},${cy-48} Q${cx-3},${cy-52} ${cx+4},${cy-49}`,fill:'none',stroke:'#C68642','stroke-width':'2','stroke-linecap':'round',opacity:'0.7'}));
+
+  // Eyebrows
   const eyeY=cy-24;
+  const browY=emotion==='sad'?eyeY-7:eyeY-8;
+  svg.appendChild(makePWQEl('path',{d:`M${cx-9},${browY+(emotion==='sad'?1:0)} Q${cx-6},${browY-2} ${cx-3},${browY}`,fill:'none',stroke:'#5C3317','stroke-width':'1.6','stroke-linecap':'round'}));
+  svg.appendChild(makePWQEl('path',{d:`M${cx+3},${browY} Q${cx+6},${browY-2} ${cx+9},${browY+(emotion==='sad'?1:0)}`,fill:'none',stroke:'#5C3317','stroke-width':'1.6','stroke-linecap':'round'}));
+
+  // Eyes
   if(emotion==='sad'){
-    // White sclera backing so eyes show against dark hair
-    svg.appendChild(makePWQEl('ellipse',{cx:cx-6,cy:eyeY,rx:5,ry:4,fill:'white',opacity:'0.9'}));
-    svg.appendChild(makePWQEl('ellipse',{cx:cx+6,cy:eyeY,rx:5,ry:4,fill:'white',opacity:'0.9'}));
-    // Sad curved down
+    svg.appendChild(makePWQEl('ellipse',{cx:cx-6,cy:eyeY,rx:'5',ry:'4',fill:'white',opacity:'0.9'}));
+    svg.appendChild(makePWQEl('ellipse',{cx:cx+6,cy:eyeY,rx:'5',ry:'4',fill:'white',opacity:'0.9'}));
     svg.appendChild(makePWQEl('path',{d:`M${cx-9},${eyeY-2} Q${cx-6},${eyeY+2} ${cx-3},${eyeY-2}`,fill:'none',stroke:'#2c3e50','stroke-width':'3'}));
     svg.appendChild(makePWQEl('path',{d:`M${cx+3},${eyeY-2} Q${cx+6},${eyeY+2} ${cx+9},${eyeY-2}`,fill:'none',stroke:'#2c3e50','stroke-width':'3'}));
-    // Tears on both eyes
-    svg.appendChild(makePWQEl('ellipse',{cx:cx-6,cy:eyeY+5,rx:2,ry:3,fill:'#5DADE2',opacity:'0.8'}));
-    svg.appendChild(makePWQEl('ellipse',{cx:cx+6,cy:eyeY+5,rx:2,ry:3,fill:'#5DADE2',opacity:'0.8'}));
+    svg.appendChild(makePWQEl('ellipse',{cx:cx-6,cy:eyeY+5,rx:'2',ry:'3',fill:'#5DADE2',opacity:'0.8'}));
+    svg.appendChild(makePWQEl('ellipse',{cx:cx+6,cy:eyeY+5,rx:'2',ry:'3',fill:'#5DADE2',opacity:'0.8'}));
   } else {
-    // White sclera backing
-    svg.appendChild(makePWQEl('circle',{cx:cx-6,cy:eyeY,r:'4',fill:'white'}));
-    svg.appendChild(makePWQEl('circle',{cx:cx+6,cy:eyeY,r:'4',fill:'white'}));
-    // Happy/normal eyes
+    svg.appendChild(makePWQEl('circle',{cx:cx-6,cy:eyeY,r:'4.2',fill:'white'}));
+    svg.appendChild(makePWQEl('circle',{cx:cx+6,cy:eyeY,r:'4.2',fill:'white'}));
     svg.appendChild(makePWQEl('circle',{cx:cx-6,cy:eyeY,r:'3',fill:'#2c3e50'}));
     svg.appendChild(makePWQEl('circle',{cx:cx+6,cy:eyeY,r:'3',fill:'#2c3e50'}));
-    svg.appendChild(makePWQEl('circle',{cx:cx-5,cy:eyeY-1,r:'1',fill:'white'}));
-    svg.appendChild(makePWQEl('circle',{cx:cx+7,cy:eyeY-1,r:'1',fill:'white'}));
+    svg.appendChild(makePWQEl('circle',{cx:cx-6,cy:eyeY,r:'1.4',fill:'#8B4513'}));
+    svg.appendChild(makePWQEl('circle',{cx:cx+6,cy:eyeY,r:'1.4',fill:'#8B4513'}));
+    svg.appendChild(makePWQEl('circle',{cx:cx-5,cy:eyeY-1.2,r:'1',fill:'white'}));
+    svg.appendChild(makePWQEl('circle',{cx:cx+7,cy:eyeY-1.2,r:'1',fill:'white'}));
+    // Lashes
+    svg.appendChild(makePWQEl('path',{d:`M${cx-10},${eyeY-2} l-2,-2.5`,stroke:'#2c3e50','stroke-width':'1','stroke-linecap':'round'}));
+    svg.appendChild(makePWQEl('path',{d:`M${cx+10},${eyeY-2} l2,-2.5`,stroke:'#2c3e50','stroke-width':'1','stroke-linecap':'round'}));
   }
+
+  // Blush
+  svg.appendChild(makePWQEl('ellipse',{cx:cx-11,cy:eyeY+7,rx:'3.5',ry:'2.2',fill:'#FF9FB2',opacity:'0.55'}));
+  svg.appendChild(makePWQEl('ellipse',{cx:cx+11,cy:eyeY+7,rx:'3.5',ry:'2.2',fill:'#FF9FB2',opacity:'0.55'}));
+
+  // Nose
+  svg.appendChild(makePWQEl('path',{d:`M${cx-1},${eyeY+2} q1,3 2,3`,fill:'none',stroke:'#E8B88A','stroke-width':'1.4','stroke-linecap':'round'}));
 
   // Mouth
   if(emotion==='sad'){
     svg.appendChild(makePWQEl('path',{d:`M${cx-6},${eyeY+10} Q${cx},${eyeY+8} ${cx+6},${eyeY+10}`,fill:'none',stroke:'#c0392b','stroke-width':'2','stroke-linecap':'round'}));
   } else if(emotion==='excited'){
     svg.appendChild(makePWQEl('path',{d:`M${cx-7},${eyeY+8} Q${cx},${eyeY+16} ${cx+7},${eyeY+8}`,fill:'#c0392b',stroke:'none'}));
-    svg.appendChild(makePWQEl('ellipse',{cx:cx,cy:eyeY+11,rx:5,ry:4,fill:'#7f0000'}));
+    svg.appendChild(makePWQEl('ellipse',{cx,cy:eyeY+11,rx:'5',ry:'4',fill:'#7f0000'}));
+    svg.appendChild(makePWQEl('path',{d:`M${cx-6},${eyeY+8.5} Q${cx},${eyeY+11} ${cx+6},${eyeY+8.5}`,fill:'none',stroke:'white','stroke-width':'1.5','stroke-linecap':'round'}));
   } else {
     svg.appendChild(makePWQEl('path',{d:`M${cx-6},${eyeY+9} Q${cx},${eyeY+14} ${cx+6},${eyeY+9}`,fill:'none',stroke:'#c0392b','stroke-width':'2','stroke-linecap':'round'}));
   }
 
-  // Crown
-  const crownCol=progress<0.3?'#aaa':'#FFD700';
-  svg.appendChild(makePWQEl('path',{d:`M${cx-12},${cy-44} L${cx-10},${cy-54} L${cx},${cy-50} L${cx+10},${cy-54} L${cx+12},${cy-44} Z`,fill:crownCol}));
+  // Crown — layered points with pearls and a glowing centre gem
+  svg.appendChild(makePWQEl('path',{d:`M${cx-13},${cy-44} L${cx-11},${cy-56} L${cx-4},${cy-49} L${cx},${cy-58} L${cx+4},${cy-49} L${cx+11},${cy-56} L${cx+13},${cy-44} Z`,fill:'url(#princessCrown)',stroke:progress<0.3?'#888':'#B8860B','stroke-width':'0.6'}));
+  svg.appendChild(makePWQEl('rect',{x:cx-13,y:cy-45,width:'26',height:'4',rx:'1.5',fill:'url(#princessCrown)'}));
   if(progress>0.3){
-    for(let gem of[[cx-10,cy-48],[cx,cy-48],[cx+10,cy-48]]){
-      svg.appendChild(makePWQEl('circle',{cx:gem[0],cy:gem[1],r:'2.5',fill:'#e74c3c'}));
-    }
+    svg.appendChild(makePWQEl('circle',{cx,cy:cy-51,r:'3.2',fill:'#e74c3c'}));
+    svg.appendChild(makePWQEl('circle',{cx:cx-1,cy:cy-52,r:'1',fill:'#fff',opacity:'0.85'}));
+    for(const gx of[cx-8,cx+8]) svg.appendChild(makePWQEl('circle',{cx:gx,cy:cy-46,r:'1.8',fill:'#fff',opacity:'0.9'}));
   }
 }
 
