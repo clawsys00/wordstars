@@ -1,3 +1,5 @@
+import crypto from 'crypto';
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, OPTIONS');
@@ -5,6 +7,42 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const { path, type, page } = req.query;
+
+  // ── Cloudinary permanent upload ────────────────────────────────────
+  if (type === 'upload') {
+    try {
+      const { imageUrl } = req.body || {};
+      const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+      const apiKey = process.env.CLOUDINARY_API_KEY;
+      const apiSecret = process.env.CLOUDINARY_API_SECRET;
+      const timestamp = Math.floor(Date.now() / 1000);
+      const folder = 'wordstars';
+      const signature = crypto
+        .createHash('sha1')
+        .update(`folder=${folder}&timestamp=${timestamp}${apiSecret}`)
+        .digest('hex');
+
+      const form = new URLSearchParams();
+      form.set('file', imageUrl);
+      form.set('api_key', apiKey);
+      form.set('timestamp', String(timestamp));
+      form.set('folder', folder);
+      form.set('signature', signature);
+
+      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: form.toString(),
+      });
+      const data = await uploadRes.json();
+      if (!uploadRes.ok || !data.secure_url) {
+        return res.status(500).json({ error: (data && data.error && data.error.message) || 'Cloudinary upload failed' });
+      }
+      return res.status(200).json({ url: data.secure_url });
+    } catch (e) {
+      return res.status(500).json({ error: e.message });
+    }
+  }
 
   // ── Pixabay image search ──────────────────────────────────────────
   if (type === 'images') {

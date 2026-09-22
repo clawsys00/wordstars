@@ -2212,15 +2212,25 @@ function selectImage(index,url){
 async function saveSelectedImage(){
   if(!imgState.selectedUrl||!imgState.wordPageId)return;
   const btn=document.getElementById('img-search-save');
-  btn.textContent='Saving...';btn.disabled=true;
+  const originalText=btn.textContent;
+  btn.textContent='Uploading...';btn.disabled=true;
   try{
-    await notionUpdate(imgState.wordPageId,{'Image URL':{url:imgState.selectedUrl}});
+    const uploadRes=await fetch('/api/notion?type=upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({imageUrl:imgState.selectedUrl})});
+    const uploadData=await uploadRes.json();
+    if(!uploadRes.ok||!uploadData.url){
+      alert("Couldn't save this image permanently, please try again");
+      btn.textContent=originalText;btn.disabled=false;
+      return;
+    }
+    const permanentUrl=uploadData.url;
+    btn.textContent='Saving...';
+    await notionUpdate(imgState.wordPageId,{'Image URL':{url:permanentUrl}});
     const wp=S.allWords.find(w=>w.id===imgState.wordPageId);
-    if(wp)wp.properties['Image URL']={url:imgState.selectedUrl};
+    if(wp)wp.properties['Image URL']={url:permanentUrl};
     closeImageSearch();
     renderImageManager(S.allWords,S.allWordsets);
   }catch(e){alert('Error saving image. Try again.');}
-  btn.textContent='✅ Use this image';btn.disabled=false;
+  btn.textContent=originalText;btn.disabled=false;
 }
 
 function syncSRToggle(source){
